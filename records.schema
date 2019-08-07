@@ -1,0 +1,13 @@
+CREATE TABLE "account" (
+	"user_id"	INTEGER PRIMARY KEY AUTOINCREMENT,
+	"user_name"	TEXT,
+	"salt"	TEXT,
+	"hashed_password"	TEXT
+);
+
+CREATE TABLE "sessions" (
+	"session_id"	INTEGER PRIMARY KEY AUTOINCREMENT,
+	"user_id"	INTEGER,
+	"current_session_key"	NUMERIC,
+	"current_session_last_update_timestamp"		NUMERIC
+);

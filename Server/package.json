@@ -1,0 +1,29 @@
+{
+  "name": "pc-stream",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "rebuild": "electron-rebuild -f -w sqlite3",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/triethyl/PC-Stream.git"
+  },
+  "author": "Sandipan Dey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/triethyl/PC-Stream/issues"
+  },
+  "homepage": "https://github.com/triethyl/PC-Stream#readme",
+  "dependencies": {
+    "electron": "^6.0.1",
+    "knex": "^0.19.1",
+    "sqlite3": "^4.0.9"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^1.8.5"
+  }
+}
