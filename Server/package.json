@@ -6,6 +6,7 @@
   "scripts": {
     "start": "electron .",
     "rebuild": "electron-rebuild -f -w sqlite3",
+    "postinstall": "electron-builder install-app-deps /m",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,10 +21,10 @@
   "homepage": "https://github.com/triethyl/PC-Stream#readme",
   "dependencies": {
     "electron": "^6.0.1",
-    "knex": "^0.19.1",
-    "sqlite3": "^4.0.9"
+    "sqlite3": "https://github.com/mapbox/node-sqlite3/tarball/master"
   },
   "devDependencies": {
+    "electron-builder": "^21.2.0",
     "electron-rebuild": "^1.8.5"
   }
 }
