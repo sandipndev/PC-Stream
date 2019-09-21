@@ -20,7 +20,8 @@
     <header class="container-fluid sticky titlebar">
         <div class="row">
             <div class="col-sm-10 window-title">
-                <p class="text-white h4">PC Stream</p>
+                <span class="h4" id="status-dot-1" style="color: #bbb; margin-right: 10px;">&#9679;</span>
+                <span class="text-white h4">PC Stream</span>
             </div>
             <div class="col-sm-2 window-controls-container">
                 <p class="float-right text-white h4">
@@ -32,13 +33,16 @@
         </div>
     </header>
 
-    <div class="container-fluid main-section mt-5">
+    <div class="container main-section mt-5">
         <div class="row">
-            <div class="col-sm-3">Hi</div>
-            <div class="col-sm-9 bg-white shadow rounded pt-3">
+            <div class="col-sm-3">Why</div>
+            <div class="col-sm-9 bg-white shadow rounded pt-3 pb-3">
                 <div class="row">
-                    <p class="h2" style="color: red;">&#9679;</p>
-                    <p class="h2 font-weight-bold" style="margin-left: 20px;">LIVE AND STREAMING</p>
+                    <span class="h2" id="status-dot-2" style="color: #bbb; margin-left: 20px;">&#9679;</span>
+                    <span class="h2 font-weight-bold" style="margin-left: 20px;" id="status-text">OFFLINE</span>
+                </div>
+                <div class="row pl-3">
+                    <button class="btn btn-primary btn-lg btn-dark" id="toggle-server-btn">Start Server</button>
                 </div>
             </div>
         </div>
