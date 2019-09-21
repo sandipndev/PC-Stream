@@ -6,25 +6,18 @@ const url = require('url')
 const sqlite3 = require('sqlite3').verbose()
 var db = new sqlite3.Database('records.db')
 
-// Get databases working if not exists
-const startup = require("./misc/startup")
-startup(db)
-
-// Test
-const { add_user } = require('./controllers/users')
-add_user({
-    user_name: 'Sandipan',
-    real_name: 'Sandipan Dey',
-    plaintext_password: 'password',
-    picture_base64: 'ehnbfbejhkfbjhefbjhefbjhb'
-})
+let mainWindow
 
 // --- ELECTRON APP --
 app.on("ready", ()=> {
-    let mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         height: 800,
-        width: 800,
-        show: false
+        width: 1200,
+        show: false,
+        frame: false,
+        webPreferences: {
+            nodeIntegration: true
+        }
     })
 
     mainWindow.loadURL(url.format({
@@ -41,4 +34,4 @@ app.on("ready", ()=> {
 app.on('window-all-closed', ()=>{ 
     app.quit()
     db.close()
- })
+})

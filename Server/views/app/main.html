@@ -1,12 +1,50 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title></title>
-    </head>
-    <body>
-        This window shows up
-        <p id="res"></p>
-        <button onclick="toggle_server()">Click Me</button>
-    </body>
-    <script src="./main.js"></script>
+<html lang="en">
+<head>
+    <!--Metas-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--Title-->
+    <title>PC Stream</title>
+
+    <!--Styles-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+    <header class="container-fluid sticky titlebar">
+        <div class="row">
+            <div class="col-sm-10 window-title">
+                <p class="text-white h4">PC Stream</p>
+            </div>
+            <div class="col-sm-2 window-controls-container">
+                <p class="float-right text-white h4">
+                    <span class="window-button titlebar-button" id="minimize-btn">&#128469;</span>
+                    <span class="window-button titlebar-button" id="max-rest-btn">&#128470;</span>
+                    <span class="window-button titlebar-button" id="close-btn">&#10006;</span>
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid main-section mt-5">
+        <div class="row">
+            <div class="col-sm-3">Hi</div>
+            <div class="col-sm-9 bg-white shadow rounded pt-3">
+                <div class="row">
+                    <p class="h2" style="color: red;">&#9679;</p>
+                    <p class="h2 font-weight-bold" style="margin-left: 20px;">LIVE AND STREAMING</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="main.js"></script>
+</body>
 </html>

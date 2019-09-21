@@ -1,0 +1,70 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Calibri';
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background: rgb(82,62,147);
+    background: -moz-linear-gradient(45deg, rgba(82,62,147,1) 0%, rgba(174,58,207,1) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(82,62,147,1) 0%, rgba(174,58,207,1) 100%);
+    background: linear-gradient(45deg, rgba(82,62,147,1) 0%, rgba(174,58,207,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#523e93",endColorstr="#ae3acf",GradientType=1);
+
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+header {
+    height: 34px;
+    padding-top: 2px;
+    background: #001011;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.sticky {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.window-button {
+    padding: 4px 6px;
+}
+
+.window-button:hover {
+    cursor: pointer;
+}
+
+#minimize-btn:hover, #max-rest-btn:hover {
+    background: #222;
+}
+
+#close-btn:hover {
+    background: red;
+}
+
+.dot {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.titlebar {
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+}
+
+.titlebar-button {
+    -webkit-app-region: no-drag;
+}
