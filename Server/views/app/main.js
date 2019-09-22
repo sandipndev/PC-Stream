@@ -20,12 +20,10 @@ document.getElementById('close-btn').addEventListener('click', () => {
 })
 
 document.getElementById('toggle-server-btn').addEventListener('click', () => {
-  console.log("b")
   ipcRenderer.send('toggle-server')
 })
 
 ipcRenderer.on('server-state', (_, state) => {
-  console.log("a")
   if (state === 'on') {
     document.getElementById('status-text').innerText = "ONLINE"
     document.getElementById('status-dot-1').style.color = "#17CC60" 

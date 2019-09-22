@@ -21,6 +21,7 @@
   "homepage": "https://github.com/triethyl/PC-Stream#readme",
   "dependencies": {
     "electron": "^6.0.1",
+    "express": "^4.17.1",
     "sqlite3": "https://github.com/mapbox/node-sqlite3/tarball/master"
   },
   "devDependencies": {

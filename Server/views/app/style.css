@@ -21,9 +21,13 @@ body {
 }
 
 header {
-    height: 34px;
-    padding-top: 2px;
+    height: 38px;
+    padding-top: 3px;
     background: #001011;
+}
+
+.window-title {
+    padding-top: 2px;
 }
 
 .full-width {
