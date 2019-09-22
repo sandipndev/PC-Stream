@@ -2,8 +2,6 @@ const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const url = require('url')
 
-// Express
-
 // Database
 const sqlite3 = require('sqlite3').verbose()
 var db = new sqlite3.Database('records.db')

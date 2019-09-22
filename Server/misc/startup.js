@@ -32,18 +32,16 @@ module.exports = function(db) {
 
         db.run(`CREATE TABLE IF NOT EXISTS "login_details" (
             "user_id"	INTEGER PRIMARY KEY,
-            "no_hours_content"	INTEGER,
             "no_logins"		INTEGER
         );`)
 
-        db.run(`CREATE TABLE IF NOT EXISTS "whats_streaming" (
+        db.run(`CREATE TABLE IF NOT EXISTS "watch_hist" (
             "user_id"	INTEGER PRIMARY KEY,
             "file_name"		TEXT,
-            "absolute_path"		TEXT,
-            "percent_watched"	INTEGER
+            "absolute_path"		TEXT
         );`)
 
-        db.run(`CREATE TABLE IF NOT EXISTS "ip_port_details" (
+        db.run(`CREATE TABLE IF NOT EXISTS "ip_port_misc_details" (
             "ip"	TEXT,
             "port"	TEXT
         );`)

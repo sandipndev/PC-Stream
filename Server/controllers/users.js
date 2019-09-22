@@ -53,9 +53,8 @@ exports.add_user = function(new_user) {
             JSON.stringify(new_user.dont_allow_these_dirs)
         ])
 
-        db.run(`INSERT INTO login_details(user_id, no_hours_content, no_logins)`, [
+        db.run(`INSERT INTO login_details(user_id, no_logins)`, [
             user_id,
-            0,
             0
         ])
     })
@@ -124,7 +123,7 @@ exports.delete_user = function(existing_user) {
         existing_user.user_id
     ])
 
-    db.run(`DELETE FROM whats_streaming WHERE user_id = ?`, [
+    db.run(`DELETE FROM watch_hist WHERE user_id = ?`, [
         existing_user.user_id
     ])
 }
