@@ -1,7 +1,17 @@
+@font-face {
+    src: url("./Product\ Sans\ Regular.ttf");
+    font-family: 'Product Sans Regular';
+}
+
+@font-face {
+    src: url("./Product\ Sans\ Bold.ttf.ttf");
+    font-family: 'Product Sans Bold';
+}
+
 * {
     padding: 0px;
     margin: 0px;
-    font-family: 'Calibri';
+    font-family: 'Product Sans Regular';
 }
 
 html {
@@ -21,13 +31,13 @@ body {
 }
 
 header {
-    height: 38px;
-    padding-top: 3px;
+    height: 30px;
     background: #001011;
 }
 
 .window-title {
-    padding-top: 2px;
+    height: 24px;
+    width: 24px;
 }
 
 .full-width {
@@ -42,7 +52,7 @@ header {
 }
 
 .window-button {
-    padding: 4px 6px;
+    padding: 0px 6px;
 }
 
 .window-button:hover {
@@ -50,7 +60,7 @@ header {
 }
 
 #minimize-btn:hover, #max-rest-btn:hover {
-    background: #222;
+    background: #444;
 }
 
 #close-btn:hover {

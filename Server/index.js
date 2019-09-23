@@ -6,16 +6,18 @@ const url = require('url')
 const sqlite3 = require('sqlite3').verbose()
 var db = new sqlite3.Database('records.db')
 
+// Server
+const { toggleServer } = require('./server')
+
 let mainWindow
-let serverState = 0
 
 // --- ELECTRON APP --
 app.on("ready", ()=> {
     mainWindow = new BrowserWindow({
-        height: 800,
-        width: 1200,
+        height: 600,
+        width: 600,
         minHeight: 600,
-        minWidth: 1000,
+        minWidth: 600,
         show: false,
         frame: false,
         webPreferences: {
@@ -40,10 +42,6 @@ app.on('window-all-closed', ()=>{
 })
 
 ipcMain.on("toggle-server", () => {
-    if (serverState == 0) {
-        serverState = 1
-    } else {
-        serverState = 0
-    }
-    mainWindow.webContents.send("server-state", (serverState==1)?"on":"off")
+    let serverState = toggleServer(5400)
+    mainWindow.webContents.send("server-state", serverState?"on":"off")
 })
