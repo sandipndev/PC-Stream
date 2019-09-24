@@ -4,7 +4,7 @@
 }
 
 @font-face {
-    src: url("./Product\ Sans\ Bold.ttf.ttf");
+    src: url("./Product\ Sans\ Bold.ttf");
     font-family: 'Product Sans Bold';
 }
 
@@ -81,4 +81,8 @@ header {
 
 .titlebar-button {
     -webkit-app-region: no-drag;
+}
+
+.p-bold {
+    font-family: 'Product Sans Bold'
 }

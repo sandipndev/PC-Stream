@@ -15,7 +15,7 @@ let mainWindow
 app.on("ready", ()=> {
     mainWindow = new BrowserWindow({
         height: 600,
-        width: 600,
+        width: 800,
         minHeight: 600,
         minWidth: 600,
         show: false,
