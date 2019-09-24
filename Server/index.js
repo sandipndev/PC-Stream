@@ -7,7 +7,7 @@ const sqlite3 = require('sqlite3').verbose()
 var db = new sqlite3.Database('records.db')
 
 // Server
-const { toggleServer } = require('./server')
+const { toggleServer } = require('./controllers/server')
 
 let mainWindow
 
