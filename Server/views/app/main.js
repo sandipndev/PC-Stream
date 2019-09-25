@@ -40,3 +40,10 @@ ipcRenderer.on('server-state', (_, state) => {
     document.getElementById('toggle-server-btn').classList.add("btn-dark")
   }
 })
+
+document.getElementById('hamburger-ico').addEventListener('click', (event)=> {
+  ipcRenderer.send('display-app-menu', {
+    x: event.x,
+    y: event.y
+  })
+})
