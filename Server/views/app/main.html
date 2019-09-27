@@ -41,6 +41,19 @@
                     <span class="h2 pl-3" id="status-dot-2" style="color: #bbb;">&#9679;</span>
                     <span class="h2 p-bold pl-3" id="status-text">OFFLINE</span>
                 </div>
+                <div class="row mb-3 mt-2" id="online-shower" style="display: none;">
+                    <div class="float-right pr-4" id="qr-code"></div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-3 text-black font-weight-bold">IP Addr:</div>
+                            <div class="col-sm-2 text-primary font-weight-bold" id="ip-placeholder"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-black font-weight-bold">Port:</div>
+                            <div class="col-sm-2 text-primary font-weight-bold" id="port-placeholder"></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row pl-3">
                     <button class="btn btn-primary btn-lg btn-dark" id="toggle-server-btn">Start Server</button>
                 </div>
@@ -123,6 +136,7 @@
         </div>
     </div>
 
+    <script src="./qrcode.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="main.js"></script>
 </body>

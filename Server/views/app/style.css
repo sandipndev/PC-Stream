@@ -28,6 +28,8 @@ body {
     margin: 0;
     background-repeat: no-repeat;
     background-attachment: fixed;
+
+    -webkit-user-select: none;
 }
 
 body::-webkit-scrollbar { 

@@ -48,7 +48,11 @@ app.on('window-all-closed', ()=>{
 
 ipcMain.on("toggle-server", () => {
     let serverState = toggleServer(5400)
-    mainWindow.webContents.send("server-state", serverState?"on":"off")
+    if (serverState[0]) {
+        mainWindow.webContents.send("server-state", "on", serverState[1], serverState[2])
+    } else {
+        mainWindow.webContents.send("server-state", "off")
+    }
 })
 
 ipcMain.on('display-app-menu', (_, arg) => {

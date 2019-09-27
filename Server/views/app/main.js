@@ -23,7 +23,7 @@ document.getElementById('toggle-server-btn').addEventListener('click', () => {
   ipcRenderer.send('toggle-server')
 })
 
-ipcRenderer.on('server-state', (_, state) => {
+ipcRenderer.on('server-state', (_, state, ip, port) => {
   if (state === 'on') {
     document.getElementById('status-text').innerText = "ONLINE"
     document.getElementById('status-dot-1').style.color = "#17CC60" 
@@ -31,6 +31,18 @@ ipcRenderer.on('server-state', (_, state) => {
     document.getElementById('toggle-server-btn').innerText = "Stop Server"
     document.getElementById('toggle-server-btn').classList.remove("btn-dark")
     document.getElementById('toggle-server-btn').classList.add("btn-success")
+    document.getElementById('ip-placeholder').innerText = ip
+    document.getElementById('port-placeholder').innerText = port
+    document.getElementById("qr-code").innerHTML = ""
+    new QRCode(document.getElementById("qr-code"), {
+      text: `${ip}:${port}`,
+      width: 128,
+      height: 128,
+      colorDark : "#000000",
+      colorLight : "#ffffff",
+      correctLevel : QRCode.CorrectLevel.H
+    });
+    document.getElementById('online-shower').style.display = "block"
   } else {
     document.getElementById('status-text').innerText = "OFFLINE"
     document.getElementById('status-dot-1').style.color = "#bbb"
@@ -38,6 +50,7 @@ ipcRenderer.on('server-state', (_, state) => {
     document.getElementById('toggle-server-btn').innerText = "Start Server"
     document.getElementById('toggle-server-btn').classList.remove("btn-success")
     document.getElementById('toggle-server-btn').classList.add("btn-dark")
+    document.getElementById('online-shower').style.display = "none"
   }
 })
 

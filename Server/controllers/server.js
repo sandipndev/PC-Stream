@@ -1,5 +1,8 @@
+const BodyParser = require('body-parser');
 const express = require('express')
 const exapp = express()
+
+exapp.ip = require('ip').address();
 
 const EventEmitter = require('events')
 const emitter = new EventEmitter()
@@ -58,13 +61,14 @@ exports.get_server_state = () => {
 }
 
 exports.toggleServer = function (port_no) {
+    exapp.port = port_no
     if (serverState === 0) {
         server = exapp.listen(port_no)
         serverState = 1
-        return true
+        return [ true, exapp.ip, exapp.port ]
     } else {
         server.close()
         serverState = 0
-        return false
+        return [ false ]
     }
 }
