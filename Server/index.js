@@ -16,10 +16,10 @@ const { menu_template, menu_click_emitter } = require('./misc/app_menu')
 // --- ELECTRON APP --
 app.on("ready", ()=> {
     mainWindow = new BrowserWindow({
-        height: 600,
+        height: 620,
         width: 800,
-        minHeight: 600,
-        minWidth: 600,
+        minHeight: 620,
+        minWidth: 800,
         show: false,
         frame: false,
         webPreferences: {

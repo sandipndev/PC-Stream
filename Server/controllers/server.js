@@ -59,12 +59,11 @@ exports.get_server_state = () => {
 
 exports.toggleServer = function (port_no) {
     if (serverState === 0) {
-        server = exapp.listen(port_no, ()=>console.log(`Server running on port ${port_no}`))
+        server = exapp.listen(port_no)
         serverState = 1
         return true
     } else {
         server.close()
-        console.log(`Server stopped`)
         serverState = 0
         return false
     }
