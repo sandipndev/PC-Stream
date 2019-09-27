@@ -41,9 +41,17 @@ ipcRenderer.on('server-state', (_, state) => {
   }
 })
 
-document.getElementById('hamburger-ico').addEventListener('click', (event)=> {
+document.getElementById('hamburger-ico').addEventListener('click', (_) => {
   ipcRenderer.send('display-app-menu', {
-    x: event.x,
-    y: event.y
+    x: document.getElementById('hamburger-ico').getBoundingClientRect().left,
+    y: document.getElementById('hamburger-ico').getBoundingClientRect().bottom
   })
+})
+
+ipcRenderer.on("menu-click", (_, event) => {
+  if (event === "toggle-server") {
+    ipcRenderer.send("toggle-server")
+  } else if (event === "show-uac") {
+    console.log("show uac")
+  }
 })

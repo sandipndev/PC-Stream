@@ -11,7 +11,7 @@ const { toggleServer } = require('./controllers/server')
 
 // Other vars
 let mainWindow
-const { menu_template } = require('./misc/app_menu')
+const { menu_template, menu_click_emitter } = require('./misc/app_menu')
 
 // --- ELECTRON APP --
 app.on("ready", ()=> {
@@ -53,4 +53,8 @@ ipcMain.on('display-app-menu', (_, arg) => {
     if(mainWindow) {
       appMenu.popup(mainWindow, arg.x, arg.y)
     }
+})
+
+menu_click_emitter.on("menu-click", (event) => {
+    mainWindow.webContents.send("menu-click", event)
 })
