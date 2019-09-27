@@ -8,17 +8,22 @@ var db = new sqlite3.Database('records.db')
 
 // Server
 const { toggleServer, get_server_state } = require('./controllers/server')
+const { add_user } = require('./controllers/dbauth')
 
 // Other vars
 let mainWindow
 const { menu_template, menu_click_emitter } = require('./misc/app_menu')
 
+// Do dbs
+const startup_db = require('./misc/startup')
+startup_db(db)
+
 // --- ELECTRON APP --
 app.on("ready", ()=> {
     mainWindow = new BrowserWindow({
-        height: 620,
+        height: 640,
         width: 800,
-        minHeight: 620,
+        minHeight: 640,
         minWidth: 800,
         show: false,
         frame: false,
@@ -64,4 +69,8 @@ ipcMain.on('display-app-menu', (_, arg) => {
 
 menu_click_emitter.on("menu-click", (event) => {
     mainWindow.webContents.send("menu-click", event)
+})
+
+ipcMain.on("user:add", (_, new_user) => {
+    add_user(new_user)
 })

@@ -1,4 +1,4 @@
-// NewUser object: real_name, user_name, plaintext_password, allow_downloads, allow_rename, allow_deletions, dont_allow_these_dirs, picture_base64
+// NewUser object: real_name, user_name, plaintext_password, picture_base64
 
 // Database Connection
 const sqlite3 = require('sqlite3').verbose()
@@ -45,15 +45,15 @@ exports.add_user = function(new_user) {
             new_user.picture_base64
         ])
 
-        db.run(`INSERT INTO permissions(user_id, can_download, can_rename, folders_unallowed) VALUES (?, ?, ?, ?)`, [
+        db.run(`INSERT INTO permissions(user_id, can_download, can_rename, can_delete, folders_unallowed) VALUES (?, ?, ?, ?, ?)`, [
             user_id,
-            new_user.allow_downloads ? 1 : 0,
-            new_user.allow_rename ? 1 : 0,
-            new_user.allow_deletions ? 1 : 0,
-            JSON.stringify(new_user.dont_allow_these_dirs)
+            0,
+            0,
+            0,
+            JSON.stringify([])
         ])
 
-        db.run(`INSERT INTO login_details(user_id, no_logins)`, [
+        db.run(`INSERT INTO login_details(user_id, no_logins) VALUES (?, ?)`, [
             user_id,
             0
         ])

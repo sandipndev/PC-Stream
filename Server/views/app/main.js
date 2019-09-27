@@ -72,3 +72,37 @@ ipcRenderer.on("menu-click", (_, event) => {
     document.getElementById(event).style.display = 'block'
   }
 })
+
+
+let imageb64
+
+function readImg(e) {
+	if (this.files && this.files[0]) {
+		var FR= new FileReader();
+
+		FR.addEventListener("load", (e) => {
+			imageb64 = e.target.result;
+		});
+
+		FR.readAsDataURL(this.files[0]);
+	}
+}
+
+document.getElementById("picture-add").addEventListener("change", readImg);
+
+document.getElementById('add-btn-submit').addEventListener('click', () => {
+  var uname = document.getElementById('username-add').value
+  var rname = document.getElementById('realname-add').value
+  var pword = document.getElementById('password-add').value
+  if (uname && rname && pword && imageb64) {
+    var new_user = {
+      real_name: rname, 
+      user_name: uname, 
+      plaintext_password: pword, 
+      picture_base64: imageb64
+    }
+    ipcRenderer.send("user:add", new_user)
+  }
+})
+
+$('.toast').toast('show')
