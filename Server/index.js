@@ -8,7 +8,7 @@ var db = new sqlite3.Database('records.db')
 
 // Server
 const { toggleServer, get_server_state } = require('./controllers/server')
-const { add_user } = require('./controllers/dbauth')
+const { per_user, add_user } = require('./controllers/dbauth')
 
 // Other vars
 let mainWindow
@@ -55,8 +55,10 @@ ipcMain.on("toggle-server", () => {
     let serverState = toggleServer(5400)
     if (serverState[0]) {
         mainWindow.webContents.send("server-state", "on", serverState[1], serverState[2])
+        mainWindow.webContents.send("notif-trig", "Server online")
     } else {
         mainWindow.webContents.send("server-state", "off")
+        mainWindow.webContents.send("notif-trig", "Server offline")
     }
 })
 
@@ -71,6 +73,13 @@ menu_click_emitter.on("menu-click", (event) => {
     mainWindow.webContents.send("menu-click", event)
 })
 
+function uadd_check_conflict(db_row) {
+
+}
+
 ipcMain.on("user:add", (_, new_user) => {
+    // per_user(log)
+
     add_user(new_user)
+    mainWindow.webContents.send("notif-trig", `User ${new_user.real_name} added`)
 })

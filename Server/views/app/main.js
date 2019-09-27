@@ -73,7 +73,6 @@ ipcRenderer.on("menu-click", (_, event) => {
   }
 })
 
-
 let imageb64
 
 function readImg(e) {
@@ -102,7 +101,30 @@ document.getElementById('add-btn-submit').addEventListener('click', () => {
       picture_base64: imageb64
     }
     ipcRenderer.send("user:add", new_user)
+    document.getElementById('username-add').value = ""
+    document.getElementById('realname-add').value = ""
+    document.getElementById('password-add').value = ""
+    imageb64 = null
   }
 })
 
-$('.toast').toast('show')
+function pop_toast(msg, bg) { 
+  document.getElementById('toast').innerText = msg
+  document.getElementById('toast').style.display = "block"
+  document.getElementById('toast').classList.add("show-toast")
+  document.getElementById('toast').classList.add(bg)
+  setTimeout(()=>{
+    document.getElementById('toast').classList.remove("show-toast")
+    document.getElementById('toast').classList.add(bg)
+    document.getElementById('toast').style.display = "none"
+    document.getElementById('toast').innerText = ""
+  } , 3000)
+}
+
+ipcRenderer.on("toast-trig", (_, msg, bg) => {
+  pop_toast(msg, `bg-${bg}`)
+})
+
+ipcRenderer.on("notif-trig", (_, msg) => {
+  document.getElementById('notifs').innerText = msg
+})

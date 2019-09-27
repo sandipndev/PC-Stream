@@ -34,6 +34,8 @@
         </div>
     </header>
 
+    <div class="rounded text-white mt-3 mr-2 p-1 pl-3 pr-3 shadow" style="display: none;" id="toast"></div>
+
     <div class="container main-section mt-5 mb-5 all-sections" id="home-section">
         <div class="row">
             <div class="col-sm-12 bg-white shadow rounded pt-3 pb-3">
@@ -136,10 +138,16 @@
         </div>
     </div>
 
-    <footer class="container-fluid sticky "></footer>
+    <footer class="container-fluid sticky pb-2">
+        <div class="col-sm-12">
+            <span class="text-white">ⓘ</span>
+            <span class="text-white ml-2" id="notifs">Turn on the server</span>
+        </div>
+    </footer>
 
     <script src="./qrcode.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"></script>
     <script src="main.js"></script>
 </body>
 </html>

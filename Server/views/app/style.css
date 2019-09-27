@@ -47,6 +47,21 @@ footer {
     bottom: 0 !important;
 }
 
+#notifs {
+    font-size: 14px;
+}
+
+#toast {
+    position: absolute;
+    right: 20px;
+    z-index: 1;
+}
+
+.show-toast {
+    visibility: visible;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
 .window-title {
     height: 24px;
     width: 24px;
@@ -101,4 +116,14 @@ footer {
 
 .p-bold {
     font-family: 'Product Sans Bold'
+}
+
+@keyframes fadein {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeout {
+    from {opacity: 1;}
+    to {opacity: 0;}
 }

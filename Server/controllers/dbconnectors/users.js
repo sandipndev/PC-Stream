@@ -16,6 +16,14 @@ exports._get_user_id = function (user_name) {
     db.close()
 }
 
+exports.per_user = function (param_func) {
+    var db = new sqlite3.Database('records.db')
+
+    db.all('SELECT user_name FROM account', (_, row) => {
+        param_func(row)
+    })
+}
+
 exports.add_user = function(new_user) {
 
     var db = new sqlite3.Database('records.db')
