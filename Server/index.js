@@ -11,7 +11,6 @@ const { toggleServer } = require('./controllers/server')
 
 // Other vars
 let mainWindow
-const { menu_template } = require('./misc/app_menu')
 
 // --- ELECTRON APP --
 app.on("ready", ()=> {
@@ -46,11 +45,4 @@ app.on('window-all-closed', ()=>{
 ipcMain.on("toggle-server", () => {
     let serverState = toggleServer(5400)
     mainWindow.webContents.send("server-state", serverState?"on":"off")
-})
-
-ipcMain.on('display-app-menu', (_, arg) => {
-    const appMenu = Menu.buildFromTemplate(menu_template)
-    if(mainWindow) {
-      appMenu.popup(mainWindow, arg.x, arg.y)
-    }
 })
