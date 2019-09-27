@@ -42,5 +42,8 @@ ipcRenderer.on('server-state', (_, state) => {
 })
 
 document.getElementById('hamburger-ico').addEventListener('click', (event)=> {
-  console.log("Ham clicked")
+  ipcRenderer.send('display-app-menu', {
+    x: event.x,
+    y: event.y
+  })
 })
