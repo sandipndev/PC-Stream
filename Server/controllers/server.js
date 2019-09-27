@@ -53,6 +53,10 @@ exapp.get('/stream', (req, res) => {
     stream(req, res, emitter)
 })
 
+exports.get_server_state = () => {
+    return serverState?"on":"off"
+}
+
 exports.toggleServer = function (port_no) {
     if (serverState === 0) {
         server = exapp.listen(port_no, ()=>console.log(`Server running on port ${port_no}`))

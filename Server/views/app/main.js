@@ -51,7 +51,11 @@ document.getElementById('hamburger-ico').addEventListener('click', (_) => {
 ipcRenderer.on("menu-click", (_, event) => {
   if (event === "toggle-server") {
     ipcRenderer.send("toggle-server")
-  } else if (event === "show-uac") {
-    console.log("show uac")
+  } else {
+    var elements = document.getElementsByClassName('all-sections')
+    for(var i=0; i<elements.length; i++) { 
+      elements[i].style.display='none'
+    }
+    document.getElementById(event).style.display = 'block'
   }
 })

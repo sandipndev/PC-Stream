@@ -7,7 +7,7 @@ const sqlite3 = require('sqlite3').verbose()
 var db = new sqlite3.Database('records.db')
 
 // Server
-const { toggleServer } = require('./controllers/server')
+const { toggleServer, get_server_state } = require('./controllers/server')
 
 // Other vars
 let mainWindow
@@ -39,6 +39,9 @@ app.on("ready", ()=> {
 })
 
 app.on('window-all-closed', ()=>{ 
+    if (get_server_state() === "on") {
+        toggleServer(5400)
+    }
     app.quit()
     db.close()
 })
