@@ -105,6 +105,7 @@ document.getElementById('add-btn-submit').addEventListener('click', () => {
     document.getElementById('username-add').value = ""
     document.getElementById('realname-add').value = ""
     document.getElementById('password-add').value = ""
+    document.getElementById("picture-add").value = document.getElementById("picture-add").defaultValue
     imageb64 = null
   }
 })
@@ -113,10 +114,17 @@ function pop_toast(msg, bg) {
   document.getElementById('toast').innerText = msg
   document.getElementById('toast').style.display = "block"
   document.getElementById('toast').classList.add("show-toast")
+
+  var x = document.getElementById('toast').classList
+  for (var i=0; i<x.length; i++) {
+    if (x[i].match(/bg-/g) !== null) {
+      x.remove(x[i])
+    }
+  }
+
   document.getElementById('toast').classList.add(bg)
   setTimeout(()=>{
     document.getElementById('toast').classList.remove("show-toast")
-    document.getElementById('toast').classList.add(bg)
     document.getElementById('toast').style.display = "none"
     document.getElementById('toast').innerText = ""
   } , 3000)
@@ -130,9 +138,25 @@ ipcRenderer.on("notif-trig", (_, msg) => {
   document.getElementById('notifs').innerText = msg
 })
 
+document.getElementById("username-choose-uperms").addEventListener("change", ()=>{
+  var e = document.getElementById("username-choose-uperms")
+  let strSelected = e.options[e.selectedIndex].text
+  
+  if (strSelected !== "Select One") {
+    console.log(strSelected)
+  }
+
+})
+
 ipcRenderer.on("listupdate:user", (_, rows) => {
   var u1 = document.getElementById("username-choose-uperms")
   u1.innerHTML = ""
+  var opt = document.createElement("option")
+  opt.selected = false
+  opt.disabled = false
+  opt.innerText = "Select One"
+  u1.appendChild(opt)
+
   for (var i=0; i<rows.length; i++) {
     var opt = document.createElement("option")
     opt.innerText = rows[i].user_name
