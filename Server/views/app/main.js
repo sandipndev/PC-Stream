@@ -142,8 +142,8 @@ document.getElementById("username-choose-uperms").addEventListener("change", ()=
   var e = document.getElementById("username-choose-uperms")
   let strSelected = e.options[e.selectedIndex].text
   
-  if (strSelected !== "Select One") {
-    console.log(strSelected)
+  if (strSelected !== "Select One" || e.selectedIndex !== 0) {
+    ipcRenderer.send("displayPerms:user", strSelected)
   }
 
 })
@@ -162,4 +162,8 @@ ipcRenderer.on("listupdate:user", (_, rows) => {
     opt.innerText = rows[i].user_name
     u1.appendChild(opt)
   }
+})
+
+ipcRenderer.on("user:displayPerms", (_, rows) => {
+  console.log(rows)
 })

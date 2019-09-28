@@ -32,6 +32,8 @@ exports.check_uname_conflict_and_add = function (new_user, emitter) {
         emitter.send("notif-trig", `Profile ${new_user.real_name} added`)
         emitter.send("toast-trig", `User ${new_user.user_name} added`, "success")
     })
+
+    db.close()
 }
 
 exports.user_list_update = function (emitter) { 
@@ -40,6 +42,8 @@ exports.user_list_update = function (emitter) {
     db.all('SELECT user_name FROM account', (_, row) => {
         emitter.send("listupdate:user", row)
     })
+
+    db.close()
 }
 
 exports.add_user = function(new_user) {
@@ -83,6 +87,16 @@ exports.add_user = function(new_user) {
             user_id,
             0
         ])
+    })
+
+    db.close()
+}
+
+exports.display_user_perms = function (uname, emitter) { 
+    var db = new sqlite3.Database('records.db')
+
+    db.all('SELECT can_download, can_rename, can_delete, folders_unallowed FROM account JOIN permissions ON account.user_id = permissions.user_id WHERE user_name = ?', uname, (_, row) => {
+        emitter.send("user:displayPerms", row)
     })
 
     db.close()

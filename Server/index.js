@@ -8,7 +8,7 @@ var db = new sqlite3.Database('records.db')
 
 // Server
 const { toggleServer, get_server_state } = require('./controllers/server')
-const { check_uname_conflict_and_add, user_list_update } = require('./controllers/dbauth')
+const { check_uname_conflict_and_add, user_list_update, display_user_perms } = require('./controllers/dbauth')
 
 // Other vars
 let mainWindow
@@ -80,4 +80,8 @@ ipcMain.on("user:add", (_, new_user) => {
 
 ipcMain.on("user:listUpdate", ()=> {
     user_list_update(mainWindow.webContents)
+})
+
+ipcMain.on("displayPerms:user", (_, uname) => {
+    display_user_perms(uname, mainWindow.webContents)
 })
