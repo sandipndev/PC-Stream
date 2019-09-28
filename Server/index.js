@@ -8,7 +8,7 @@ var db = new sqlite3.Database('records.db')
 
 // Server
 const { toggleServer, get_server_state } = require('./controllers/server')
-const { check_uname_conflict_and_add, add_user } = require('./controllers/dbauth')
+const { check_uname_conflict_and_add, user_list_update } = require('./controllers/dbauth')
 
 // Other vars
 let mainWindow
@@ -74,7 +74,10 @@ menu_click_emitter.on("menu-click", (event) => {
 })
 
 ipcMain.on("user:add", (_, new_user) => {
-
     check_uname_conflict_and_add(new_user, mainWindow.webContents)
     mainWindow.webContents.send("menu-click", "home-section")
+})
+
+ipcMain.on("user:listUpdate", ()=> {
+    user_list_update(mainWindow.webContents)
 })

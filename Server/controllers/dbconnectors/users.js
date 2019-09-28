@@ -34,6 +34,14 @@ exports.check_uname_conflict_and_add = function (new_user, emitter) {
     })
 }
 
+exports.user_list_update = function (emitter) { 
+    var db = new sqlite3.Database('records.db')
+
+    db.all('SELECT user_name FROM account', (_, row) => {
+        emitter.send("listupdate:user", row)
+    })
+}
+
 exports.add_user = function(new_user) {
 
     var db = new sqlite3.Database('records.db')

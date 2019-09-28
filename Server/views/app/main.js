@@ -70,6 +70,7 @@ ipcRenderer.on("menu-click", (_, event) => {
       elements[i].style.display='none'
     }
     document.getElementById(event).style.display = 'block'
+    ipcRenderer.send("user:listUpdate")
   }
 })
 
@@ -127,4 +128,14 @@ ipcRenderer.on("toast-trig", (_, msg, bg) => {
 
 ipcRenderer.on("notif-trig", (_, msg) => {
   document.getElementById('notifs').innerText = msg
+})
+
+ipcRenderer.on("listupdate:user", (_, rows) => {
+  var u1 = document.getElementById("username-choose-uperms")
+  u1.innerHTML = ""
+  for (var i=0; i<rows.length; i++) {
+    var opt = document.createElement("option")
+    opt.innerText = rows[i].user_name
+    u1.appendChild(opt)
+  }
 })

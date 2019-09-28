@@ -1,3 +1,3 @@
-const { add_user, check_uname_conflict_and_add } = require('./dbconnectors/users')
-exports.add_user = add_user
+const { check_uname_conflict_and_add, user_list_update } = require('./dbconnectors/users')
 exports.check_uname_conflict_and_add = check_uname_conflict_and_add
+exports.user_list_update = user_list_update
