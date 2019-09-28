@@ -8,7 +8,7 @@ var db = new sqlite3.Database('records.db')
 
 // Server
 const { toggleServer, get_server_state } = require('./controllers/server')
-const { per_user, add_user } = require('./controllers/dbauth')
+const { check_uname_conflict_and_add, add_user } = require('./controllers/dbauth')
 
 // Other vars
 let mainWindow
@@ -73,13 +73,8 @@ menu_click_emitter.on("menu-click", (event) => {
     mainWindow.webContents.send("menu-click", event)
 })
 
-function uadd_check_conflict(db_row) {
-
-}
-
 ipcMain.on("user:add", (_, new_user) => {
-    // per_user(log)
 
-    add_user(new_user)
-    mainWindow.webContents.send("notif-trig", `User ${new_user.real_name} added`)
+    check_uname_conflict_and_add(new_user, mainWindow.webContents)
+    mainWindow.webContents.send("menu-click", "home-section")
 })

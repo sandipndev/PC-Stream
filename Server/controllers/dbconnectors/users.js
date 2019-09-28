@@ -16,11 +16,21 @@ exports._get_user_id = function (user_name) {
     db.close()
 }
 
-exports.per_user = function (param_func) {
+exports.check_uname_conflict_and_add = function (new_user, emitter) {
     var db = new sqlite3.Database('records.db')
 
     db.all('SELECT user_name FROM account', (_, row) => {
-        param_func(row)
+        
+        for (var i=0; i<row.length; i++) {
+            if (row[i].user_name === new_user.user_name) {
+                emitter.send("toast-trig", `Username ${new_user.user_name} already exists!`, "danger")
+                emitter.send("notif-trig", `Profile ${new_user.real_name} not added due to username conflict`)
+                return
+            }
+        }
+        exports.add_user(new_user)
+        emitter.send("notif-trig", `Profile ${new_user.real_name} added`)
+        emitter.send("toast-trig", `User ${new_user.user_name} added`, "success")
     })
 }
 
