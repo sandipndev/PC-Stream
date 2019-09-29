@@ -347,6 +347,8 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
       if (uname !== "Select One") {
         ipcRenderer.send("user:del", uname)
+      } else if (uname === "Select One") {
+        pop_toast("First select an user", "bg-info")
       }
 
     })

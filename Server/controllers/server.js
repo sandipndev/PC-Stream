@@ -1,8 +1,18 @@
-const BodyParser = require('body-parser');
+const BodyParser = require('body-parser')
 const express = require('express')
 const exapp = express()
 
-exapp.ip = require('ip').address();
+// To jsonify every request
+exapp.use(BodyParser.json());
+exapp.use(BodyParser.urlencoded({ extended: true }));
+exapp.use(function (err, _, res, _) {
+	if (err) {
+		res.status(500).send('JSON_INCORRECT')
+		return
+	}
+})
+
+exapp.ip = require('ip').address()
 
 const EventEmitter = require('events')
 const emitter = new EventEmitter()
@@ -72,3 +82,5 @@ exports.toggleServer = function (port_no) {
         return [ false ]
     }
 }
+
+exports.server_emitter = emitter

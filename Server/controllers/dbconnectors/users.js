@@ -182,7 +182,7 @@ exports.delete_user = function(existing_user, emitter) {
         ])
 
         emitter.send("user:delDone")
-        emitter.send("toast-trig", `User ${existing_user.user_name} deleted`, "success")
+        emitter.send("toast-trig", `User ${existing_user.user_name} deleted`, "danger")
         emitter.send("notif-trig", `Profile for ${row[0].real_name} deleted successfully`)
     })
 }

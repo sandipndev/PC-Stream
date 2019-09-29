@@ -14,10 +14,11 @@ const { check_uname_conflict_and_add, user_list_update, display_user_perms, edit
 // Other vars
 let mainWindow
 const { menu_template, menu_click_emitter } = require('./misc/app_menu')
+const port = 5456
 
 // Do dbs
 const startup_db = require('./misc/startup')
-startup_db(db)
+startup_db()
 
 // --- ELECTRON APP --
 app.on("ready", ()=> {
@@ -46,7 +47,7 @@ app.on("ready", ()=> {
 
 function turn_off () { 
     if (get_server_state() === "on") {
-        toggleServer(5400)
+        toggleServer(port)
     }
     app.quit()
     db.close()
@@ -57,7 +58,7 @@ app.on('window-all-closed', turn_off )
 // Event triggers
 
 ipcMain.on("toggle-server", () => {
-    let serverState = toggleServer(5400)
+    let serverState = toggleServer(port)
     if (serverState[0]) {
         mainWindow.webContents.send("server-state", "on", serverState[1], serverState[2])
         mainWindow.webContents.send("notif-trig", "Server online")

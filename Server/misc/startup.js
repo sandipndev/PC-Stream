@@ -1,6 +1,9 @@
 // To create databases
+const sqlite3 = require('sqlite3').verbose()
 
-module.exports = function(db) {
+module.exports = function() {
+    var db = new sqlite3.Database('records.db')
+
     db.serialize(()=> {
         db.run(`CREATE TABLE IF NOT EXISTS "account" (
             "user_id"	INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -46,4 +49,6 @@ module.exports = function(db) {
             "port"	TEXT
         );`)
     })
+
+    db.close()
 }
