@@ -12,6 +12,6 @@ module.exports.menu_template = [
          {  label: 'Remove User',  click() { menu_click_emitter.emit("menu-click", "del-user-section") } },
      ] },
     {label: 'About'},
-    {label: 'Exit'}
+    {label: 'Exit', click() { menu_click_emitter.emit("quit-menu") }}
 ]
 module.exports.menu_click_emitter = menu_click_emitter

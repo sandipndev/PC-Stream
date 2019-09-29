@@ -44,13 +44,15 @@ app.on("ready", ()=> {
     })
 })
 
-app.on('window-all-closed', ()=>{ 
+function turn_off () { 
     if (get_server_state() === "on") {
         toggleServer(5400)
     }
     app.quit()
     db.close()
-})
+}
+
+app.on('window-all-closed', turn_off )
 
 // Event triggers
 
@@ -106,3 +108,5 @@ ipcMain.on("user:changepw", (_, uname, newps) => {
 ipcMain.on("user:del", (_, uname) => {
     delete_user({user_name: uname}, mainWindow.webContents)
 })
+
+menu_click_emitter.on("quit-menu", ()=>{ turn_off() })
