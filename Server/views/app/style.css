@@ -127,3 +127,9 @@ footer {
     from {opacity: 1;}
     to {opacity: 0;}
 }
+
+.close-icon:hover {
+    cursor: pointer;
+    color: white;
+    background: red;
+}

@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain, Menu} = require('electron')
+const {app, BrowserWindow, ipcMain, Menu, dialog} = require('electron')
 const path = require('path')
 const url = require('url')
 
@@ -84,4 +84,10 @@ ipcMain.on("user:listUpdate", ()=> {
 
 ipcMain.on("displayPerms:user", (_, uname) => {
     display_user_perms(uname, mainWindow.webContents)
+})
+
+ipcMain.on("open:folder", () => {
+    dialog.showOpenDialog(mainWindow, {
+        properties: ['openDirectory']
+    }, path => mainWindow.webContents.send("folder:open", path))
 })
