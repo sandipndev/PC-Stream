@@ -8,7 +8,7 @@ module.exports.menu_template = [
      submenu: [
          {  label: 'Add User',  click() { menu_click_emitter.emit("menu-click", "add-user-section") } },
          {  label: 'User Permissions',  click() { menu_click_emitter.emit("menu-click", "user-perms-section") } },
-         {  label: 'Change Password',  click() { menu_click_emitter.emit("menu-click", "change-pw-section") } },
+         {  label: 'Change Password',  click() { menu_click_emitter.emit("menu-click", "edit-pw-section") } },
          {  label: 'Remove User',  click() { menu_click_emitter.emit("menu-click", "del-user-section") } },
      ] },
     {label: 'About'},

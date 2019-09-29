@@ -150,8 +150,8 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
   })
 
-  ipcRenderer.on("listupdate:user", (_, rows) => {
-    var u1 = document.getElementById("username-choose-uperms")
+  function updateuserlist(id, rows) {
+    var u1 = document.getElementById(id)
     u1.innerHTML = ""
     var opt = document.createElement("option")
     opt.selected = false
@@ -164,6 +164,11 @@ document.addEventListener("DOMContentLoaded", ()=> {
       opt.innerText = rows[i].user_name
       u1.appendChild(opt)
     }
+  }
+
+  ipcRenderer.on("listupdate:user", (_, rows) => {
+    updateuserlist("username-choose-uperms", rows)
+    updateuserlist("username-choose-editpw", rows)
   })
 
   var unallFolders = []
@@ -269,11 +274,14 @@ document.addEventListener("DOMContentLoaded", ()=> {
   })
 
   ipcRenderer.on("folder:open", (_, path) => {
-    if (path[0]) {
+    if (unallFolders.indexOf(path[0]) == -1) {
       unallFolders.push(path[0])
       updateUnallowedDirs()
+    } else {
+      pop_toast("Directory already exists", "bg-warning")
+    }   
     }
-  })
+  )
 
   document.getElementById("update-perms-final-btn").addEventListener("click", ()=>{
     let data = {}
@@ -305,5 +313,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     
     ipcRenderer.send("perms:updated", data)
   })
+
+
 
 })

@@ -8,7 +8,7 @@ var db = new sqlite3.Database('records.db')
 
 // Server
 const { toggleServer, get_server_state } = require('./controllers/server')
-const { check_uname_conflict_and_add, user_list_update, display_user_perms, edit_user_perms } = require('./controllers/dbauth')
+const { check_uname_conflict_and_add, user_list_update, display_user_perms, edit_user_perms, edit_user_password } = require('./controllers/dbauth')
 
 // Other vars
 let mainWindow
