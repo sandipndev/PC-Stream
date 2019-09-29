@@ -1,8 +1,9 @@
+const { auth } = require("../controllers/dbconnectors/apiconnect")
+
 module.exports = function ( req, res, emitter ) {
     
-    if(req.body["username"] && req.body["password"] && typeof req.body["username"] == "string" && typeof req.body["password"] == "string") {
-        console.log(req.body["username"], req.body["password"])
-        res.sendStatus(200)
+    if(req.body["username"] && req.body["password"] && typeof req.body["username"] === "string" && typeof req.body["password"] === "string") {
+        auth(req.body["username"], req.body["password"], res, emitter)
     } else {
         res.sendStatus(400)
     }

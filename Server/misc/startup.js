@@ -20,6 +20,8 @@ module.exports = function() {
             "current_session_last_update_timestamp"		NUMERIC
         );`)
 
+        db.run(`DELETE FROM "sessions"`)
+
         db.run(`CREATE TABLE IF NOT EXISTS "user_pictures" (
             "user_id" 	INTEGER PRIMARY KEY,
             "profile_picture"	TEXT
