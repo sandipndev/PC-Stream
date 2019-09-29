@@ -95,3 +95,7 @@ ipcMain.on("open:folder", () => {
 ipcMain.on("perms:updated", (_, data)=> {
     edit_user_perms(data, mainWindow.webContents)
 })
+
+ipcMain.on("user:changepw", (_, uname, newps) => {
+    edit_user_password({plaintext_password: newps, user_name: uname}, mainWindow.webContents)
+})

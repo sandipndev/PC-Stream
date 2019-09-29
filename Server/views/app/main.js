@@ -314,6 +314,18 @@ document.addEventListener("DOMContentLoaded", ()=> {
     ipcRenderer.send("perms:updated", data)
   })
 
+  document.getElementById("username-choose-editpw").addEventListener("change", ()=>{
+    
+    document.getElementById("edit-pw-of").style.display = "block"
+    document.getElementById("edited-pw-btn").addEventListener("click", ()=> {
+      var e = document.getElementById("username-choose-editpw")
+      let uname = e.options[e.selectedIndex].text
 
+      let ps = document.getElementById("edited-pw").value
 
+      if (ps) {
+        ipcRenderer.send("user:changepw", uname, ps)
+      }
+    })
+  })
 })

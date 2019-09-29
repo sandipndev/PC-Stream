@@ -134,15 +134,15 @@ exports.edit_user_password = function(existing_user_changes, emitter) {
     const full_password = existing_user_changes.plaintext_password + salt
     const hashed_password = createHash('sha256').update(full_password, 'utf8').digest('hex')
 
-    db.all(`SELECT user_id, real_name FROM account WHERE user_name = ?`, existing_user_changes.user_name, (row) => {
-        
+    db.all(`SELECT user_id, real_name FROM account WHERE user_name = ?`, existing_user_changes.user_name, (_, row) => {
+
         db.run(`UPDATE account SET salt = ?, hashed_password = ? WHERE user_id = ?`, [
             salt,
             hashed_password,
             row[0].user_id
         ])
 
-        emitter.send("toast-trig", `User ${existing_user_changes.user_name}'s password updated`)
+        emitter.send("toast-trig", `User ${existing_user_changes.user_name}'s password updated`, "info")
         emitter.send("notif-trig", `Password for ${row[0].real_name} updated`)
 
     })
