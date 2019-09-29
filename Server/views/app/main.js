@@ -166,11 +166,47 @@ document.addEventListener("DOMContentLoaded", ()=> {
     }
   })
 
-  ipcRenderer.on("user:displayPerms", (_, rows) => {
-    console.log(rows)
+  var unallFolders = []
+
+  ipcRenderer.on("user:displayPerms", (_, rows, uname) => {
+    unallFolders = []
+    data = rows[0]
+    document.getElementById("uname-chosen-pms").innerText = uname
+    if (data.can_download === 1) {
+      document.getElementById("down-yes-pms").click()
+    } else {
+      document.getElementById("down-no-pms").click()
+    }
+    if (data.can_rename === 1) {
+      document.getElementById("rnm-yes-pms").click()
+    } else {
+      document.getElementById("rnm-no-pms").click()
+    }
+    if (data.can_delete === 1) {
+      document.getElementById("del-yes-pms").click()
+    } else {
+      document.getElementById("del-no-pms").click()
+    }
+
+    unallFolders = JSON.parse(data.folders_unallowed)
+
+    updateUnallowedDirs()
+
+    document.getElementById("username-perms-show-container").style.display = "block"
+
   })
 
+  function updateUnallowedDirs() { 
+    deleteUnallowedDirs()
+
+    for (var i=0; i<unallFolders.length; i++) {
+      addUnallowedDirectory(unallFolders[i])
+    }
+
+  }
+
   function addUnallowedDirectory(dirname) {
+
     let d1 = document.createElement("div")
     d1.classList.add("col-sm-10")
     d1.classList.add("text-break")
@@ -181,6 +217,15 @@ document.addEventListener("DOMContentLoaded", ()=> {
     d2.classList.add("close-icon")
     d2.classList.add("text-center")
     d2.innerText = "✖"
+    d2.addEventListener("click", ()=> {
+
+      var index = unallFolders.indexOf(dirname)
+      if (index > -1) {
+        unallFolders.splice(index, 1)
+      }
+
+      updateUnallowedDirs()
+    })
 
     let d3 = document.createElement("div")
     d3.classList.add("row")
@@ -224,12 +269,41 @@ document.addEventListener("DOMContentLoaded", ()=> {
   })
 
   ipcRenderer.on("folder:open", (_, path) => {
-    if (path[0])
-      addUnallowedDirectory(path[0])
+    if (path[0]) {
+      unallFolders.push(path[0])
+      updateUnallowedDirs()
+    }
   })
 
   document.getElementById("update-perms-final-btn").addEventListener("click", ()=>{
-    deleteUnallowedDirs()
+    let data = {}
+
+    let d = document.getElementsByName("down-pms")
+    for (var i=0; i<d.length; i++) {
+      if (d[i].checked) {
+        data.can_download = (d[i].value === "Yes") ? 1 : 0
+      }
+    }
+    
+    d = document.getElementsByName("rnm-pms")
+    for (var i=0; i<d.length; i++) {
+      if (d[i].checked) {
+        data.can_rename = (d[i].value === "Yes") ? 1 : 0
+      }
+    }
+
+    d = document.getElementsByName("del-pms")
+    for (var i=0; i<d.length; i++) {
+      if (d[i].checked) {
+        data.can_delete = (d[i].value === "Yes") ? 1 : 0
+      }
+    }
+
+    data.folders_unallowed = JSON.stringify(unallFolders)
+
+    data.user_name = document.getElementById("uname-chosen-pms").innerText
+    
+    ipcRenderer.send("perms:updated", data)
   })
 
 })

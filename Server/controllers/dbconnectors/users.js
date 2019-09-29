@@ -24,12 +24,12 @@ exports.check_uname_conflict_and_add = function (new_user, emitter) {
         for (var i=0; i<row.length; i++) {
             if (row[i].user_name === new_user.user_name) {
                 emitter.send("toast-trig", `Username ${new_user.user_name} already exists!`, "danger")
-                emitter.send("notif-trig", `Profile ${new_user.real_name} not added due to username conflict`)
+                emitter.send("notif-trig", `Profile for ${new_user.real_name} not added due to username conflict`)
                 return
             }
         }
         exports.add_user(new_user)
-        emitter.send("notif-trig", `Profile ${new_user.real_name} added`)
+        emitter.send("notif-trig", `Profile for ${new_user.real_name} added`)
         emitter.send("toast-trig", `User ${new_user.user_name} added`, "success")
     })
 
@@ -96,24 +96,29 @@ exports.display_user_perms = function (uname, emitter) {
     var db = new sqlite3.Database('records.db')
 
     db.all('SELECT can_download, can_rename, can_delete, folders_unallowed FROM account JOIN permissions ON account.user_id = permissions.user_id WHERE user_name = ?', uname, (_, row) => {
-        emitter.send("user:displayPerms", row)
+        emitter.send("user:displayPerms", row, uname)
     })
 
     db.close()
 }
 
-exports.edit_user_perms = function(existing_user_changes) {
+exports.edit_user_perms = function(existing_user_changes, emitter) {
 
     var db = new sqlite3.Database('records.db')
 
     // Update permissions
-    db.run(`UPDATE permissions SET can_download = ?, can_rename = ?, can_delete = ?, folders_unallowed = ? WHERE user_id = ?`, [
-        existing_user_changes.allow_downloads ? 1 : 0,
-        existing_user_changes.allow_rename ? 1 : 0,
-        existing_user_changes.allow_deletions ? 1 : 0,
-        JSON.stringify(existing_user_changes.dont_allow_these_dirs),
-        existing_user_changes.user_id
-    ])
+    db.all(`SELECT user_id, real_name FROM account WHERE user_name = ?`, existing_user_changes.user_name, (_, row)=>{
+        db.run(`UPDATE permissions SET can_download = ?, can_rename = ?, can_delete = ?, folders_unallowed = ? WHERE user_id = ?`, [
+            existing_user_changes.can_download ? 1 : 0,
+            existing_user_changes.can_rename ? 1 : 0,
+            existing_user_changes.can_delete ? 1 : 0,
+            existing_user_changes.folders_unallowed,
+            row[0].user_id
+        ], ()=>{
+            emitter.send("toast-trig", `User ${existing_user_changes.user_name}'s permissions updated`, "success")
+            emitter.send("notif-trig", `Permissions for ${row[0].real_name} updated`)
+        })
+    })
 
     db.close()
 }
