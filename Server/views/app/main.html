@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-sm-8 window-title">
                 <span class="h5 window-button titlebar-button" id="hamburger-ico" style="color: #fff; margin-right: 10px; padding: 3px;">&#9776;</span>
-                <span class="h4 titlebar-button" id="status-dot-1" style="color: #bbb; margin-right: 10px;">&#9679;</span>
+                <span class="h4 titlebar-button" id="status-dot-1" title="Offline" style="color: #bbb; margin-right: 10px;">&#9679;</span>
                 <span class="text-white h5">PC Stream</span>
             </div>
             <div class="col-sm-4 window-controls-container">
@@ -224,6 +224,35 @@
                             <button type="submit" id="edited-pw-btn" class="btn btn-primary">Change Password</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container main-section mt-5 mb-5 all-sections" id="del-user-section" style="display: none;">
+        <div class="row">
+            <div class="col-sm-12 bg-white shadow rounded pt-3 pb-3">
+                <div class="row">
+                    <span class = "col-sm-12 h3 pl-3">Delete User</span>
+                </div>
+                <div class="row">
+                    <p class="pl-3">This section is to delete an user. Remember that this action is irrevokable.</p>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form>
+                            <div class="form-group">
+                                <label for="username-choose-del">Choose User</label>
+                                <select class="form-control" id="username-choose-del">
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row" id="del-user" style="display: none;">
+                    <div class="col-sm-12">
+                        <button type="button" id="del-user-btn" class="btn btn-primary">Remove User</button>
+                    </div>
                 </div>
             </div>
         </div>

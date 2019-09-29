@@ -150,33 +150,40 @@ exports.edit_user_password = function(existing_user_changes, emitter) {
     db.close()
 }
 
-exports.delete_user = function(existing_user) {
+exports.delete_user = function(existing_user, emitter) {
 
     var db = new sqlite3.Database('records.db')
 
-    // Delete an user
-    db.run(`DELETE FROM account WHERE user_id = ?`, [
-        existing_user.user_id
-    ])
+    db.all(`SELECT user_id, real_name FROM account WHERE user_name = ?`, existing_user.user_name, (_, row) => {
 
-    db.run(`DELETE FROM sessions WHERE user_id = ?`, [
-        existing_user.user_id
-    ])
+        // Delete an user
+        db.run(`DELETE FROM account WHERE user_id = ?`, [
+            row[0].user_id
+        ])
 
-    db.run(`DELETE FROM user_pictures WHERE user_id = ?`, [
-        existing_user.user_id
-    ])
+        db.run(`DELETE FROM sessions WHERE user_id = ?`, [
+            row[0].user_id
+        ])
 
-    db.run(`DELETE FROM permissions WHERE user_id = ?`, [
-        existing_user.user_id
-    ])
+        db.run(`DELETE FROM user_pictures WHERE user_id = ?`, [
+            row[0].user_id
+        ])
 
-    db.run(`DELETE FROM login_details WHERE user_id = ?`, [
-        existing_user.user_id
-    ])
+        db.run(`DELETE FROM permissions WHERE user_id = ?`, [
+            row[0].user_id
+        ])
 
-    db.run(`DELETE FROM watch_hist WHERE user_id = ?`, [
-        existing_user.user_id
-    ])
+        db.run(`DELETE FROM login_details WHERE user_id = ?`, [
+            row[0].user_id
+        ])
+
+        db.run(`DELETE FROM watch_hist WHERE user_id = ?`, [
+            row[0].user_id
+        ])
+
+        emitter.send("user:delDone")
+        emitter.send("toast-trig", `User ${existing_user.user_name} deleted`, "success")
+        emitter.send("notif-trig", `Profile for ${row[0].real_name} deleted successfully`)
+    })
 }
 

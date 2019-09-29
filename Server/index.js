@@ -8,7 +8,8 @@ var db = new sqlite3.Database('records.db')
 
 // Server
 const { toggleServer, get_server_state } = require('./controllers/server')
-const { check_uname_conflict_and_add, user_list_update, display_user_perms, edit_user_perms, edit_user_password } = require('./controllers/dbauth')
+const { check_uname_conflict_and_add, user_list_update, display_user_perms, edit_user_perms, edit_user_password,
+        delete_user } = require('./controllers/dbauth')
 
 // Other vars
 let mainWindow
@@ -50,6 +51,8 @@ app.on('window-all-closed', ()=>{
     app.quit()
     db.close()
 })
+
+// Event triggers
 
 ipcMain.on("toggle-server", () => {
     let serverState = toggleServer(5400)
@@ -98,4 +101,8 @@ ipcMain.on("perms:updated", (_, data)=> {
 
 ipcMain.on("user:changepw", (_, uname, newps) => {
     edit_user_password({plaintext_password: newps, user_name: uname}, mainWindow.webContents)
+})
+
+ipcMain.on("user:del", (_, uname) => {
+    delete_user({user_name: uname}, mainWindow.webContents)
 })

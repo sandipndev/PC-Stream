@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     if (state === 'on') {
       document.getElementById('status-text').innerText = "ONLINE"
       document.getElementById('status-dot-1').style.color = "#17CC60" 
+      document.getElementById('status-dot-1').setAttribute("title", "Online")
       document.getElementById('status-dot-2').style.color = "#17CC60"
       document.getElementById('toggle-server-btn').innerText = "Stop Server"
       document.getElementById('toggle-server-btn').classList.remove("btn-dark")
@@ -48,6 +49,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     } else {
       document.getElementById('status-text').innerText = "OFFLINE"
       document.getElementById('status-dot-1').style.color = "#bbb"
+      document.getElementById('status-dot-1').setAttribute("title", "Offline")
       document.getElementById('status-dot-2').style.color = "#bbb"
       document.getElementById('toggle-server-btn').innerText = "Start Server"
       document.getElementById('toggle-server-btn').classList.remove("btn-success")
@@ -71,7 +73,12 @@ document.addEventListener("DOMContentLoaded", ()=> {
       for(var i=0; i<elements.length; i++) { 
         elements[i].style.display='none'
       }
-      document.getElementById(event).style.display = 'block'
+
+      document.getElementById("username-perms-show-container").style.display = "none"
+      document.getElementById("edit-pw-of").style.display = "none"
+      document.getElementById("del-user").style.display = "none"
+
+      document.getElementById(event).style.display = 'block'      
       ipcRenderer.send("user:listUpdate")
     }
   })
@@ -169,6 +176,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
   ipcRenderer.on("listupdate:user", (_, rows) => {
     updateuserlist("username-choose-uperms", rows)
     updateuserlist("username-choose-editpw", rows)
+    updateuserlist("username-choose-del", rows)
   })
 
   var unallFolders = []
@@ -323,9 +331,29 @@ document.addEventListener("DOMContentLoaded", ()=> {
 
       let ps = document.getElementById("edited-pw").value
 
-      if (ps) {
+      if (ps && uname !== "Select One") {
         ipcRenderer.send("user:changepw", uname, ps)
+      } else if (uname === "Select One") {
+        pop_toast("First select an user", "bg-info")
       }
     })
   })
+
+  document.getElementById("username-choose-del").addEventListener("change", () => {
+    document.getElementById("del-user").style.display = "block"
+    document.getElementById("del-user-btn").addEventListener("click", ()=> {
+      var e = document.getElementById("username-choose-del")
+      let uname = e.options[e.selectedIndex].text
+
+      if (uname !== "Select One") {
+        ipcRenderer.send("user:del", uname)
+      }
+
+    })
+  })
+
+  ipcRenderer.on("user:delDone", ()=> {
+    ipcRenderer.send("user:listUpdate")
+  })
+
 })
