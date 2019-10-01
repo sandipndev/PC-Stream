@@ -17,7 +17,13 @@ module.exports = function ( req, res, emitter ) {
                 return
             }
 
-            const unallowed_dirs = JSON.parse(r1[0].folders_unallowed)
+            let unallowed_dirs = JSON.parse(r1[0].folders_unallowed)
+
+            if (process.platform == 'win32') {
+                for (var i=0; i<unallowed_dirs.length; i++) {
+                    unallowed_dirs[i] = unallowed_dirs[i].replace(/\//g, "\\")
+                }
+            }
 
             // Session Key exists and correct
             console.log(unallowed_dirs)

@@ -106,6 +106,12 @@ exports.edit_user_perms = function(existing_user_changes, emitter) {
 
     var db = new sqlite3.Database('records.db')
 
+    if (process.platform == 'win32') {
+        for (var i=0; i<existing_user_changes.folders_unallowed.length; i++) {
+            existing_user_changes.folders_unallowed[i] = existing_user_changes.folders_unallowed[i].replace(/\\/g, "/")
+        }
+    }
+
     // Update permissions
     db.all(`SELECT user_id, real_name FROM account WHERE user_name = ?`, existing_user_changes.user_name, (_, row)=>{
         db.run(`UPDATE permissions SET can_download = ?, can_rename = ?, can_delete = ?, folders_unallowed = ? WHERE user_id = ?`, [
