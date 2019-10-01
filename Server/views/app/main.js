@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
       }
     }
 
-    data.folders_unallowed = JSON.stringify(unallFolders)
+    data.folders_unallowed = unallFolders
 
     data.user_name = document.getElementById("uname-chosen-pms").innerText
     
