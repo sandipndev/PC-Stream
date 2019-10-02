@@ -25,7 +25,8 @@ const { authenticate,
         getstream,
         recursivemediasearch,
         rename,
-        stream } = require("../api")
+        stream,
+        getInfo } = require("../api")
 
 let server
 let serverState = 0
@@ -64,6 +65,10 @@ exapp.post('/rename', (req, res) => {
 
 exapp.get('/stream', (req, res) => {
     stream(req, res, emitter)
+})
+
+exapp.post('/getinfo', (req, res) => {
+    getInfo(req, res, emitter)
 })
 
 exports.get_server_state = () => {
