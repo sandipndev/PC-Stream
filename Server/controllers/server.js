@@ -26,7 +26,8 @@ const { authenticate,
         recursivemediasearch,
         rename,
         stream,
-        getInfo } = require("../api")
+        getPicture,
+        servercheck } = require("../api")
 
 let server
 let serverState = 0
@@ -67,8 +68,12 @@ exapp.get('/stream', (req, res) => {
     stream(req, res, emitter)
 })
 
-exapp.post('/getinfo', (req, res) => {
-    getInfo(req, res, emitter)
+exapp.post('/getPicture', (req, res) => {
+    getPicture(req, res, emitter)
+})
+
+exapp.get('/servercheck', (req, res) => {
+    servercheck(req, res, emitter)
 })
 
 exports.get_server_state = () => {
