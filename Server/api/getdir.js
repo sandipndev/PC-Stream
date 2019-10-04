@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const { driveDataWin, isPathAbs, isDir, isFile, getFileSize } = require("../misc/randomfuncs")
+const { driveDataWin, isPathAbs, isDir, isFile } = require("../misc/randomfuncs")
 
 const sqlite3 = require('sqlite3').verbose()
 
@@ -67,7 +67,7 @@ module.exports = function ( req, res, emitter ) {
 
             fs.readdir(req.body["dir"], (err, files) => {
                 if (err) {
-                    res.send(500).send("SERVER_ERR")
+                    res.status(500).send("SERVER_ERR")
                 } else {
 
                     for (var i=0; i<files.length; i++) {

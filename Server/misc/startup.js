@@ -22,6 +22,22 @@ module.exports = function() {
 
         db.run(`DELETE FROM "sessions"`)
 
+        db.run(`CREATE TABLE IF NOT EXISTS "download_keys" (
+            "key"   TEXT PRIMARY KEY,
+            "by_user"   INTEGER,
+            "file"  TEXT
+        );"`)
+
+        db.run(`DELETE FROM "download_keys"`)
+
+        db.run(`CREATE TABLE IF NOT EXISTS "stream_keys" (
+            "key"   TEXT PRIMARY KEY,
+            "by_user"   INTEGER,
+            "file"  TEXT
+        );"`)
+
+        db.run(`DELETE FROM "stream_keys"`)
+
         db.run(`CREATE TABLE IF NOT EXISTS "user_pictures" (
             "user_id" 	INTEGER PRIMARY KEY,
             "profile_picture"	TEXT
