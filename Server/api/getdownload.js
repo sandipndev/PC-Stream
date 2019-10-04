@@ -10,13 +10,19 @@ module.exports = function ( req, res, emitter ) {
 
         // Database checks
         var db = new sqlite3.Database('records.db')
-        db.all(`SELECT permissions.folders_unallowed, sessions.user_id
+        db.all(`SELECT permissions.folders_unallowed, permissions.can_download, sessions.user_id
         FROM sessions JOIN permissions ON permissions.user_id = sessions.user_id 
         WHERE current_session_key = ?`, req.body["session_key"], (_, r1)=> {
 
             // Session Key does not exist
             if (r1.length === 0) {
                 res.status(400).send("SKEY_X")
+                return
+            }
+
+            // Permission checking
+            if (r1[0].can_download == 0) {
+                res.status(400).send("CANT_DL")
                 return
             }
 
