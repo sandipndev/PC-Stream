@@ -58,7 +58,7 @@ module.exports = function ( req, res, emitter ) {
             // Generate Key
             let key = randomBytes(10).toString('hex')
 
-            db.all(`INSERT INTO download_keys(key, by_user, file) VALUES (?, ?, ?)`,[
+            db.all(`INSERT INTO stream_keys(key, by_user, file) VALUES (?, ?, ?)`,[
                 key,
                 r1[0].user_id,
                 req.body["file"]
