@@ -27,7 +27,8 @@ const { authenticate,
         rename,
         stream,
         getPicture,
-        servercheck } = require("../api")
+        servercheck,
+        getFileInfo } = require("../api")
 
 let server
 let serverState = 0
@@ -74,6 +75,10 @@ exapp.post('/getPicture', (req, res) => {
 
 exapp.get('/servercheck', (req, res) => {
     servercheck(req, res, emitter)
+})
+
+exapp.post('/getFileInfo', (req, res) => {
+    getFileInfo(req, res, emitter)
 })
 
 exports.get_server_state = () => {
