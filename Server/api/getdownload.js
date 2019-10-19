@@ -42,11 +42,6 @@ module.exports = function ( req, res, emitter ) {
                 return
             }
 
-            // Given is not a file
-            if (!isFile(req.body["file"])) {
-                res.status(400).send("FILE_DNE")
-            }
-
             // Given file is inside an unallowed dir
             for (var i=0; i<unallowed_dirs.length; i++) {
                 if (req.body["file"].includes(unallowed_dirs[i])) {
