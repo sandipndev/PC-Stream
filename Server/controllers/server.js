@@ -1,6 +1,7 @@
 const BodyParser = require('body-parser')
 const express = require('express')
 const exapp = express()
+const path = require('path')
 
 // To jsonify every request
 exapp.use(BodyParser.json());
@@ -11,6 +12,12 @@ exapp.use(function (err, _, res, _) {
 		return
 	}
 })
+
+// Statics
+exapp.use("/css", express.static(path.join(__dirname, "..", "views", "web", "css")))
+exapp.use("/assets", express.static(path.join(__dirname, "..", "views", "web", "assets")))
+exapp.use("/js", express.static(path.join(__dirname, "..", "views", "web", "js")))
+exapp.get('/', (_, res) => res.sendFile(path.join(__dirname, "..", "views", "web", "index.html")))
 
 exapp.ip = require('ip').address()
 
@@ -32,6 +39,14 @@ const { authenticate,
 
 let server
 let serverState = 0
+
+exapp.get('/weblogin', (req, res) => {
+    if (req.query["sessKey"] && typeof req.query["sessKey"] === "string") {
+        
+    } else {
+        res.sendStatus(400)
+    }
+})
 
 exapp.post('/authenticate', (req, res) => {
     authenticate(req, res, emitter)
