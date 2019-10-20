@@ -45,11 +45,14 @@ const { authenticate,
         stream,
         getPicture,
         servercheck,
-        getFileInfo,
-        weblogin } = require("../api")
+        getFileInfo } = require("../api")
+
+const { weblogin } = require('../api/webapi')
 
 let server
 let serverState = 0
+
+// -------------- WEBPAGE CALLS -------------------
 
 exapp.get('/', (req, res) =>  {
     if (req.session.loggedin) {
@@ -87,6 +90,8 @@ exapp.get('/logout', (req, res) => {
     req.session.sessKey = null
     res.redirect("../?lout=1")
 })
+
+// ------------------- API CALLS --------------------
 
 exapp.post('/authenticate', (req, res) => {
     authenticate(req, res, emitter)
