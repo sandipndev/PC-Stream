@@ -2,6 +2,7 @@ const BodyParser = require('body-parser')
 const express = require('express')
 const exapp = express()
 const path = require('path')
+const session = require('express-session')
 
 // To jsonify every request
 exapp.use(BodyParser.json());
@@ -13,11 +14,20 @@ exapp.use(function (err, _, res, _) {
 	}
 })
 
+// For sessions
+exapp.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}))
+
+// Engine
+exapp.engine('html', require('ejs').renderFile)
+
 // Statics
 exapp.use("/css", express.static(path.join(__dirname, "..", "views", "web", "css")))
 exapp.use("/assets", express.static(path.join(__dirname, "..", "views", "web", "assets")))
 exapp.use("/js", express.static(path.join(__dirname, "..", "views", "web", "js")))
-exapp.get('/', (_, res) => res.sendFile(path.join(__dirname, "..", "views", "web", "index.html")))
 
 exapp.ip = require('ip').address()
 
@@ -35,17 +45,47 @@ const { authenticate,
         stream,
         getPicture,
         servercheck,
-        getFileInfo } = require("../api")
+        getFileInfo,
+        weblogin } = require("../api")
 
 let server
 let serverState = 0
 
-exapp.get('/weblogin', (req, res) => {
-    if (req.query["sessKey"] && typeof req.query["sessKey"] === "string") {
-        
+exapp.get('/', (req, res) =>  {
+    if (req.session.loggedin) {
+        res.redirect("../home")
+        return
     } else {
-        res.sendStatus(400)
+        if (req.query["lout"] == 1) {
+            res.render(path.join(__dirname, "..", "views", "web", "index.html"), {
+                louthtm: `You've been successfully logged out!`
+            })
+        } else {
+            res.render(path.join(__dirname, "..", "views", "web", "index.html"), {
+                louthtm: ""
+            })
+        }
     }
+})
+
+exapp.get('/weblogin', (req, res) => {
+    weblogin(req, res, emitter)
+})
+
+exapp.get('/home', (req, res) => {
+    if (req.session.loggedin) {
+        res.render(path.join(__dirname, "..", "views", "web", "home.html"), {
+            sessKey: req.session.sessKey
+        })
+    } else {
+        res.redirect("../")
+    }
+})
+
+exapp.get('/logout', (req, res) => {
+    req.session.loggedin = false
+    req.session.sessKey = null
+    res.redirect("../?lout=1")
 })
 
 exapp.post('/authenticate', (req, res) => {
