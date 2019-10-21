@@ -1,4 +1,20 @@
 .ico {
-    height: 45px;
+    height: 35px;
     width: auto;
+}
+
+.cur-ptr {
+    cursor: pointer;
+}
+
+.full-screen-fixed {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.non-see-thru {
+    background: white;
 }

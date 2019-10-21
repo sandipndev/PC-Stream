@@ -55,12 +55,17 @@ function updateShowDir(dir) {
     
     for (var i=0; i<rx.length; i++) {
         var d = document.createElement("kbd")
+        d.classList.add("mr-2")
         d.innerText = rx[i]
         var dest = rx.slice(0, i+1).join('/') + '/'
         d.setAttribute("onclick", `getDir("${dest}")`)
 
         $("#show-dir").append(d)
     }
+}
+
+function refreshDir() {
+    getDir(cwd);
 }
 
 function getDirExtended(d) {
@@ -73,8 +78,8 @@ function getDirExtended(d) {
 function getDir(dir) {
     if (dir === 'Drives/Root')
         dir = '/'
-    
-    console.log(dir)
+
+    $("#loadin").show()
 
     $.ajax({
         type: "POST",
@@ -85,6 +90,8 @@ function getDir(dir) {
         },
         dataType: "json",
         success: (response) => {
+
+            $("#loadin").hide()
 
             resetDisp()
 

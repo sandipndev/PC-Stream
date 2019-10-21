@@ -13,13 +13,22 @@
 
 </head>
 <body>
-    <div class="col-12 mt-2">
+    <div class="full-screen-fixed" id="loadin" style="display: none;">
+        <div class="non-see-thru col-6 offset-3 text-center rounded mt-2 p-4">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="centered">Loading...</div>
+        </div>
+    </div>
+
+    <div class="col-12 pt-2">
         <div class="row">
             <div class="col-10">
                 <p class="h2">Browse</p>
             </div>
             <div class="col-2">
-                <img class="float-right" src="../assets/computer.png" onclick="refreshDir();" width="30px" height="30px">
+                <img class="float-right" src="../assets/computer.png" onclick="getDir('/');" width="30px" height="30px">
             </div>
         </div>
         <div class="row">
@@ -31,17 +40,17 @@
                 <img class="float-right" src="../assets/reload.png" onclick="refreshDir();" width="25px" height="25px">
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12 mt-2">
+        <div class="row cur-ptr">
+            <div class="col-12 mt-2">
                 <div id="app">
                     <!--Folders-->
                     <ul class="col-12" style="list-style-type: none;">
                         <li class="bg-dark mt-1 mb-1 p-2 text-white rounded" v-for="ele in folders">
-                            <div class="row" @click="gtDr(ele)">
-                                <div class="col-3">
+                            <div class="row cur-ptr" @click="gtDr(ele)">
+                                <div class="col-2">
                                     <img class="ico" src="../assets/foldericons/folder.svg">
                                 </div>
-                                <div class="col-9">
+                                <div class="col-10">
                                     {{ ele }}
                                 </div>
                             </div>
@@ -51,11 +60,11 @@
                     <!--Files-->
                     <ul class="col-12" style="list-style-type: none;">
                         <li class="bg-primary mt-1 mb-1 p-2 text-white rounded" v-for="(ele, index) in files">
-                            <div class="row">
-                                <div class="col-3">
+                            <div class="row cur-ptr">
+                                <div class="col-2">
                                     <img class="ico" :src="'../assets/foldericons/' + fileExts[index] + '.svg'">
                                 </div>
-                                <div class="col-9">
+                                <div class="col-10">
                                     {{ ele }}
                                 </div>
                             </div>
@@ -65,11 +74,11 @@
                     <!--Drives-->
                     <ul class="col-12" style="list-style-type: none;">
                         <li class="bg-success mt-1 mb-1 p-2 text-white rounded" v-for="ele in disks">
-                            <div class="row" @click="getDir(ele.name + '/')">
-                                <div class="col-3">
+                            <div class="row cur-ptr" @click="getDir(ele.name + '/')">
+                                <div class="col-2">
                                     <img class="ico" src="../assets/foldericons/disk.webp">
                                 </div>
-                                <div class="col-9">
+                                <div class="col-10">
                                     <div v-if="ele.volumename == null"><span class="font-weight-bold">[ {{ele.name}} ]</span> {{ele.type}}</div>
                                     <div v-else><span class="font-weight-bold">[ {{ele.name}} ]</span> {{ele.volumename}}</div>
                                 </div>
