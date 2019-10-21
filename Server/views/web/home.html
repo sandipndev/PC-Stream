@@ -5,9 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home</title>
+
+    <!--CSS-->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
 </head>
 <body>
-    I'm logged in with session key <%= sessKey %> <br>
-    <a href="../logout">Logout</a>
+    <div id="app">
+        <h2>Files</h2>
+        <ul>
+            <li v-for="ele in files"> {{ ele }} </li>
+        </ul>
+        <h2>Folders</h2>
+        <ul>
+            <li v-for="ele in folders"> {{ ele }} </li>
+        </ul>
+        <h2>Drives</h2>
+        <ul>
+            <li v-for="ele in disks"> {{ ele }} </li>
+        </ul>
+        <h2>Unknowns</h2>
+        <ul>
+            <li v-for="ele in unknowns"> {{ ele }} </li>
+        </ul>
+    </div>
+
+    <!--Scripts-->
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script>
+        const sessKey = "<%= sessKey %>"
+    </script>
+    <script src="../js/home.js"></script>
 </body>
 </html>
