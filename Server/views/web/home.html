@@ -5,28 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home</title>
+    <meta name="theme-color" content="#0275d8">
 
     <!--CSS-->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/home.css">
+
 </head>
 <body>
-    <div id="app">
-        <h2>Files</h2>
-        <ul>
-            <li v-for="ele in files"> {{ ele }} </li>
-        </ul>
-        <h2>Folders</h2>
-        <ul>
-            <li v-for="ele in folders"> {{ ele }} </li>
-        </ul>
-        <h2>Drives</h2>
-        <ul>
-            <li v-for="ele in disks"> {{ ele }} </li>
-        </ul>
-        <h2>Unknowns</h2>
-        <ul>
-            <li v-for="ele in unknowns"> {{ ele }} </li>
-        </ul>
+    <div class="col-12 mt-2">
+        <div class="row">
+            <div class="col-10">
+                <p class="h2">Browse</p>
+            </div>
+            <div class="col-2">
+                <img class="float-right" src="../assets/computer.png" onclick="refreshDir();" width="30px" height="30px">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-10">
+                <span id="show-dir">
+                </span>
+            </div>
+            <div class="col-2">
+                <img class="float-right" src="../assets/reload.png" onclick="refreshDir();" width="25px" height="25px">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 mt-2">
+                <div id="app">
+                    <!--Folders-->
+                    <ul class="col-12" style="list-style-type: none;">
+                        <li class="bg-dark mt-1 mb-1 p-2 text-white rounded" v-for="ele in folders">
+                            <div class="row" @click="gtDr(ele)">
+                                <div class="col-3">
+                                    <img class="ico" src="../assets/foldericons/folder.svg">
+                                </div>
+                                <div class="col-9">
+                                    {{ ele }}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <!--Files-->
+                    <ul class="col-12" style="list-style-type: none;">
+                        <li class="bg-primary mt-1 mb-1 p-2 text-white rounded" v-for="(ele, index) in files">
+                            <div class="row">
+                                <div class="col-3">
+                                    <img class="ico" :src="'../assets/foldericons/' + fileExts[index] + '.svg'">
+                                </div>
+                                <div class="col-9">
+                                    {{ ele }}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <!--Drives-->
+                    <ul class="col-12" style="list-style-type: none;">
+                        <li class="bg-success mt-1 mb-1 p-2 text-white rounded" v-for="ele in disks">
+                            <div class="row" @click="getDir(ele.name + '/')">
+                                <div class="col-3">
+                                    <img class="ico" src="../assets/foldericons/disk.webp">
+                                </div>
+                                <div class="col-9">
+                                    <div v-if="ele.volumename == null"><span class="font-weight-bold">[ {{ele.name}} ]</span> {{ele.type}}</div>
+                                    <div v-else><span class="font-weight-bold">[ {{ele.name}} ]</span> {{ele.volumename}}</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!--
+                    <h2>Unknowns</h2>
+                    <ul class="col-12" style="list-style-type: none;">
+                        <li class="bg-primary mt-1 mb-1 p-2 text-white rounded" v-for="ele in unknowns">
+                            {{ ele }}
+                        </li>
+                    </ul> -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <!--Scripts-->

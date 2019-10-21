@@ -28,6 +28,7 @@ exapp.engine('html', require('ejs').renderFile)
 exapp.use("/css", express.static(path.join(__dirname, "..", "views", "web", "css")))
 exapp.use("/assets", express.static(path.join(__dirname, "..", "views", "web", "assets")))
 exapp.use("/js", express.static(path.join(__dirname, "..", "views", "web", "js")))
+exapp.use("/fonts", express.static(path.join(__dirname, "..", "views", "web", "fonts")))
 exapp.get("/favicon.ico", (_, res) => res.sendFile(path.join(__dirname, "..", "views", "web", "assets", "favicon.ico")))
 
 exapp.ip = require('ip').address()
