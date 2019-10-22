@@ -18,3 +18,7 @@
 .non-see-thru {
     background: white;
 }
+
+kbd {
+    cursor: pointer;
+}

@@ -1,7 +1,16 @@
 var cwd = '/'
 var icosavailable = ["avi", "css", "csv", "doc", "exe", "html", "iso", "jpg", "js", "json", "mkv", "mp3", "mp4", "pdf", "png", "ppt", "psd", "py", "rtf", "svg", "torrent", "txt", "wmv", "xml", "zip"]
+var os = null
 
 $(document).ready(() => {
+
+    $.ajax({
+        type: "GET",
+        url: "../servercheck",
+        success: (response) => {
+            os = response.slice(response.lastIndexOf(", ")+2)
+        }
+    })
 
     window.vueapp = new Vue({
         el: '#app',
@@ -58,7 +67,11 @@ function updateShowDir(dir) {
         d.classList.add("mr-2")
         d.innerText = rx[i]
         var dest = rx.slice(0, i+1).join('/') + '/'
-        d.setAttribute("onclick", `getDir("${dest}")`)
+        
+        if (os === 'win32')
+            d.setAttribute("onclick", `getDir("${dest}")`)
+        else
+            d.setAttribute("onclick", `getDir("/${dest}")`)
 
         $("#show-dir").append(d)
     }
@@ -69,13 +82,16 @@ function refreshDir() {
 }
 
 function getDirExtended(d) {
-    if (cwd[cwd.length-1] === '/')
+    if (cwd[cwd.length-1] === '/' && os === 'win32')
         getDir(cwd +d)
-    else
+    else if (os === 'win32')
         getDir(cwd + '/' +d)
+    else
+        getDir(cwd + d + '/')
 }
 
 function getDir(dir) {
+
     if (dir === 'Drives/Root')
         dir = '/'
 
