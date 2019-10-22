@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Embedded Video Player</title>
+
+    <!--CSS-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        .video-css {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+
+</head>
+<body class="bg-primary">
+    <div class="container">
+        <div class="row">
+            <div class="m-3 p-2 bg-white rounded">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="h4"><%= filename %></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <video class="video-css" src="assets/Castle Of Glass - Linkin Park.mp4" controls></video>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <span class="text-muted">Logged in as:</span>
+                        <span class="h6"><%= username %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--Scripts-->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>
