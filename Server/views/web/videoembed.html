@@ -7,7 +7,7 @@
     <title>Embedded Video Player</title>
 
     <!--CSS-->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
     <style>
         .video-css {
             width: 100%;
@@ -17,17 +17,17 @@
 
 </head>
 <body class="bg-primary">
-    <div class="container">
+    <div class="col-12">
         <div class="row">
-            <div class="m-3 p-2 bg-white rounded">
+            <div class="col-12 mt-3 mb-3 p-2 bg-white rounded">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 mb-4">
                         <p class="h4"><%= filename %></p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <video class="video-css" src="assets/Castle Of Glass - Linkin Park.mp4" controls></video>
+                        <video class="video-css" src="../stream?token=<%= vtoken %>" controls></video>
                     </div>
                 </div>
                 <div class="row">
@@ -41,7 +41,7 @@
     </div>
     
     <!--Scripts-->
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 </body>
 </html>

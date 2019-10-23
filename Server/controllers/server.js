@@ -49,7 +49,8 @@ const { authenticate,
         servercheck,
         getFileInfo } = require("../api")
 
-const { weblogin } = require('../api/webapi')
+const { weblogin,
+        showvideo } = require('../api/webapi')
 
 let server
 let serverState = 0
@@ -71,6 +72,10 @@ exapp.get('/', (req, res) =>  {
             })
         }
     }
+})
+
+exapp.get('/showvideo', (req, res) => {
+    showvideo(req, res, emitter)
 })
 
 exapp.get('/weblogin', (req, res) => {

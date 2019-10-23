@@ -75,6 +75,10 @@ function updateShowDir(dir) {
 
         $("#show-dir").append(d)
     }
+
+    $("#test").stop().animate({
+        scrollLeft: $("#test")[0].scrollWidth
+    }, 500)
 }
 
 function refreshDir() {

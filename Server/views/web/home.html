@@ -28,16 +28,18 @@
                 <p class="h2">Browse</p>
             </div>
             <div class="col-2">
-                <img class="float-right" src="../assets/computer.png" onclick="getDir('/');" width="30px" height="30px">
             </div>
         </div>
         <div class="row">
-            <div class="col-10">
+            <div id="test" class="col-8 overflow-auto">
                 <span id="show-dir">
                 </span>
             </div>
-            <div class="col-2">
-                <img class="float-right" src="../assets/reload.png" onclick="refreshDir();" width="25px" height="25px">
+            <div class="col-4">
+                <div class="float-right">
+                    <img src="../assets/computer.png" onclick="getDir('/');" width="28px" height="28px">
+                    <img src="../assets/reload.png" onclick="refreshDir();" width="28px" height="28px">
+                </div>
             </div>
         </div>
         <div class="row cur-ptr">
@@ -75,7 +77,7 @@
                     <ul class="col-12" style="list-style-type: none;">
                         <li class="bg-success mt-1 mb-1 p-2 text-white rounded" v-for="ele in disks">
                             <div class="row cur-ptr" @click="getDir(ele.name + '/')">
-                                <div class="col-2">
+                                <div class="col-2 text-center">
                                     <img class="ico" src="../assets/foldericons/disk.webp">
                                 </div>
                                 <div class="col-10">
