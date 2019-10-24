@@ -12,6 +12,19 @@ $(document).ready(() => {
         }
     })
 
+    $.ajax({
+        type: "POST",
+        url: "../getPicture",
+        data: {
+            session_key: sessKey
+        },
+        dataType: "json",
+        success: (response) => {
+            $("#fname").text(response["name"])
+            $("#profile-dp").attr("src", response["base64DP"])
+        }
+    })
+
     window.vueapp = new Vue({
         el: '#app',
         data: {
@@ -27,7 +40,7 @@ $(document).ready(() => {
                 var res = []
                 for (var i=0; i<this.files.length; i++) {
                     var x = this.files[i]
-                    var ext = x.slice(x.lastIndexOf('.')+1)
+                    var ext = x.slice(x.lastIndexOf('.')+1).toLowerCase()
                     if (ext === "jpeg") {
                         ext = "jpg"
                     }
@@ -46,6 +59,14 @@ $(document).ready(() => {
     })
 
     getDir(cwd)
+
+    $("#profile-dp").on("click", ()=>{
+        $("#name-logout-dialog").show()
+    })
+
+    $("#closer-name-logout-dialog").on("click", ()=>{
+        $("#name-logout-dialog").hide()
+    })
 
 })
 
@@ -149,14 +170,15 @@ function getDir(dir) {
 
 function getFile(filename) {
     const fullFileDir = cwd + filename
+    console.log(fullFileDir)
 
-    $.ajax({
-        type: "POST",
-        url: "../getFileInfo",
-        data: {
-            session_key: sessKey,
-            fileDir: fullFileDir
-        },
-        dataType: "json"
-    })
+    // $.ajax({
+    //     type: "POST",
+    //     url: "../getFileInfo",
+    //     data: {
+    //         session_key: sessKey,
+    //         fileDir: fullFileDir
+    //     },
+    //     dataType: "json"
+    // })
 }

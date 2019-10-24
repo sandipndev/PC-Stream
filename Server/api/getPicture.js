@@ -5,8 +5,9 @@ module.exports = function ( req, res, emitter ) {
         
         // DB checks
         var db = new sqlite3.Database('records.db')
-        db.all(`SELECT user_pictures.profile_picture
+        db.all(`SELECT user_pictures.profile_picture, account.real_name
         FROM user_pictures JOIN sessions ON sessions.user_id = user_pictures.user_id
+        JOIN account ON account.user_id = user_pictures.user_id
         WHERE sessions.current_session_key = ?`, req.body["session_key"], (_, r1) => {
 
             // Session Key does not exists
@@ -16,7 +17,8 @@ module.exports = function ( req, res, emitter ) {
             }
 
             res.status(200).send({
-                base64DP: r1[0].profile_picture
+                base64DP: r1[0].profile_picture,
+                name: r1[0].real_name
             })
 
         })
