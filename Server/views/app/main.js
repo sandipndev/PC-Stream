@@ -282,14 +282,15 @@ document.addEventListener("DOMContentLoaded", ()=> {
   })
 
   ipcRenderer.on("folder:open", (_, path) => {
-    if (unallFolders.indexOf(path[0]) == -1) {
-      unallFolders.push(path[0])
-      updateUnallowedDirs()
-    } else {
-      pop_toast("Directory already exists", "bg-warning")
-    }   
+    if (path.length !== 0) {
+      if (unallFolders.indexOf(path[0]) == -1) {
+        unallFolders.push(path[0])
+        updateUnallowedDirs()
+      } else {
+        pop_toast("Directory already exists", "bg-warning")
+      }
     }
-  )
+  })
 
   document.getElementById("update-perms-final-btn").addEventListener("click", ()=>{
     let data = {}
