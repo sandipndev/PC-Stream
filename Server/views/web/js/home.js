@@ -20,7 +20,8 @@ $(document).ready(() => {
             unknowns: [],
             disks: [],
             getDir: getDir,
-            gtDr: getDirExtended
+            gtDr: getDirExtended,
+            gtFile: getFile
         }, computed: {
             fileExts() {
                 var res = []
@@ -76,8 +77,8 @@ function updateShowDir(dir) {
         $("#show-dir").append(d)
     }
 
-    $("#test").stop().animate({
-        scrollLeft: $("#test")[0].scrollWidth
+    $("#browse-chunks").stop().animate({
+        scrollLeft: $("#browse-chunks")[0].scrollWidth
     }, 500)
 }
 
@@ -143,5 +144,19 @@ function getDir(dir) {
 
             vueapp.$forceUpdate()
         }
+    })
+}
+
+function getFile(filename) {
+    const fullFileDir = cwd + filename
+
+    $.ajax({
+        type: "POST",
+        url: "../getFileInfo",
+        data: {
+            session_key: sessKey,
+            fileDir: fullFileDir
+        },
+        dataType: "json"
     })
 }

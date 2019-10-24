@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="row">
-            <div id="test" class="col-8 overflow-auto">
+            <div id="browse-chunks" class="col-8 overflow-auto">
                 <span id="show-dir">
                 </span>
             </div>
@@ -62,7 +62,7 @@
                     <!--Files-->
                     <ul class="col-12" style="list-style-type: none;">
                         <li class="bg-primary mt-1 mb-1 p-2 text-white rounded" v-for="(ele, index) in files">
-                            <div class="row cur-ptr">
+                            <div class="row cur-ptr" @click="gtFile(ele)">
                                 <div class="col-2">
                                     <img class="ico" :src="'../assets/foldericons/' + fileExts[index] + '.svg'">
                                 </div>
