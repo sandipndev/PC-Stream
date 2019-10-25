@@ -169,16 +169,23 @@ function getDir(dir) {
 }
 
 function getFile(filename) {
-    const fullFileDir = cwd + filename
-    console.log(fullFileDir)
+    $("#loadin").show()
 
-    // $.ajax({
-    //     type: "POST",
-    //     url: "../getFileInfo",
-    //     data: {
-    //         session_key: sessKey,
-    //         fileDir: fullFileDir
-    //     },
-    //     dataType: "json"
-    // })
+    const fullFileDir = cwd + filename
+
+    $.ajax({
+        type: "POST",
+        url: "../getFileInfo",
+        data: {
+            session_key: sessKey,
+            file: fullFileDir
+        },
+        dataType: "json",
+        success: (r) => {
+            $("#loadin").hide()
+
+            alert(JSON.stringify(r))
+            
+        }
+    })
 }

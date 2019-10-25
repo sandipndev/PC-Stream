@@ -1,4 +1,6 @@
-const { pathExists, isPathAbs, getFileSize } = require("../misc/randomfuncs")
+const { getVideoDurationInSeconds } = require('get-video-duration')
+const { pathExists, isPathAbs, getFileSize, video_extentions_streamable, audio_extentions_streamable } = require("../misc/randomfuncs")
+const path = require('path')
 const sqlite3 = require('sqlite3').verbose()
 
 module.exports = function ( req, res, emitter ) {
@@ -52,9 +54,34 @@ module.exports = function ( req, res, emitter ) {
             // To send - Filesize, ...
             try {
                 var x = getFileSize(req.body["file"])
-                res.status(200).send({
-                    "fileSizeInBytes": x
-                })
+
+                var tx = {
+                    file_size: x,
+                    is_streamable: false
+                }
+                
+                // If control is here, that means file exists
+                var ext = path.extname(req.body["file"]).toLowerCase()
+
+                if (video_extentions_streamable.includes(ext)) {
+                    tx.is_streamable = true
+                    tx.type = 'video'
+                    getVideoDurationInSeconds(req.body["file"]).then((duration)=>{
+                        tx.duration = duration
+                        res.status(200).send(tx)
+                    })
+                } else if (audio_extentions_streamable.includes(ext)) {
+                    tx.is_streamable = true
+                    tx.type = 'audio'
+                    getVideoDurationInSeconds(req.body["file"]).then((duration)=>{
+                        tx.duration = duration
+                        res.status(200).send(tx)
+                    })
+                } else {
+                    res.status(200).send(tx)
+                }
+
+
             } catch(error) {
                 res.status(400).send("FILE_DNE")
             }

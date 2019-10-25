@@ -51,4 +51,5 @@ exports.driveDataWin = async function () {
 	return x;
 }
 
-exports.streamableFileExts = []
+exports.video_extentions_streamable = ['.avi', '.mkv', '.mp4', '.wmv']
+exports.audio_extentions_streamable = ['.mp3']
