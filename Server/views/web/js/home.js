@@ -171,8 +171,11 @@ function getDir(dir) {
 function getFile(filename) {
     $("#loadin").show()
 
-    const fullFileDir = cwd + filename
-
+    if (os === 'win32')
+        var fullFileDir = cwd + '/' + filename
+    else
+        var fullFileDir = cwd + filename
+    
     $.ajax({
         type: "POST",
         url: "../getFileInfo",
