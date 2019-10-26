@@ -68,6 +68,10 @@ $(document).ready(() => {
         $("#name-logout-dialog").hide()
     })
 
+    $("#closer-stream-download-dialog").on("click", ()=>{
+        $("#stream-download-dialog").hide()
+    })
+
 })
 
 function resetDisp() {
@@ -186,9 +190,68 @@ function getFile(filename) {
         dataType: "json",
         success: (r) => {
             $("#loadin").hide()
+            $("#axRsmab").hide()
 
-            alert(JSON.stringify(r))
+            if (r.is_streamable === true) {
+                $("#axRsmab").show()
+
+                $("#file-name-dialog").text(filename)
+                $("#dir-name-dialog").text(cwd)
+
+                $("#watch-dg").on("click", ()=>{
+                    $.ajax({
+                        type: "POST",
+                        url: "../getstream",
+                        data: {
+                            session_key: sessKey,
+                            file: fullFileDir
+                        },
+                        dataType: "json",
+                        success: (r) => {
+                            window.open("../showvideo/?token=" + r.token)
+                        }
+                    })
+                })
+
+                $("#download-dg").on("click", (e)=>{
+                    $.ajax({
+                        type: "POST",
+                        url: "../getdownload",
+                        data: {
+                            session_key: sessKey,
+                            file: fullFileDir
+                        },
+                        dataType: "json",
+                        success: (r) => {
+                            window.location.href = "../download/?token=" + r.token
+                        }
+                    })
+                })
+
+            } else {
+                $("#file-name-dialog").text(filename)
+                $("#dir-name-dialog").text(cwd)
+
+                $("#download-dg").on("click", (e)=>{
+                    $.ajax({
+                        type: "POST",
+                        url: "../getdownload",
+                        data: {
+                            session_key: sessKey,
+                            file: fullFileDir
+                        },
+                        dataType: "json",
+                        success: (r) => {
+                            window.location.href = "../download/?token=" + r.token
+                        }
+                    })
+                })
+            }
+
+            $("#stream-download-dialog").show()
+
             
         }
     })
 }
+

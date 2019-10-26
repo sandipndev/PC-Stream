@@ -32,9 +32,18 @@
 
     <div class="full-screen-fixed" id="stream-download-dialog" style="display: none;">
         <div class="non-see-thru col-8 offset-2 rounded mt-4 p-5">
-            <span class="float-right" id="closer-stream-download-dialog">❌</span>
+            <p class="float-right" id="closer-stream-download-dialog">❌</p>
+            <div class="row overflow-auto mt-5">
+                <p class="h5" id="file-name-dialog"></p>
+            </div>
             <div class="row">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. At, dicta maxime? Labore ducimus facere itaque, magni saepe nisi explicabo neque tempora voluptates, corrupti sed exercitationem excepturi iure quia vero nesciunt?
+                <p class="h6">@ <span id="dir-name-dialog"></span></p>
+            </div>
+            <div class="row mt-2" id="axRsmab">
+                <a id="watch-dg" class="col-8 text-center btn btn-primary text-white">Watch</a>
+            </div>
+            <div class="row mt-2" id="axRsmac">
+                <a id="download-dg" class="col-12 text-center btn btn-success text-white">Download</a>
             </div>
         </div>
     </div>
@@ -49,8 +58,8 @@
             </div>
         </div>
         <div class="row">
-            <div id="browse-chunks" class="col-8 overflow-auto">
-                <span id="show-dir">
+            <div id="browse-chunks" class="col-8" style="overflow-y: scroll;">
+                <span id="show-dir" style="white-space: nowrap;">
                 </span>
             </div>
             <div class="col-4">
