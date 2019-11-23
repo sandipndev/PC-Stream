@@ -7,7 +7,7 @@ const sqlite3 = require('sqlite3').verbose()
 var db = new sqlite3.Database('records.db')
 
 // Server
-const { toggleServer, get_server_state } = require('./controllers/server')
+const { toggleServer, get_server_state, setPrivateKey } = require('./controllers/server')
 const { check_uname_conflict_and_add, user_list_update, display_user_perms, edit_user_perms, edit_user_password,
         delete_user } = require('./controllers/dbauth')
 
@@ -17,8 +17,10 @@ const { menu_template, menu_click_emitter } = require('./misc/app_menu')
 const port = 5456
 
 // Do dbs
-const startup_db = require('./misc/startup')
-startup_db()
+const { initDbAndGetPrivateKey } = require('./misc/startup')
+initDbAndGetPrivateKey().then(pKey => {
+    setPrivateKey(pKey)
+})
 
 // --- ELECTRON APP --
 app.on("ready", ()=> {

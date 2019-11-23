@@ -5,23 +5,16 @@ const { driveDataWin, isPathAbs, isDir, isFile } = require("../misc/randomfuncs"
 const sqlite3 = require('sqlite3').verbose()
 
 module.exports = function ( req, res, emitter ) {
-    if(req.body["session_key"] && req.body["dir"] && typeof req.body["session_key"] === "string" && typeof req.body["dir"] === "string") {
+
+    if(req.body["dir"] && typeof req.body["dir"] === "string") {
         
         // Username and Password are sent and of type Strings
 
         // Database checks
         var db = new sqlite3.Database('records.db')
-        db.all(`SELECT permissions.folders_unallowed
-        FROM sessions JOIN permissions ON permissions.user_id = sessions.user_id 
-        WHERE current_session_key = ?`, req.body["session_key"], (_, r1)=> {
-
-            // Session Key does not exists
-            if (r1.length === 0) {
-                res.status(400).send("SKEY_X")
-                return
-            }
-
-            // Session Key exists and correct
+        db.all(`SELECT folders_unallowed
+        FROM permissions
+        WHERE user_id = ?`, req.user_id, (_, r1)=> {
 
             let unallowed_dirs = JSON.parse(r1[0].folders_unallowed)
 

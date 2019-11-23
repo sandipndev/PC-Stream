@@ -2,7 +2,9 @@ const BodyParser = require('body-parser')
 const express = require('express')
 const exapp = express()
 const path = require('path')
-const session = require('express-session')
+const jwt = require('jsonwebtoken')
+
+// Private Key for jsonwebtoken
 
 // To jsonify every request
 exapp.use(BodyParser.json());
@@ -13,13 +15,6 @@ exapp.use(function (err, _, res, _) {
 		return
 	}
 })
-
-// For sessions
-exapp.use(session({
-	secret: 'secret',
-	resave: true,
-	saveUninitialized: true
-}))
 
 // Engine
 exapp.engine('html', require('ejs').renderFile)
@@ -35,6 +30,12 @@ exapp.ip = require('ip').address()
 
 const EventEmitter = require('events')
 const emitter = new EventEmitter()
+
+let privateKey
+
+exports.setPrivateKey = function setPrivateKey(pKey) {
+    privateKey = pKey
+}
 
 const { authenticate,
         deletex,
@@ -56,6 +57,9 @@ let server
 let serverState = 0
 
 // -------------- WEBPAGE CALLS -------------------
+
+/* Not serving websites now */
+/*
 
 exapp.get('/', (req, res) =>  {
     if (req.session.loggedin) {
@@ -98,10 +102,12 @@ exapp.get('/logout', (req, res) => {
     res.redirect("../?lout=1")
 })
 
+*/
+
 // ------------------- API CALLS --------------------
 
 exapp.post('/authenticate', (req, res) => {
-    authenticate(req, res, emitter)
+    authenticate(req, res, emitter, privateKey)
 })
 
 exapp.post('/delete', (req, res) => {
@@ -112,7 +118,7 @@ exapp.get('/download', (req, res) => {
     download(req, res, emitter)
 })
 
-exapp.post('/getdir', (req, res) => {
+exapp.post('/getdir', verifyToken, (req, res) => {
     getdir(req, res, emitter)
 })
 
@@ -147,6 +153,38 @@ exapp.get('/servercheck', (req, res) => {
 exapp.post('/getFileInfo', (req, res) => {
     getFileInfo(req, res, emitter)
 })
+
+// Verify Token
+function verifyToken(req, res, next) {
+    // Get auth header value
+    const bearerHeader = req.headers['authorization'];
+
+    // Check if bearer is undefined
+    if(typeof bearerHeader !== 'undefined') {
+      // Split at the space
+      const bearer = bearerHeader.split(' ');
+
+      // Get token from array
+      const bearerToken = bearer[1];
+
+      jwt.verify(bearerToken, privateKey, (err, authData) => {
+        if (err) {
+            res.sendStatus(403)
+        } else {
+
+            req.user_id = authData["user_id"]
+
+            // Next middleware
+            next();
+        }
+      })
+
+    } else {
+      // Forbidden
+      res.sendStatus(403)
+    }
+  
+}
 
 exports.get_server_state = () => {
     return serverState?"on":"off"

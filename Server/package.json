@@ -24,13 +24,10 @@
     "ejs": "^2.7.1",
     "electron": "^6.0.1",
     "express": "^4.17.1",
-    "express-session": "^1.17.0",
-    "ffprobe": "^1.1.0",
-    "ffprobe-static": "^3.0.0",
     "get-video-duration": "^1.0.3",
     "ip": "^1.1.5",
-    "sqlite3": "https://github.com/mapbox/node-sqlite3/tarball/master",
-    "thumbsupply": "^0.4.0"
+    "jsonwebtoken": "^8.5.1",
+    "sqlite3": "https://github.com/mapbox/node-sqlite3/tarball/master"
   },
   "devDependencies": {
     "electron-builder": "^21.2.0",
