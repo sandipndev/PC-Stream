@@ -98,3 +98,28 @@ name:     String, containing the Real Name of the user.
 - ❌ `403 Forbidden`
 -> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
 
+
+### 5. /getFileInfo
+
+```http
+POST /getFileInfo
+authorization: Bearer <jsonwebtoken>
+
+{
+    "file": "absolute/dir/to/file"
+}
+```
+
+*returns:*
+- ✅  `200 OK` *body* ->  `{file_size, is_streamable, type, duration}`
+```
+file_size:     Number, File Size in Bytes
+is_streamable: Boolean, If it can be streamed or not
+*type:          Enum { "audio", "video" } 
+*duration:      Numeric, Number of seconds of size of the file
+
+*only for streamable
+```
+
+- ❌ `403 Forbidden`
+-> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
