@@ -66,8 +66,8 @@ authorization: Bearer <jsonwebtoken>
     - volumename = If any special name is provided to the Disk by the user, then that name.
 
  folders: []       Array of folder names in the current directory
- files: `[]            Array of file names in the current directory
- others: `[]        Array of weirdo files which causes errors when opening or reading the details of
+ files: []            Array of file names in the current directory
+ others: []        Array of weirdo files which causes errors when opening or reading the details of
  ```
 
 
@@ -80,5 +80,26 @@ authorization: Bearer <jsonwebtoken>
 
 - ❌ `500 Server Error`
 *body* -> `SERVER_ERR`    **Some error occurred while opening the folder**
+
+### 4. /getPicture
+
+```http
+POST /getPicture
+authorization: Bearer <jsonwebtoken>
+```
+
+*returns:*
+- ✅  `200 OK` *body* ->  `{base64DP, name}`
+```
+base64DP: String, containing the Base 64 Encoded Profile Picture of Logged in user.
+name:     String, containing the Real Name of the user.
+```
+
+- ❌ `403 Forbidden`
+-> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
+
+
+
+## Sample Image of the Electron App
 
 ![https://i.imgur.com/JgkQYUZ.png](https://i.imgur.com/JgkQYUZ.png)
