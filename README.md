@@ -98,8 +98,3 @@ name:     String, containing the Real Name of the user.
 - ❌ `403 Forbidden`
 -> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
 
-
-
-## Sample Image of the Electron App
-
-![https://i.imgur.com/JgkQYUZ.png](https://i.imgur.com/JgkQYUZ.png)
