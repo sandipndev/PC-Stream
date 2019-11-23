@@ -142,7 +142,7 @@ exapp.get('/stream', (req, res) => {
     stream(req, res, emitter)
 })
 
-exapp.post('/getPicture', (req, res) => {
+exapp.post('/getPicture', verifyToken, (req, res) => {
     getPicture(req, res, emitter)
 })
 
