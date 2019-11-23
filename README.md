@@ -40,7 +40,7 @@ GET /servercheck
 **Having information of the os is necessary, so that you can request dirs appropriately.**
 **Also, this open route will help to scan the network to find a host running PC Stream.**
 
-### /getdir
+### 3. /getdir
 
 ```http
 POST /getdir
