@@ -121,5 +121,9 @@ is_streamable: Boolean, If it can be streamed or not
 *only for streamable
 ```
 
+- ❌ `400 Bad Request`
+   - *body* -> `DIR_DNE`    **The folder doesn't exist or the user doesn't have permissions to enter**
+   - *body* -> `PATH_NOT_ABS`    **Relative paths are not supported. All requested path needs to be absolute, from root/drive letter**
+
 - ❌ `403 Forbidden`
 -> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
