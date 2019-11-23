@@ -150,7 +150,7 @@ exapp.get('/servercheck', (req, res) => {
     servercheck(req, res, emitter)
 })
 
-exapp.post('/getFileInfo', (req, res) => {
+exapp.post('/getFileInfo', verifyToken, (req, res) => {
     getFileInfo(req, res, emitter)
 })
 

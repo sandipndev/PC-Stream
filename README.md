@@ -66,8 +66,8 @@ authorization: Bearer <jsonwebtoken>
     - volumename = If any special name is provided to the Disk by the user, then that name.
 
  folders: []       Array of folder names in the current directory
- files: `[]            Array of file names in the current directory
- others: `[]        Array of weirdo files which causes errors when opening or reading the details of
+ files: []            Array of file names in the current directory
+ others: []        Array of weirdo files which causes errors when opening or reading the details of
  ```
 
 
