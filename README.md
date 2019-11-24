@@ -37,8 +37,8 @@ GET /api/server-check
 - `win32` - Windows (x32 / x64)
 - `linux/macos/etc` - Unix Based
 
-**Having information of the os is necessary, so that you can request dirs appropriately.**
-**Also, this open route will help to scan the network to find a host running PC Stream.**
+Having information of the os is necessary, so that you can request dirs appropriately.
+Also, this open route will help to scan the network to find a host running PC Stream.
 
 ### 3. /get-dir
 

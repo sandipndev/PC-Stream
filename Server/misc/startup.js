@@ -17,14 +17,6 @@ module.exports.initDbAndGetPrivateKey = function() {
                 "hashed_password"	TEXT
             );`)
 
-            db.run(`CREATE TABLE IF NOT EXISTS "download_keys" (
-                "key"   TEXT PRIMARY KEY,
-                "by_user"   INTEGER,
-                "file"  TEXT
-            );"`)
-
-            db.run(`DELETE FROM "download_keys"`)
-
             db.run(`CREATE TABLE IF NOT EXISTS "stream_keys" (
                 "key"   TEXT PRIMARY KEY,
                 "by_user"   INTEGER,
