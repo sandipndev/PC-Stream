@@ -123,7 +123,7 @@ exapp.post('/api/get-stream', verifyToken, (req, res) => {
     getstream(req, res, emitter)
 })
 
-exapp.post('/api/recur-media-scan', (req, res) => {
+exapp.post('/api/recur-media-scan', verifyToken, (req, res) => {
     recursivemediasearch(req, res, emitter)
 })
 

@@ -53,3 +53,13 @@ exports.driveDataWin = async function () {
 
 exports.video_extentions_streamable = ['.avi', '.mkv', '.mp4', '.wmv']
 exports.audio_extentions_streamable = ['.mp3']
+exports.streamable = exports.video_extentions_streamable.concat(exports.audio_extentions_streamable)
+
+exports.getDirectories = function (src, callback) {
+	glob(src + '/**/*', callback);
+};
+
+exports.isChild = (parent, dir) => {
+	const relative = path.relative(parent, dir);
+	return (relative && !relative.startsWith('..') && !path.isAbsolute(relative));
+}

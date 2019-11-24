@@ -231,3 +231,31 @@ authorization: Bearer <jsonwebtoken>
 - ❌ `500 Server Error`
 *body* -> `{syscall error}`
 -> **The file couldn't be reanamed due to some issue on server or maybe the file wasn't accessible**
+
+### 10. /recur-media-scan
+
+```http
+POST /api/recur-media-scan
+authorization: Bearer <jsonwebtoken>
+
+{
+   "dir": "dir/to/scan/recursively/under"
+}
+```
+
+*returns:*
+- ✅  `200 OK` *body* -> `{ media }`
+```
+media:   Array of absolute paths of streamable files, accessible to current user
+```
+
+- ❌ `400 Bad Request`
+   - *body* -> `PATH_NOT_ABS`
+   - *body* -> `DIR_DNE`
+   - *body* -> `DIR_X`
+
+- ❌ `403 Forbidden`
+-> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
+
+- ❌ `500 Server Error`
+-> **Error is scanning directories**
