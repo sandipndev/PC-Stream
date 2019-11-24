@@ -250,9 +250,9 @@ media:   Array of absolute paths of streamable files, accessible to current user
 ```
 
 - ❌ `400 Bad Request`
-   - *body* -> `PATH_NOT_ABS`
-   - *body* -> `DIR_DNE`
-   - *body* -> `DIR_X`
+   - *body* -> `PATH_NOT_ABS` **Directory path sent wasn't absolute**
+   - *body* -> `DIR_DNE`   **Given directory does not exist**
+   - *body* -> `DIR_X`  **Not a directory**
 
 - ❌ `403 Forbidden`
 -> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
