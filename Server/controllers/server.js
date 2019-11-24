@@ -128,7 +128,7 @@ exapp.post('/api/rename', (req, res) => {
     rename(req, res, emitter)
 })
 
-exapp.get('/api/stream', (req, res) => {
+exapp.get('/stream', (req, res) => {
     stream(req, res, emitter)
 })
 
