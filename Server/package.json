@@ -1,13 +1,14 @@
 {
   "name": "pc-stream",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "electron .",
     "rebuild": "electron-rebuild -f -w sqlite3",
     "postinstall": "electron-builder install-app-deps /m",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -30,7 +31,16 @@
   },
   "devDependencies": {
     "electron": "^6.0.1",
-    "electron-builder": "^21.2.0",
-    "electron-rebuild": "^1.8.5"
+    "electron-builder": "^21.2.0"
+  },
+  "build": {
+    "appId": "com.triethyl.pcstream",
+    "productName": "PC Stream",
+    "target": "NSIS",
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false
+    },
+    "asar": false
   }
 }
