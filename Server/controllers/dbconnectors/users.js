@@ -77,7 +77,7 @@ exports.add_user = function(new_user) {
 
         db.run(`INSERT INTO permissions(user_id, can_download, can_rename, can_delete, folders_unallowed) VALUES (?, ?, ?, ?, ?)`, [
             user_id,
-            0,
+            1,
             0,
             0,
             JSON.stringify([])

@@ -9,9 +9,13 @@ module.exports = function ( req, res, emitter ) {
         db.all(`SELECT file, by_user FROM stream_keys WHERE key = ?`, req.query["token"], (e, r1)=>{
             if (!e) {
 
+                /* STREAMING LOGIC --starts */
+
                 res.download(r1[0].file, path.basename(r1[0].file), (err) => {
                     if (err) return;
                 })
+
+                /* -- ends */
 
             } else {
                 res.sendStatus(500)

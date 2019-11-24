@@ -39,9 +39,7 @@ exports.setPrivateKey = function setPrivateKey(pKey) {
 
 const { authenticate,
         deletex,
-        download,
         getdir,
-        getdownload,
         getstream,
         recursivemediasearch,
         rename,
@@ -114,16 +112,8 @@ exapp.post('/api/delete', (req, res) => {
     deletex(req, res, emitter)
 })
 
-exapp.get('/api/download', (req, res) => {
-    download(req, res, emitter)
-})
-
 exapp.post('/api/get-dir', verifyToken, (req, res) => {
     getdir(req, res, emitter)
-})
-
-exapp.post('/api/get-download', verifyToken, (req, res) => {
-    getdownload(req, res, emitter)
 })
 
 exapp.post('/api/get-stream', verifyToken, (req, res) => {
