@@ -3,9 +3,9 @@ const sqlite3 = require('sqlite3').verbose()
 module.exports = function ( req, res, emitter ) {
     // DB checks
     var db = new sqlite3.Database('records.db')
-    db.all(`SELECT profile_picture
-    FROM user_pictures
-    WHERE user_id = ?`, req.user_id, (_, r1) => {
+    db.all(`SELECT user_pictures.profile_picture, account.real_name
+    FROM user_pictures JOIN account ON user_pictures.user_id = account.user_id
+    WHERE account.user_id = ?`, req.user_id, (_, r1) => {
 
         // Session Key does not exists
         if (r1.length === 0) {
