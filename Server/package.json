@@ -22,7 +22,6 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "ejs": "^2.7.1",
-    "electron": "^6.0.1",
     "express": "^4.17.1",
     "get-video-duration": "^1.0.3",
     "ip": "^1.1.5",
@@ -30,6 +29,7 @@
     "sqlite3": "https://github.com/mapbox/node-sqlite3/tarball/master"
   },
   "devDependencies": {
+    "electron": "^6.0.1",
     "electron-builder": "^21.2.0",
     "electron-rebuild": "^1.8.5"
   }
