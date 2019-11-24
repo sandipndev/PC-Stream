@@ -25,7 +25,7 @@ POST /authenticate
    - *body* -> `UNAME_X`    **username doesn't exist**
    - *body* -> `PWORD_X`    **wrong password**
 
-### 2. /servercheck
+### 2. /server-check
 
 ```http
 GET /servercheck
@@ -40,7 +40,7 @@ GET /servercheck
 **Having information of the os is necessary, so that you can request dirs appropriately.**
 **Also, this open route will help to scan the network to find a host running PC Stream.**
 
-### 3. /getdir
+### 3. /get-dir
 
 ```http
 POST /getdir
@@ -81,7 +81,7 @@ authorization: Bearer <jsonwebtoken>
 - ❌ `500 Server Error`
 *body* -> `SERVER_ERR`    **Some error occurred while opening the folder**
 
-### 4. /getPicture
+### 4. /get-picture
 
 ```http
 POST /getPicture
@@ -99,7 +99,7 @@ name:     String, containing the Real Name of the user.
 -> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
 
 
-### 5. /getFileInfo
+### 5. /get-file-info
 
 ```http
 POST /getFileInfo
