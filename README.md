@@ -28,7 +28,7 @@ POST /api/authenticate
 ### 2. /server-check
 
 ```http
-GET /servercheck
+GET /server-check
 ```
 *returns*:
 - ✅  Always `200 OK` if server running with body as `PC Stream, <os_code>`
@@ -43,7 +43,7 @@ GET /servercheck
 ### 3. /get-dir
 
 ```http
-POST /api/getdir
+POST /api/get-dir
 authorization: Bearer <jsonwebtoken>
 
 {
@@ -84,7 +84,7 @@ authorization: Bearer <jsonwebtoken>
 ### 4. /get-picture
 
 ```http
-POST /api/getPicture
+POST /api/get-picture
 authorization: Bearer <jsonwebtoken>
 ```
 
@@ -102,7 +102,7 @@ name:     String, containing the Real Name of the user.
 ### 5. /get-file-info
 
 ```http
-POST /api/getFileInfo
+POST /api/get-file-info
 authorization: Bearer <jsonwebtoken>
 
 {
