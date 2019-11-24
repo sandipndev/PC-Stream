@@ -118,19 +118,19 @@ exapp.get('/download', (req, res) => {
     download(req, res, emitter)
 })
 
-exapp.post('/getdir', verifyToken, (req, res) => {
+exapp.post('/get-dir', verifyToken, (req, res) => {
     getdir(req, res, emitter)
 })
 
-exapp.post('/getdownload', (req, res) => {
+exapp.post('/get-download', (req, res) => {
     getdownload(req, res, emitter)
 })
 
-exapp.post('/getstream', (req, res) => {
+exapp.post('/get-stream', (req, res) => {
     getstream(req, res, emitter)
 })
 
-exapp.post('/recurmediascan', (req, res) => {
+exapp.post('/recur-media-scan', (req, res) => {
     recursivemediasearch(req, res, emitter)
 })
 
@@ -142,15 +142,15 @@ exapp.get('/stream', (req, res) => {
     stream(req, res, emitter)
 })
 
-exapp.post('/getPicture', verifyToken, (req, res) => {
+exapp.post('/get-user-data', verifyToken, (req, res) => {
     getPicture(req, res, emitter)
 })
 
-exapp.get('/servercheck', (req, res) => {
+exapp.get('/server-check', (req, res) => {
     servercheck(req, res, emitter)
 })
 
-exapp.post('/getFileInfo', verifyToken, (req, res) => {
+exapp.post('/get-file-info', verifyToken, (req, res) => {
     getFileInfo(req, res, emitter)
 })
 
