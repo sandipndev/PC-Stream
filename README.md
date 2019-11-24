@@ -122,7 +122,7 @@ is_streamable: Boolean, If it can be streamed or not
 ```
 
 - ❌ `400 Bad Request`
-   - *body* -> `DIR_DNE`    **The folder doesn't exist or the user doesn't have permissions to enter**
+   - *body* -> `FILE_DNE`    **The file doesn't exist or the user doesn't have permissions to see in it**
    - *body* -> `PATH_NOT_ABS`    **Relative paths are not supported. All requested path needs to be absolute, from root/drive letter**
 
 - ❌ `403 Forbidden`
@@ -175,3 +175,31 @@ This is done so that it can be easily used in the following manner:
 - ❌ `400 Bad Request`
    - *body* -> `DATA_X`    **A token wasn't sent**
    - *body* -> `TOKEN_X`    **An invalid token was sent**
+
+
+### 8. /delete
+
+```http
+POST /api/delete
+authorization: Bearer <jsonwebtoken>
+
+{
+   "file": "absolute/path/to/file"
+}
+```
+
+*returns:*
+- ✅  `200 OK` **The file was deleted successfully**
+
+- ❌ `400 Bad Request`
+   - *body* -> `DATA_X`    **A file wasn't sent**
+   - *body* -> `CANT_DX`    **No permissions to delete**
+   - *body* -> `PATH_NOT_ABS`    **Given file path wasn't absolute**
+   - *body* -> `DIR_CANT`    **Can't delete directories**
+   - *body* -> `FILE_DNE`    **The file doesn't exist or the user doesn't have permissions to access that folder in which the file is present**
+
+- ❌ `403 Forbidden`
+-> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
+
+- ❌ `500 Server Error`
+-> **The file couldn't be deleted due to some issue on server or maybe the file wasn't accessible**

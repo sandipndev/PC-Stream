@@ -4,8 +4,6 @@ const sqlite3 = require('sqlite3').verbose()
 module.exports = function ( req, res, emitter ) {
     if (req.body["file"] && typeof req.body["file"] === "string" && req.body["file"] !== "") {
 
-        // Username and Password are sent and of type Strings
-
         // Database checks
         var db = new sqlite3.Database('records.db')
         db.all(`SELECT folders_unallowed, can_delete
@@ -24,13 +22,18 @@ module.exports = function ( req, res, emitter ) {
 
             // No perms
             if (r1[0].can_delete === 0) {
-                res.status(400).send("CANT")
+                res.status(400).send("CANT_DX")
                 return
             }
 
             // Path must be absolute
             if (!isPathAbs(req.body["file"])) {
                 res.status(400).send("PATH_NOT_ABS")
+                return
+            }
+
+            if (isDir(req.body["file"])) {
+                res.status(400).send("DIR_CANT")
                 return
             }
 
@@ -51,9 +54,9 @@ module.exports = function ( req, res, emitter ) {
             // Okay, now delete
             deleteFile(req.body["file"], (err)=>{
                 if (err) {
-                    res.status(500).send("DIR_CANT")
+                    res.sendStatus(500)
                 } else {
-                    res.status(200).send("OK")
+                    res.sendStatus(200)
                 }
             })
 
