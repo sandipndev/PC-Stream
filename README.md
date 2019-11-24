@@ -72,8 +72,8 @@ authorization: Bearer <jsonwebtoken>
 
 
 - ❌ `400 Bad Request`
-   - *body* -> `DIR_DNE`    **The folder doesn't exist or the user doesn't have permissions to enter. Chill, unallowed dirs won't be returned as a folder when requesting a dir having a folder which is not allowed**
    - *body* -> `PATH_NOT_ABS`    **Relative paths are not supported. All requested path needs to be absolute, from root/drive letter**
+   - *body* -> `DIR_DNE`    **The folder doesn't exist or the user doesn't have permissions to enter. Chill, unallowed dirs won't be returned as a folder when requesting a dir having a folder which is not allowed**
 
 - ❌ `403 Forbidden`
 -> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
@@ -81,10 +81,10 @@ authorization: Bearer <jsonwebtoken>
 - ❌ `500 Server Error`
 *body* -> `SERVER_ERR`    **Some error occurred while opening the folder**
 
-### 4. /get-picture
+### 4. /get-user-data
 
 ```http
-POST /api/get-picture
+POST /api/get-user-data
 authorization: Bearer <jsonwebtoken>
 ```
 
@@ -127,3 +127,51 @@ is_streamable: Boolean, If it can be streamed or not
 
 - ❌ `403 Forbidden`
 -> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
+
+### 6. /get-stream
+
+```http
+POST /api/get-stream
+authorization: Bearer <jsonwebtoken>
+
+{
+   "file": "absolute/path/to/file/"
+}
+```
+
+*returns:*
+- ✅  `200 OK` *body* ->  `{token}`
+```
+token:     String, token to stream the file with, used in /api/stream
+```
+
+- ❌ `400 Bad Request`
+   - *body* -> `DATA_X`    **A file was not requested for**
+   - *body* -> `CANT_DL_STREAM`    **You don't have download and streaming permissions**
+   - *body* -> `PATH_NOT_ABS`    **Relative paths are not supported. All requested path needs to be absolute, from root/drive letter**
+   - *body* -> `DIR_DNE`    **The folder doesn't exist or the user doesn't have permissions to enter**
+
+- ❌ `403 Forbidden`
+-> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
+
+- ❌ `500 Server Error`
+-> **A proper token couldn't be created, retry**
+
+### 7. /stream
+
+```http
+GET /stream?token=<stream-token>
+```
+
+To stream or download, first a **token** is required. The token can be received using the path `/api/get-stream`.
+This is done so that it can be easily used in the following manner:
+```html
+   <video src="/stream?token=<stream-token>" controls>
+```
+
+*returns:*
+- ✅  `200 OK` *body* ->  A buffer containing the stream
+
+- ❌ `400 Bad Request`
+   - *body* -> `DATA_X`    **A token wasn't sent**
+   - *body* -> `TOKEN_X`    **An invalid token was sent**

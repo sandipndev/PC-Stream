@@ -18,7 +18,7 @@ module.exports = function ( req, res, emitter ) {
                 /* -- ends */
 
             } else {
-                res.sendStatus(500)
+                res.status(400).send("TOKEN_X")
             }
         })
 
