@@ -193,7 +193,7 @@ authorization: Bearer <jsonwebtoken>
 
 - ❌ `400 Bad Request`
    - *body* -> `DATA_X`    **A file wasn't sent**
-   - *body* -> `CANT_DX`    **No permissions to delete**
+   - *body* -> `CANT_DX`    **No permissions to delete was given to you**
    - *body* -> `PATH_NOT_ABS`    **Given file path wasn't absolute**
    - *body* -> `DIR_CANT`    **Can't delete directories**
    - *body* -> `FILE_DNE`    **The file doesn't exist or the user doesn't have permissions to access that folder in which the file is present**
@@ -203,3 +203,31 @@ authorization: Bearer <jsonwebtoken>
 
 - ❌ `500 Server Error`
 -> **The file couldn't be deleted due to some issue on server or maybe the file wasn't accessible**
+
+### 9. /rename
+
+```http
+POST /api/rename
+authorization: Bearer <jsonwebtoken>
+
+{
+   "from_name": "absolute/path/to/file/or/dir",
+   "to_name": "absolute/path/to/file/or/dir"
+}
+```
+
+*returns:*
+- ✅  `200 OK` **The file was renamed successfully**
+
+- ❌ `400 Bad Request`
+   - *body* -> `DATA_X`    **From and To Names weren't sent**
+   - *body* -> `CANT_RN`    **No permissions to rename was given to you**
+   - *body* -> `PATH_NOT_ABS`    **Given file path wasn't absolute of either From or To**
+   - *body* -> `FILE_DNE`    **The file doesn't exist or the user doesn't have permissions to access that folder in which the file is present**
+
+- ❌ `403 Forbidden`
+-> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
+
+- ❌ `500 Server Error`
+*body* -> `{syscall error}`
+-> **The file couldn't be reanamed due to some issue on server or maybe the file wasn't accessible**

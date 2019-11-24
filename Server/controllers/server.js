@@ -15,6 +15,8 @@ exapp.use(function (err, _, res, _) {
 	}
 })
 
+/*
+
 // Engine
 exapp.engine('html', require('ejs').renderFile)
 
@@ -24,6 +26,8 @@ exapp.use("/assets", express.static(path.join(__dirname, "..", "views", "web", "
 exapp.use("/js", express.static(path.join(__dirname, "..", "views", "web", "js")))
 exapp.use("/fonts", express.static(path.join(__dirname, "..", "views", "web", "fonts")))
 exapp.get("/favicon.ico", (_, res) => res.sendFile(path.join(__dirname, "..", "views", "web", "assets", "favicon.ico")))
+
+*/
 
 exapp.ip = require('ip').address()
 
@@ -123,7 +127,7 @@ exapp.post('/api/recur-media-scan', (req, res) => {
     recursivemediasearch(req, res, emitter)
 })
 
-exapp.post('/api/rename', (req, res) => {
+exapp.post('/api/rename', verifyToken, (req, res) => {
     rename(req, res, emitter)
 })
 

@@ -1,28 +1,23 @@
-const { pathExists, isPathAbs, renameFile } = require("../misc/randomfuncs")
+const { pathExists, isDir, isFile, isPathAbs, renameFile } = require("../misc/randomfuncs")
+const fs = require('fs')
 const sqlite3 = require('sqlite3').verbose()
 
 module.exports = function ( req, res, emitter ) {
-    if (req.body["session_key"] && req.body["file"] && typeof req.body["session_key"] === "string" && typeof req.body["file"] === "string") {
-
-        // Username and Password are sent and of type Strings
+    if (req.body["from_name"] && req.body["to_name"] && typeof req.body["from_name"] === "string" && typeof req.body["to_name"] === "string" && req.body["from_name"] !== "" && req.body["to_name"] !== "") {
 
         // Database checks
         var db = new sqlite3.Database('records.db')
-        db.all(`SELECT permissions.folders_unallowed, permissions.can_rename, sessions.user_id
-        FROM sessions JOIN permissions ON permissions.user_id = sessions.user_id 
-        WHERE current_session_key = ?`, req.body["session_key"], (_, r1)=> {
-
-            // Session Key does not exist
-            if (r1.length === 0) {
-                res.status(400).send("SKEY_X")
-                return
-            }
+        db.all(`SELECT folders_unallowed, can_rename
+        FROM permissions
+        WHERE user_id = ?`, req.user_id, (_, r1)=> {
 
             // Session Key exists and correct
             let unallowed_dirs = JSON.parse(r1[0].folders_unallowed)
 
             // correcting dir format for windows
             if (process.platform == 'win32') {
+                req.body["from_name"] = req.body["from_name"].replace(/\//g, "\\")
+                req.body["to_name"] = req.body["to_name"].replace(/\//g, "\\")
                 for (var i=0; i<unallowed_dirs.length; i++) {
                     unallowed_dirs[i] = unallowed_dirs[i].replace(/\//g, "\\")
                 }
@@ -30,36 +25,36 @@ module.exports = function ( req, res, emitter ) {
 
             // No perms
             if (r1[0].can_rename === 0) {
-                res.status(400).send("CANT")
+                res.status(400).send("CANT_RN")
                 return
             }
 
             // Path must be absolute
-            if (!isPathAbs(req.body["file"])) {
+            if (!isPathAbs(req.body["from_name"]) || !isPathAbs(req.body["to_name"])) {
                 res.status(400).send("PATH_NOT_ABS")
                 return
             }
 
             // Given file is inside an unallowed dir
             for (var i=0; i<unallowed_dirs.length; i++) {
-                if (req.body["file"].includes(unallowed_dirs[i])) {
+                if (req.body["from_name"].includes(unallowed_dirs[i])) {
                     res.status(400).send("FILE_DNE")
                     return
                 }
             }
 
-            // File has no existence really
-            if (!pathExists(req.body["file"])) {
+            // Source File/Dir has no existence really
+            if (!pathExists(req.body["from_name"])) {
                 res.status(400).send("FILE_DNE")
                 return
             }
 
             // Okay, now rename
-            renameFile(req.body["file"], (err)=>{
+            renameFile(req.body["from_name"], req.body["to_name"], (err)=>{
                 if (err) {
-                    res.status(500).send("DIR_CANT")
+                    res.status(500).send(err)
                 } else {
-                    res.status(200).send("OK")
+                    res.sendStatus(200)
                 }
             })
 

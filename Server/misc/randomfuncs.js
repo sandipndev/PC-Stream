@@ -9,7 +9,7 @@ exports.getFileSize = source => fs.statSync(source).size
 exports.isPathAbs = source => path.isAbsolute(source)
 exports.pathExists = source => fs.existsSync(source)
 exports.deleteFile = (source, cb) => fs.unlink(source, cb)
-exports.renameFile = (source, cb) => fs.rename(source, cb)
+exports.renameFile = (source, newSource, cb) => fs.rename(source, newSource, cb)
 
 async function sh(cmd) {
 	return new Promise(function (resolve, reject) {
