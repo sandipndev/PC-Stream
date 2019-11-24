@@ -7,7 +7,7 @@ An Electron app for a futuristic looking PC Streaming solution
 ### 1. /authenticate
 
 ```http
-POST /authenticate
+POST /api/authenticate
 
 {
     "username":    "username",
@@ -43,7 +43,7 @@ GET /servercheck
 ### 3. /get-dir
 
 ```http
-POST /getdir
+POST /api/getdir
 authorization: Bearer <jsonwebtoken>
 
 {
@@ -84,7 +84,7 @@ authorization: Bearer <jsonwebtoken>
 ### 4. /get-picture
 
 ```http
-POST /getPicture
+POST /api/getPicture
 authorization: Bearer <jsonwebtoken>
 ```
 
@@ -102,7 +102,7 @@ name:     String, containing the Real Name of the user.
 ### 5. /get-file-info
 
 ```http
-POST /getFileInfo
+POST /api/getFileInfo
 authorization: Bearer <jsonwebtoken>
 
 {

@@ -106,51 +106,51 @@ exapp.get('/logout', (req, res) => {
 
 // ------------------- API CALLS --------------------
 
-exapp.post('/authenticate', (req, res) => {
+exapp.post('/api/authenticate', (req, res) => {
     authenticate(req, res, emitter, privateKey)
 })
 
-exapp.post('/delete', (req, res) => {
+exapp.post('/api/delete', (req, res) => {
     deletex(req, res, emitter)
 })
 
-exapp.get('/download', (req, res) => {
+exapp.get('/api/download', (req, res) => {
     download(req, res, emitter)
 })
 
-exapp.post('/get-dir', verifyToken, (req, res) => {
+exapp.post('/api/get-dir', verifyToken, (req, res) => {
     getdir(req, res, emitter)
 })
 
-exapp.post('/get-download', (req, res) => {
+exapp.post('/api/get-download', verifyToken, (req, res) => {
     getdownload(req, res, emitter)
 })
 
-exapp.post('/get-stream', (req, res) => {
+exapp.post('/api/get-stream', verifyToken, (req, res) => {
     getstream(req, res, emitter)
 })
 
-exapp.post('/recur-media-scan', (req, res) => {
+exapp.post('/api/recur-media-scan', (req, res) => {
     recursivemediasearch(req, res, emitter)
 })
 
-exapp.post('/rename', (req, res) => {
+exapp.post('/api/rename', (req, res) => {
     rename(req, res, emitter)
 })
 
-exapp.get('/stream', (req, res) => {
+exapp.get('/api/stream', (req, res) => {
     stream(req, res, emitter)
 })
 
-exapp.post('/get-user-data', verifyToken, (req, res) => {
+exapp.post('/api/get-user-data', verifyToken, (req, res) => {
     getPicture(req, res, emitter)
 })
 
-exapp.get('/server-check', (req, res) => {
+exapp.get('/api/server-check', (req, res) => {
     servercheck(req, res, emitter)
 })
 
-exapp.post('/get-file-info', verifyToken, (req, res) => {
+exapp.post('/api/get-file-info', verifyToken, (req, res) => {
     getFileInfo(req, res, emitter)
 })
 
