@@ -6,3 +6,6 @@ node_modules/
 
 # Databases
 *.db
+
+# Distribution Binaries
+dist/
