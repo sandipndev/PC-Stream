@@ -28,7 +28,7 @@ POST /api/authenticate
 ### 2. /server-check
 
 ```http
-GET /server-check
+GET /api/server-check
 ```
 *returns*:
 - ✅  Always `200 OK` if server running with body as `PC Stream, <os_code>`
