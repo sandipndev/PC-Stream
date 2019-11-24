@@ -1,8 +1,9 @@
-const sqlite3 = require('sqlite3').verbose()
+const sqlite3 = require('sqlite3')
+const path = require('path')
 
 module.exports = function ( req, res, emitter ) {
     // DB checks
-    var db = new sqlite3.Database('records.db')
+    var db = new sqlite3.Database(path.join(__dirname, '..', 'records.db'))
     db.all(`SELECT user_pictures.profile_picture, account.real_name
     FROM user_pictures JOIN account ON user_pictures.user_id = account.user_id
     WHERE account.user_id = ?`, req.user_id, (_, r1) => {

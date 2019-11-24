@@ -1,4 +1,5 @@
-const sqlite3 = require('sqlite3').verbose()
+const sqlite3 = require('sqlite3')
+const path = require('path')
 const { createHash } = require('crypto')
 const jwt = require('jsonwebtoken')
 
@@ -9,7 +10,7 @@ module.exports = function ( req, res, emitter, privateKey ) {
         // Username and Password are sent and of type Strings
 
         // Database checks
-        var db = new sqlite3.Database('records.db')
+        var db = new sqlite3.Database(path.join(__dirname, '..', 'records.db'))
         db.all(`SELECT user_id, salt, hashed_password FROM account WHERE user_name = ?`, req.body["username"], (_, r) => {
             
             // Check even if the user exists

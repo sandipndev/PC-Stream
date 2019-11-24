@@ -1,13 +1,14 @@
 // NewUser object: real_name, user_name, plaintext_password, picture_base64
 
 // Database Connection
-const sqlite3 = require('sqlite3').verbose()
+const sqlite3 = require('sqlite3')
+const path = require('path')
 
 // For Salts
 const { randomBytes, createHash } = require('crypto')
 
 exports._get_user_id = function (user_name) {
-    var db = new sqlite3.Database('records.db')
+    var db = new sqlite3.Database(path.join(__dirname, '..', '..', 'records.db'))
 
     db.each(`SELECT * FROM account WHERE user_name = ?`, user_name, (err, rows) => {
         console.log(rows)
@@ -17,7 +18,7 @@ exports._get_user_id = function (user_name) {
 }
 
 exports.check_uname_conflict_and_add = function (new_user, emitter) {
-    var db = new sqlite3.Database('records.db')
+    var db = new sqlite3.Database(path.join(__dirname, '..', '..', 'records.db'))
 
     db.all('SELECT user_name FROM account', (_, row) => {
         
@@ -37,7 +38,7 @@ exports.check_uname_conflict_and_add = function (new_user, emitter) {
 }
 
 exports.user_list_update = function (emitter) { 
-    var db = new sqlite3.Database('records.db')
+    var db = new sqlite3.Database(path.join(__dirname, '..', '..', 'records.db'))
 
     db.all('SELECT user_name FROM account', (_, row) => {
         emitter.send("listupdate:user", row)
@@ -48,7 +49,7 @@ exports.user_list_update = function (emitter) {
 
 exports.add_user = function(new_user) {
 
-    var db = new sqlite3.Database('records.db')
+    var db = new sqlite3.Database(path.join(__dirname, '..', '..', 'records.db'))
 
     // Generate salt
     const salt = randomBytes(10).toString('hex')
@@ -93,7 +94,7 @@ exports.add_user = function(new_user) {
 }
 
 exports.display_user_perms = function (uname, emitter) { 
-    var db = new sqlite3.Database('records.db')
+    var db = new sqlite3.Database(path.join(__dirname, '..', '..', 'records.db'))
 
     db.all('SELECT can_download, can_rename, can_delete, folders_unallowed FROM account JOIN permissions ON account.user_id = permissions.user_id WHERE user_name = ?', uname, (_, row) => {
         emitter.send("user:displayPerms", row, uname)
@@ -104,7 +105,7 @@ exports.display_user_perms = function (uname, emitter) {
 
 exports.edit_user_perms = function(existing_user_changes, emitter) {
 
-    var db = new sqlite3.Database('records.db')
+    var db = new sqlite3.Database(path.join(__dirname, '..', '..', 'records.db'))
 
     if (process.platform == 'win32') {
         for (var i=0; i<existing_user_changes.folders_unallowed.length; i++) {
@@ -133,7 +134,7 @@ exports.edit_user_perms = function(existing_user_changes, emitter) {
 
 exports.edit_user_password = function(existing_user_changes, emitter) {
 
-    var db = new sqlite3.Database('records.db')
+    var db = new sqlite3.Database(path.join(__dirname, '..', '..', 'records.db'))
 
     // Generate salt
     const salt = randomBytes(10).toString('hex')
@@ -160,7 +161,7 @@ exports.edit_user_password = function(existing_user_changes, emitter) {
 
 exports.delete_user = function(existing_user, emitter) {
 
-    var db = new sqlite3.Database('records.db')
+    var db = new sqlite3.Database(path.join(__dirname, '..', '..', 'records.db'))
 
     db.all(`SELECT user_id, real_name FROM account WHERE user_name = ?`, existing_user.user_name, (_, row) => {
 

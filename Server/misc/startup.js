@@ -1,12 +1,13 @@
 // To create databases
 const sqlite3 = require('sqlite3').verbose()
+const path = require('path')
 const { randomBytes } = require('crypto')
 
 module.exports.initDbAndGetPrivateKey = function() {
 
     return new Promise((resolve, _) => {
 
-        var db = new sqlite3.Database('records.db')
+        var db = new sqlite3.Database(path.join(__dirname, '..', 'records.db'))
 
         db.serialize(()=> {
             db.run(`CREATE TABLE IF NOT EXISTS "account" (

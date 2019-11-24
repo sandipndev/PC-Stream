@@ -1,11 +1,11 @@
 const path = require('path')
-const sqlite3 = require('sqlite3').verbose()
+const sqlite3 = require('sqlite3')
 
 module.exports = function ( req, res, emitter ) {
     if (req.query["token"] && typeof req.query["token"] == "string" && req.body["token"] !== "") {
 
         // DB Checks
-        var db = new sqlite3.Database('records.db')
+        var db = new sqlite3.Database(path.join(__dirname, '..', 'records.db'))
         db.all(`SELECT file, by_user FROM stream_keys WHERE key = ?`, req.query["token"], (e, r1)=>{
             if (!e) {
 

@@ -2,10 +2,6 @@ const {app, BrowserWindow, ipcMain, Menu, dialog} = require('electron')
 const path = require('path')
 const url = require('url')
 
-// Database
-const sqlite3 = require('sqlite3').verbose()
-var db = new sqlite3.Database('records.db')
-
 // Server
 const { toggleServer, get_server_state, setPrivateKey } = require('./controllers/server')
 const { check_uname_conflict_and_add, user_list_update, display_user_perms, edit_user_perms, edit_user_password,
@@ -52,7 +48,6 @@ function turn_off () {
         toggleServer(port)
     }
     app.quit()
-    db.close()
 }
 
 app.on('window-all-closed', turn_off )

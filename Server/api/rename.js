@@ -1,12 +1,12 @@
-const { pathExists, isDir, isFile, isPathAbs, renameFile } = require("../misc/randomfuncs")
-const fs = require('fs')
-const sqlite3 = require('sqlite3').verbose()
+const { pathExists, isPathAbs, renameFile } = require("../misc/randomfuncs")
+const path = require('path')
+const sqlite3 = require('sqlite3')
 
 module.exports = function ( req, res, emitter ) {
     if (req.body["from_name"] && req.body["to_name"] && typeof req.body["from_name"] === "string" && typeof req.body["to_name"] === "string" && req.body["from_name"] !== "" && req.body["to_name"] !== "") {
 
         // Database checks
-        var db = new sqlite3.Database('records.db')
+        var db = new sqlite3.Database(path.join(__dirname, '..', 'records.db'))
         db.all(`SELECT folders_unallowed, can_rename
         FROM permissions
         WHERE user_id = ?`, req.user_id, (_, r1)=> {

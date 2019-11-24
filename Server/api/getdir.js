@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { driveDataWin, isPathAbs, isDir, isFile } = require("../misc/randomfuncs")
 
-const sqlite3 = require('sqlite3').verbose()
+const sqlite3 = require('sqlite3')
 
 module.exports = function ( req, res, emitter ) {
 
@@ -11,7 +11,7 @@ module.exports = function ( req, res, emitter ) {
         // Username and Password are sent and of type Strings
 
         // Database checks
-        var db = new sqlite3.Database('records.db')
+        var db = new sqlite3.Database(path.join(__dirname, '..', 'records.db'))
         db.all(`SELECT folders_unallowed
         FROM permissions
         WHERE user_id = ?`, req.user_id, (_, r1)=> {
