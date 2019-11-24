@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 module.exports = function ( req, res, emitter, privateKey ) {
     
-    if(req.body["username"] && req.body["password"] && typeof req.body["username"] === "string" && typeof req.body["password"] === "string") {
+    if(req.body["username"] && req.body["password"] && typeof req.body["username"] === "string" && typeof req.body["password"] === "string"  && req.body["username"] !== "" && req.body["password"] !== "") {
 
         // Username and Password are sent and of type Strings
 

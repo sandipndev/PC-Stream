@@ -4,7 +4,7 @@ const path = require('path')
 const sqlite3 = require('sqlite3').verbose()
 
 module.exports = function ( req, res, emitter ) {
-    if (req.body["file"] && typeof req.body["file"] === "string") {
+    if (req.body["file"] && typeof req.body["file"] === "string" && req.body["file"] !== "") {
 
         // Username and Password are sent and of type Strings
 

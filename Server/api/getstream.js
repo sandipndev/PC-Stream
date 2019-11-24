@@ -4,7 +4,7 @@ const { randomBytes } = require('crypto')
 const sqlite3 = require('sqlite3').verbose()
 
 module.exports = function ( req, res, emitter ) {
-    if (req.body["file"] && typeof req.body["file"] === "string") {
+    if (req.body["file"] && typeof req.body["file"] === "string" && req.body["file"] !== "") {
 
         // Database checks
         var db = new sqlite3.Database('records.db')

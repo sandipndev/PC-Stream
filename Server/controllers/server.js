@@ -4,7 +4,6 @@ const exapp = express()
 const path = require('path')
 const jwt = require('jsonwebtoken')
 
-// Private Key for jsonwebtoken
 
 // To jsonify every request
 exapp.use(BodyParser.json());
@@ -108,7 +107,7 @@ exapp.post('/api/authenticate', (req, res) => {
     authenticate(req, res, emitter, privateKey)
 })
 
-exapp.post('/api/delete', (req, res) => {
+exapp.post('/api/delete', verifyToken, (req, res) => {
     deletex(req, res, emitter)
 })
 
