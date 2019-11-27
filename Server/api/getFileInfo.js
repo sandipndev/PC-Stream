@@ -1,5 +1,5 @@
 const { getVideoDurationInSeconds } = require('get-video-duration')
-const { pathExists, isPathAbs, getFileSize, video_extentions_streamable, audio_extentions_streamable } = require("../misc/randomfuncs")
+const { pathExists, isPathAbs, getFileSize, modifiedTime, video_extentions_streamable, audio_extentions_streamable } = require("../misc/randomfuncs")
 const path = require('path')
 const sqlite3 = require('sqlite3')
 
@@ -47,9 +47,11 @@ module.exports = function ( req, res, emitter ) {
             // To send - Filesize, ...
             try {
                 var x = getFileSize(req.body["file"])
+                var y = modifiedTime(req.body["file"])
 
                 var tx = {
                     file_size: x,
+                    last_modified: y,
                     is_streamable: false
                 }
                 

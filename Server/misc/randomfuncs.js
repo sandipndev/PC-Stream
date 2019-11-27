@@ -5,6 +5,7 @@ const glob = require('glob');
 
 exports.isFile = source => fs.lstatSync(source).isFile()
 exports.isDir = source => fs.lstatSync(source).isDirectory()
+exports.modifiedTime = source => fs.lstatSync(source).mtime
 exports.getFileSize = source => fs.statSync(source).size
 exports.isPathAbs = source => path.isAbsolute(source)
 exports.pathExists = source => fs.existsSync(source)
