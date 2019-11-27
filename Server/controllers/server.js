@@ -1,9 +1,7 @@
 const BodyParser = require('body-parser')
 const express = require('express')
 const exapp = express()
-const path = require('path')
 const jwt = require('jsonwebtoken')
-
 
 // To jsonify every request
 exapp.use(BodyParser.json());
@@ -14,20 +12,6 @@ exapp.use(function (err, _, res, _) {
 		return
 	}
 })
-
-/*
-
-// Engine
-exapp.engine('html', require('ejs').renderFile)
-
-// Statics
-exapp.use("/css", express.static(path.join(__dirname, "..", "views", "web", "css")))
-exapp.use("/assets", express.static(path.join(__dirname, "..", "views", "web", "assets")))
-exapp.use("/js", express.static(path.join(__dirname, "..", "views", "web", "js")))
-exapp.use("/fonts", express.static(path.join(__dirname, "..", "views", "web", "fonts")))
-exapp.get("/favicon.ico", (_, res) => res.sendFile(path.join(__dirname, "..", "views", "web", "assets", "favicon.ico")))
-
-*/
 
 exapp.ip = require('ip').address()
 
@@ -51,59 +35,8 @@ const { authenticate,
         servercheck,
         getFileInfo } = require("../api")
 
-const { weblogin,
-        showvideo } = require('../api/webapi')
-
 let server
 let serverState = 0
-
-// -------------- WEBPAGE CALLS -------------------
-
-/* Not serving websites now */
-/*
-
-exapp.get('/', (req, res) =>  {
-    if (req.session.loggedin) {
-        res.redirect("../home")
-        return
-    } else {
-        if (req.query["lout"] == 1) {
-            res.render(path.join(__dirname, "..", "views", "web", "index.html"), {
-                louthtm: `You've been successfully logged out!`
-            })
-        } else {
-            res.render(path.join(__dirname, "..", "views", "web", "index.html"), {
-                louthtm: ""
-            })
-        }
-    }
-})
-
-exapp.get('/showvideo', (req, res) => {
-    showvideo(req, res, emitter)
-})
-
-exapp.get('/weblogin', (req, res) => {
-    weblogin(req, res, emitter)
-})
-
-exapp.get('/home', (req, res) => {
-    if (req.session.loggedin) {
-        res.render(path.join(__dirname, "..", "views", "web", "home.html"), {
-            sessKey: req.session.sessKey
-        })
-    } else {
-        res.redirect("../")
-    }
-})
-
-exapp.get('/logout', (req, res) => {
-    req.session.loggedin = false
-    req.session.sessKey = null
-    res.redirect("../?lout=1")
-})
-
-*/
 
 // ------------------- API CALLS --------------------
 
