@@ -22,6 +22,10 @@ module.exports = function ( req, res, emitter, privateKey ) {
                 // Password is correct
                 if (hshpw === r[0].hashed_password) {
 
+                    db.all(`SELECT no_logins FROM login_details WHERE user_id = ?`, r[0].user_id, (_, n) => {
+                        db.run(`UPDATE login_details SET no_logins = ? WHERE user_id = ?`, [ n[0].no_logins+1, r[0].user_id ])
+                    })
+
                     jwt.sign({
                         user_id: r[0].user_id
                     },  
