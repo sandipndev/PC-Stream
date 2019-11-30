@@ -1,5 +1,5 @@
 // To create databases
-const sqlite3 = require('sqlite3').verbose()
+const sqlite3 = require('sqlite3')
 const path = require('path')
 const { randomBytes } = require('crypto')
 
@@ -47,7 +47,8 @@ module.exports.initDbAndGetPrivateKey = function() {
             db.run(`CREATE TABLE IF NOT EXISTS "watch_hist" (
                 "user_id"	INTEGER PRIMARY KEY,
                 "file_name"		TEXT,
-                "absolute_path"		TEXT
+                "absolute_path"		TEXT,
+                "percent_watched"   INTEGER
             );`)
 
             db.run(`CREATE TABLE IF NOT EXISTS "ip_port_pkey" (

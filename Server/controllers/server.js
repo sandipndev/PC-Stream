@@ -33,7 +33,9 @@ const { authenticate,
         stream,
         getPicture,
         servercheck,
-        getFileInfo } = require("../api")
+        getFileInfo,
+        updateWatching,
+        getVideoThumbnail } = require("../api")
 
 let server
 let serverState = 0
@@ -78,6 +80,14 @@ exapp.get('/api/server-check', (req, res) => {
 
 exapp.post('/api/get-file-info', verifyToken, (req, res) => {
     getFileInfo(req, res, emitter)
+})
+
+exapp.post('/api/update-watching', verifyToken, (req, res) => {
+    updateWatching(req, res, emitter)
+})
+
+exapp.post('/api/get-video-thumbnail', verifyToken, (req, res) => {
+    getVideoThumbnail(req, res, emitter)
 })
 
 // Verify Token
