@@ -1,12 +1,12 @@
 const fs = require('fs')
 const path = require('path')
-const { driveDataWin, isPathAbs, isDir, isFile } = require("../misc/randomfuncs")
+const { resDataCheck, driveDataWin, isPathAbs, isDir, isFile } = require("../misc/randomfuncs")
 
 const sqlite3 = require('sqlite3')
 
 module.exports = function ( req, res, emitter ) {
 
-    if(req.body["dir"] && typeof req.body["dir"] === "string" && req.body["dir"] !== "") {
+    if(resDataCheck(req.body["dir"])) {
         
         // Username and Password are sent and of type Strings
 

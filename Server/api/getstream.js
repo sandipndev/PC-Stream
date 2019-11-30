@@ -1,11 +1,11 @@
-const { pathExists, isFile, isPathAbs } = require("../misc/randomfuncs")
+const { resDataCheck, pathExists, isFile, isPathAbs } = require("../misc/randomfuncs")
 const { randomBytes } = require('crypto')
 const path = require('path')
 
 const sqlite3 = require('sqlite3')
 
 module.exports = function ( req, res, emitter ) {
-    if (req.body["file"] && typeof req.body["file"] === "string" && req.body["file"] !== "") {
+    if (resDataCheck(req.body["file"])) {
 
         // Database checks
         var db = new sqlite3.Database(path.join(__dirname, '..', 'records.db'))

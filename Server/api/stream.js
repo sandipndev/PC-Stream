@@ -2,7 +2,7 @@ const path = require('path')
 const sqlite3 = require('sqlite3')
 
 module.exports = function ( req, res, emitter ) {
-    if (req.query["token"] && typeof req.query["token"] == "string" && req.body["token"] !== "") {
+    if (resDataCheck(req.query["token"])) {
 
         // DB Checks
         var db = new sqlite3.Database(path.join(__dirname, '..', 'records.db'))

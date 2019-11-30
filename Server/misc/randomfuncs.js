@@ -64,3 +64,7 @@ exports.isChild = (parent, dir) => {
 	const relative = path.relative(parent, dir);
 	return (relative && !relative.startsWith('..') && !path.isAbsolute(relative));
 }
+
+exports.resDataCheck = (data) => {
+	return data !== null && ((typeof data === "string" && data !== "" ) || typeof data === "number")
+}

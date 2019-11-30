@@ -1,10 +1,16 @@
 const { getVideoDurationInSeconds } = require('get-video-duration')
-const { pathExists, isPathAbs, getFileSize, modifiedTime, video_extentions_streamable, audio_extentions_streamable } = require("../misc/randomfuncs")
+const { resDataCheck,
+        pathExists, 
+        isPathAbs, 
+        getFileSize, 
+        modifiedTime, 
+        video_extentions_streamable, 
+        audio_extentions_streamable } = require("../misc/randomfuncs")
 const path = require('path')
 const sqlite3 = require('sqlite3')
 
 module.exports = function ( req, res, emitter ) {
-    if (req.body["file"] && typeof req.body["file"] === "string" && req.body["file"] !== "") {
+    if (resDataCheck(req.body["file"])) {
 
         // Username and Password are sent and of type Strings
 

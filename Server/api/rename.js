@@ -1,9 +1,9 @@
-const { pathExists, isPathAbs, renameFile } = require("../misc/randomfuncs")
+const { resDataCheck, pathExists, isPathAbs, renameFile } = require("../misc/randomfuncs")
 const path = require('path')
 const sqlite3 = require('sqlite3')
 
 module.exports = function ( req, res, emitter ) {
-    if (req.body["from_name"] && req.body["to_name"] && typeof req.body["from_name"] === "string" && typeof req.body["to_name"] === "string" && req.body["from_name"] !== "" && req.body["to_name"] !== "") {
+    if (resDataCheck(req.body["from_name"]) && resDataCheck(req.body["to_name"])) {
 
         // Database checks
         var db = new sqlite3.Database(path.join(__dirname, '..', 'records.db'))

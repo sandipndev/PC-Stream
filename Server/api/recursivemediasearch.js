@@ -1,10 +1,10 @@
-const { streamable, getDirectories, isChild, isFile, isPathAbs , isDir} = require("../misc/randomfuncs")
+const { resDataCheck, streamable, getDirectories, isChild, isFile, isPathAbs , isDir} = require("../misc/randomfuncs")
 const path = require('path')
 const sqlite3 = require('sqlite3')
 
 module.exports = function ( req, res, emitter ) {
 
-    if(req.body["dir"] && typeof req.body["dir"] === "string" && req.body["dir"] !== "") {
+    if(resDataCheck(req.body["dir"])) {
 
         if (req.body["dir"] === "/") {
             res.status(400).send("ROOT_X")
