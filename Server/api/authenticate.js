@@ -2,10 +2,11 @@ const sqlite3 = require('sqlite3')
 const path = require('path')
 const { createHash } = require('crypto')
 const jwt = require('jsonwebtoken')
+const { resDataCheck } = require("../misc/randomfuncs")
 
 module.exports = function ( req, res, emitter, privateKey ) {
     
-    if(req.body["username"] && req.body["password"] && typeof req.body["username"] === "string" && typeof req.body["password"] === "string"  && req.body["username"] !== "" && req.body["password"] !== "") {
+    if(resDataCheck(req.body["username"]) && resDataCheck(req.body["password"])) {
 
         // Username and Password are sent and of type Strings
 
