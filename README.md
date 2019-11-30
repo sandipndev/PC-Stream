@@ -1,3 +1,5 @@
+[![HitCount](http://hits.dwyl.io/triethyl/PC-Stream.svg)](http://hits.dwyl.io/triethyl/PC-Stream)
+
 # PC Stream
 
 An Electron app for a futuristic looking PC Streaming solution
