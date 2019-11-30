@@ -29,6 +29,8 @@ module.exports = function (req, res, emitter) {
                     req.body["seen_till"]
                 ])
 
+                res.sendStatus(200)
+
             } else {
 
                 db.run(`UPDATE watch_hist SET percent_watched = ? WHERE user_id = ? AND absolute_path = ?`, [
@@ -36,6 +38,8 @@ module.exports = function (req, res, emitter) {
                     req.user_id,
                     req.body["file"]
                 ])
+
+                res.sendStatus(200)
 
             }
         })

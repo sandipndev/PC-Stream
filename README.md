@@ -262,3 +262,24 @@ media:   Array of absolute paths of streamable files, accessible to current user
 
 - ❌ `500 Server Error`
 -> **Error is scanning directories**
+
+### 11. /update-watching
+
+```http
+POST /api/update-watching
+authorization: Bearer <jsonwebtoken>
+
+{
+   "file": "absolute/path/to/file/getting/streamed",
+   "seen_till": Number 0-100
+}
+```
+
+*returns:*
+- ✅  `200 OK` (If updated)
+
+- ❌ `400 Bad Request`
+   - *body* -> `PATH_NOT_ABS` **Directory path sent wasn't absolute**
+
+- ❌ `403 Forbidden`
+   -> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
