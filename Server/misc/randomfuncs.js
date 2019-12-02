@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const { exec } = require('child_process');
 const glob = require('glob');
+const ffmpeg = require('fluent-ffmpeg');
 
 exports.isFile = source => fs.lstatSync(source).isFile()
 exports.isDir = source => fs.lstatSync(source).isDirectory()
@@ -22,6 +23,13 @@ async function sh(cmd) {
 			}
 		});
 	});
+}
+
+/* https://stackoverflow.com/a/24526156 */
+// function to encode file data to base64 encoded string
+function base64_encode(file) {
+    var bitmap = fs.readFileSync(file);
+    return new Buffer.from(bitmap).toString('base64');
 }
 
 exports.driveDataWin = async function () {
@@ -67,4 +75,26 @@ exports.isChild = (parent, dir) => {
 
 exports.resDataCheck = (data) => {
 	return data !== null && ((typeof data === "string" && data !== "" ) || typeof data === "number")
+}
+
+exports.get_thumbnail = function (file, reqTime) {
+    return new Promise((resolve, reject) => {
+        new ffmpeg(file)
+        .takeScreenshots({
+            filename: "%b-%s.png",
+            count: 1,
+            timestamps: [ reqTime ]
+        }, path.join(__dirname, '..', 'misc', 'thumbnails'))
+        .on('end', () => {
+            const thumbnail_path = path.join(__dirname, '..', 'misc', 'thumbnails', 
+                                                `${path.basename(file, path.extname(file))}-${reqTime}.png`)
+            resolve({
+				base64: base64_encode(thumbnail_path),
+				thumbpath: thumbnail_path
+			})
+        })
+        .on('error', (error) => {
+            reject(error)
+        })
+    })
 }
