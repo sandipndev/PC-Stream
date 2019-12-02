@@ -253,6 +253,7 @@ media:   Array of absolute paths of streamable files, accessible to current user
 ```
 
 - ❌ `400 Bad Request`
+   - *body* -> `DATA_X`    **Directory was not sent**
    - *body* -> `PATH_NOT_ABS` **Directory path sent wasn't absolute**
    - *body* -> `DIR_DNE`   **Given directory does not exist**
    - *body* -> `DIR_X`  **Not a directory**
@@ -279,7 +280,36 @@ authorization: Bearer <jsonwebtoken>
 - ✅  `200 OK` (If updated)
 
 - ❌ `400 Bad Request`
+   - *body* -> `DATA_X`    **File/Seen Till was not sent**
    - *body* -> `PATH_NOT_ABS` **Directory path sent wasn't absolute**
+
+- ❌ `403 Forbidden`
+   -> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
+
+### 12. /get-video-thumbnail
+
+```http
+POST /api/get-video-thumbnail
+authorization: Bearer <jsonwebtoken>
+
+{
+   "file": "absolute/path/to/streamable/video/file",
+   "at": Number 0-duration
+}
+```
+
+*returns:*
+- ✅  `200 OK` *body* -> `{thumbnail}`
+```
+thumbnail:  Base64 encoded thumbnail
+```
+
+- ❌ `400 Bad Request`
+   - *body* -> `DATA_X` **File/At was not sent**
+   - *body* -> `PATH_NOT_ABS` **File path sent wasn't absolute**
+   - *body* -> `FILE_DNE` **File does not exist**
+   - *body* -> `NOT_VID` **Sent file was not a video and hence, a thumbnail can't be made**
+
 
 - ❌ `403 Forbidden`
    -> **Authorization Header not present/Wrong Authorization Header/Session Timed Out**
