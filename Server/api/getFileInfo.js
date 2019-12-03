@@ -114,6 +114,8 @@ module.exports = function ( req, res, emitter ) {
                 res.status(400).send("FILE_DNE")
             }
 
+            /* Closing database after database ops */
+            db.close()
         })
     } else {
         /* File was not sent */
