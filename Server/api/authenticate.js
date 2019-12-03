@@ -1,11 +1,11 @@
 /* Imports for all apis */
 const { resDataCheck } = require("../misc/randomfuncs")
-const path = require('path')
-const sqlite3 = require('sqlite3')
+const path = require("path")
+const sqlite3 = require("sqlite3")
 
 /* Hash for checking hashed password and we are using jwt auth */
-const { createHash } = require('crypto')
-const jwt = require('jsonwebtoken')
+const { createHash } = require("crypto")
+const jwt = require("jsonwebtoken")
 
 module.exports = function ( req, res, emitter, privateKey ) {
     
@@ -13,7 +13,7 @@ module.exports = function ( req, res, emitter, privateKey ) {
         /* Username and Password are sent and of type Strings */
 
         /* Database Object */
-        let db = new sqlite3.Database(path.join(__dirname, '..', 'records.db'))
+        let db = new sqlite3.Database(path.join(__dirname, "..", "records.db"))
 
         /* Confirming User ID and Password */
         db.all(`SELECT account.user_id, account.salt, account.hashed_password, account.real_name, login_details.no_logins
@@ -24,7 +24,7 @@ module.exports = function ( req, res, emitter, privateKey ) {
             if (r.length > 0) {
 
                 /* Recreate the sha256 hashed password using salt */
-                const hshpw = createHash('sha256').update(req.body["password"] + r[0].salt, 'utf8').digest('hex')
+                const hshpw = createHash("sha256").update(req.body["password"] + r[0].salt, "utf8").digest("hex")
 
                 /* Password is correct */
                 if (hshpw === r[0].hashed_password) {
@@ -37,7 +37,7 @@ module.exports = function ( req, res, emitter, privateKey ) {
                         user_id: r[0].user_id
                     },  
                         privateKey, 
-                        { expiresIn: '30m' },
+                        { expiresIn: "30m" },
                         (_, token) => {
 
                             /* Send the correct response */
