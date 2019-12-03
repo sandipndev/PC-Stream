@@ -52,21 +52,29 @@ module.exports = function ( req, res, emitter ) {
                 res.status(400).send("FILE_DNE")
                 return
             }
-            
-            // Generate Key
-            let key = randomBytes(20).toString('hex')
 
-            db.all(`INSERT INTO stream_keys(key, by_user, file) VALUES (?, ?, ?)`,[
-                key,
+            db.all(`SELECT percent_watched FROM watch_hist WHERE user_id = ? AND absolute_path = ?`, [
                 req.user_id,
                 req.body["file"]
-            ], (err) => {
-                if (!err)
-                    res.status(200).send({
-                        "token": key
-                    })
-                else
-                    res.status(500).send("SERVER_ERR")
+            ], (_, wTill) => {
+
+                // Generate Key
+                let key = randomBytes(20).toString('hex')
+
+                db.all(`INSERT INTO stream_keys(key, by_user, file) VALUES (?, ?, ?)`,[
+                    key,
+                    req.user_id,
+                    req.body["file"]
+                ], (err) => {
+                    if (!err)
+                        res.status(200).send({
+                            "watched_till": (wTill.length == 0) ? 0 : wTill[0].percent_watched,
+                            "token": key
+                        })
+                    else
+                        res.status(500).send("SERVER_ERR")
+                })
+
             })
 
         })

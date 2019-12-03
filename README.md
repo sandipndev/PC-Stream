@@ -272,9 +272,10 @@ authorization: Bearer <jsonwebtoken>
 
 {
    "file": "absolute/path/to/file/getting/streamed",
-   "seen_till": Number 0-100
+   "seen_till": 0-100
 }
 ```
+`seen_till` is a Number indicating at which percentage of the file the user is at
 
 *returns:*
 - ✅  `200 OK` (If updated)
@@ -294,7 +295,7 @@ authorization: Bearer <jsonwebtoken>
 
 {
    "file": "absolute/path/to/streamable/video/file",
-   "at": Number 0-duration
+   "at": 0-999
 }
 ```
 
