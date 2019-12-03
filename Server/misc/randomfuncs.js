@@ -73,6 +73,10 @@ exports.isChild = (parent, dir) => {
 	return (relative && !relative.startsWith('..') && !path.isAbsolute(relative));
 }
 
+exports.req_data_check = (data) => {
+	return data !== null && ((typeof data === "string" && data !== "" ) || typeof data === "number")
+}
+
 exports.resDataCheck = (data) => {
 	return data !== null && ((typeof data === "string" && data !== "" ) || typeof data === "number")
 }
@@ -97,4 +101,8 @@ exports.get_thumbnail = function (file, reqTime) {
             reject(error)
         })
     })
+}
+
+exports.send_error = function (res, type, error) {
+	res.status(500).send({ type, error })
 }
