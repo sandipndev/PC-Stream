@@ -4,7 +4,6 @@ const path = require("path")
 const sqlite3 = require("sqlite3")
 
 /* Imports to get video thumbnail */
-const { getVideoDurationInSeconds } = require("get-video-duration")
 const { get_thumbnail, 
         isPathAbs, 
         pathExists, 

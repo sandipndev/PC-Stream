@@ -4,7 +4,11 @@ const path = require("path")
 const sqlite3 = require("sqlite3")
 
 /* To read a directory and generate drive data */
-const { driveDataWin, isPathAbs, isDir, isFile } = require("../misc/randomfuncs")
+const { driveDataWin, 
+        pathExists,
+        isPathAbs, 
+        isDir, 
+        isFile } = require("../misc/randomfuncs")
 const { readdir } = require("fs")
 
 module.exports = function ( req, res, emitter ) {
@@ -61,6 +65,12 @@ module.exports = function ( req, res, emitter ) {
                     res.status(400).send("DIR_DNE")
                     return
                 }
+            }
+
+            /* The dir must actually exist */
+            if (!!pathExists(req.body["dir"])) {
+                res.status(400).send("DIR_DNE")
+                return
             }
 
             /* Create the basic response */

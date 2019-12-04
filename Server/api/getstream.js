@@ -21,6 +21,7 @@ module.exports = function ( req, res, emitter ) {
         /* It is not a file */
         if (!path.extname(req.body["file"])) {
             res.status(400).send("FILE_X")
+            return
         }
 
         /* Database Object */
