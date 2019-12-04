@@ -5,7 +5,7 @@ const sqlite3 = require("sqlite3")
 
 /* Create random token for stream */
 const { pathExists, isPathAbs } = require("../misc/randomfuncs")
-const { randomBytes } = require('crypto')
+const { randomBytes } = require("crypto")
 
 module.exports = function ( req, res, emitter ) {
 
@@ -38,7 +38,7 @@ module.exports = function ( req, res, emitter ) {
 
             /* Permission checking - Stream perms required */
             if (r[0].can_download == 0) {
-                res.status(400).send("CANT_DL_STREAM")
+                res.status(400).send("DL_X")
                 return
             }
 
@@ -77,7 +77,7 @@ module.exports = function ( req, res, emitter ) {
                 }
 
                 /* Generate Key */
-                let key = randomBytes(20).toString('hex')
+                let key = randomBytes(20).toString("hex")
 
                 /* Insert key in database */
                 db.all(`INSERT INTO stream_keys(key, by_user, file) VALUES (?, ?, ?)`,[ key, req.user_id, req.body["file"] ], 
