@@ -53,7 +53,7 @@ module.exports = function ( req, res, emitter, privateKey ) {
                             })
 
                             /* Raise event for logged in user */
-                            emitter.send("api:authenticate:LoggedIn", {
+                            emitter.emit("api:authenticate:LoggedIn", {
                                 name: r[0].real_name,
                                 id: r[0].user_id
                             })

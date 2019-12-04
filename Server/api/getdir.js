@@ -9,7 +9,7 @@ const { readdir } = require("fs")
 
 module.exports = function ( req, res, emitter ) {
 
-    /* Username and Password are sent and of type Strings */
+    /* Dir is sent and of type String */
     if( req_data_check(req.body["dir"]) ) {
 
         /* Path given must be absolute */
@@ -120,7 +120,7 @@ module.exports = function ( req, res, emitter ) {
                     res.status(200).send(response)
 
                     /* Raise event */
-                    emitter.send("api:getdir:ReqDir", {
+                    emitter.emit("api:getdir:ReqDir", {
                         user_id: req.user_id,
                         dir: req.body["dir"]
                     })

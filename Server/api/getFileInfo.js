@@ -102,7 +102,7 @@ module.exports = function ( req, res, emitter ) {
                     res.status(200).send(tx)
 
                 /* Emit event */
-                emitter.send("api:getfileinfo:ReqInfo", {
+                emitter.emit("api:getfileinfo:ReqInfo", {
                     user_id: req.user_id,
                     file: req.body["file"]
                 })

@@ -25,6 +25,11 @@ module.exports = function ( req, res, emitter ) {
             name: r[0].real_name
         })
 
+        /* Emit Event */
+        emitter.emit("api:getpicture:ReqUser", {
+            id: req.user_id
+        })
+
         /* Closing database after database ops */
         db.close()
     })
