@@ -7,16 +7,6 @@ const path = require('path')
 // For Salts
 const { randomBytes, createHash } = require('crypto')
 
-exports._get_user_id = function (user_name) {
-    var db = new sqlite3.Database(path.join(__dirname, '..', '..', 'records.db'))
-
-    db.each(`SELECT * FROM account WHERE user_name = ?`, user_name, (err, rows) => {
-        console.log(rows)
-    })
-
-    db.close()
-}
-
 exports.check_uname_conflict_and_add = function (new_user, emitter) {
     var db = new sqlite3.Database(path.join(__dirname, '..', '..', 'records.db'))
 

@@ -82,16 +82,17 @@ exports.resDataCheck = (data) => {
 }
 
 exports.get_thumbnail = function (file, reqTime) {
+	console.log(reqTime)
     return new Promise((resolve, reject) => {
         new ffmpeg(file)
         .takeScreenshots({
-            filename: "%b-%s.png",
+            filename: "%b.png",
             count: 1,
             timestamps: [ reqTime ]
         }, path.join(__dirname, '..', 'misc', 'thumbnails'))
         .on('end', () => {
             const thumbnail_path = path.join(__dirname, '..', 'misc', 'thumbnails', 
-                                                `${path.basename(file, path.extname(file))}-${reqTime}.png`)
+                                                `${path.basename(file, path.extname(file))}.png`)
             resolve({
 				base64: base64_encode(thumbnail_path),
 				thumbpath: thumbnail_path

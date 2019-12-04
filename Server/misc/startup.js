@@ -48,7 +48,7 @@ module.exports.initDbAndGetPrivateKey = function() {
                 "user_id"	INTEGER PRIMARY KEY,
                 "file_name"		TEXT,
                 "absolute_path"		TEXT,
-                "percent_watched"   INTEGER
+                "percent_watched"   REAL
             );`)
 
             db.run(`CREATE TABLE IF NOT EXISTS "ip_port_pkey" (
