@@ -1,26 +1,39 @@
-const { resDataCheck } = require("../misc/randomfuncs")
-const path = require('path')
-const sqlite3 = require('sqlite3')
+/* Imports for all apis */
+const { req_data_check, send_error } = require("../misc/randomfuncs")
+const path = require("path")
+const sqlite3 = require("sqlite3")
 
 module.exports = function ( req, res, emitter ) {
-    if (resDataCheck(req.query["token"])) {
 
-        // DB Checks
-        var db = new sqlite3.Database(path.join(__dirname, '..', 'records.db'))
-        db.all(`SELECT file, by_user FROM stream_keys WHERE key = ?`, req.query["token"], (e, r1)=>{
-            if (!e) {
+    /* A token is required */
+    if ( req_data_check(req.query["token"]) ) {
 
-                /* STREAMING LOGIC --starts */
+        /* Database Object */
+        let db = new sqlite3.Database(path.join(__dirname, "..", "records.db"))
 
-                res.download(r1[0].file, path.basename(r1[0].file), (err) => {
-                    if (err) return;
-                })
+        /* Get the file for stream key */
+        db.all(`SELECT file, by_user FROM stream_keys WHERE key = ?`, req.query["token"], (e, r)=>{
 
-                /* -- ends */
-
-            } else {
-                res.status(400).send("TOKEN_X")
+            /* Database Error */
+            if (e) {
+                send_error(res, "DBERR", e)
+                return
             }
+
+            /* STREAMING LOGIC --starts */
+
+            res.download(r[0].file, path.basename(r[0].file), (err) => {
+                if (err) return;
+            })
+
+            /* -- ends */
+
+            /* Emit event */
+            emitter.emit("api:stream:Streaming", {
+                user_id: r[0].user_id,
+                file: path.basename()
+            })
+
         })
 
     } else {

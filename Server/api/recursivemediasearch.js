@@ -78,7 +78,7 @@ module.exports = function ( req, res, emitter ) {
 
                 /* Some error occured when moving through the dirs */
                 if (e) {
-                    send_error(res, "DIRSCANERR", e)
+                    send_error(res, "FSERR", e)
                     return
                 }
 
