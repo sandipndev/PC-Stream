@@ -36,6 +36,8 @@ module.exports.initDbAndGetPrivateKey = function() {
                 "can_download"	INTEGER,
                 "can_rename"	INTEGER,
                 "can_delete"	INTEGER,
+                "can_upload"    INTEGER,
+                "can_rce"       INTEGER,
                 "folders_unallowed"		TEXT
             );`)
 

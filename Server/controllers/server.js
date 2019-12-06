@@ -1,21 +1,29 @@
-const BodyParser = require('body-parser')
-const express = require('express')
+const BodyParser = require("body-parser")
+const express = require("express")
 const exapp = express()
-const jwt = require('jsonwebtoken')
+const fileUpload = require("express-fileupload")
+const jwt = require("jsonwebtoken")
+const path = require("path")
 
 // To jsonify every request
 exapp.use(BodyParser.json());
 exapp.use(BodyParser.urlencoded({ extended: true }));
 exapp.use(function (err, _, res, _) {
 	if (err) {
-		res.status(500).send('JSON_INCORRECT')
+		res.status(500).send("JSON_INCORRECT")
 		return
 	}
 })
 
-exapp.ip = require('ip').address()
+exapp.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : path.join(__dirname, "..", "misc", "temp"),
+    limits: { fileSize: 50 * 1024 * 1024 },
+}))
 
-const EventEmitter = require('events')
+exapp.ip = require("ip").address()
+
+const EventEmitter = require("events")
 const emitter = new EventEmitter()
 
 let privateKey
@@ -35,70 +43,75 @@ const { authenticate,
         servercheck,
         getFileInfo,
         updateWatching,
-        getVideoThumbnail } = require("../api")
+        getVideoThumbnail,
+        upload } = require("../api")
 
 let server
 let serverState = 0
 
 // ------------------- API CALLS --------------------
 
-exapp.post('/api/authenticate', (req, res) => {
+exapp.post("/api/authenticate", (req, res) => {
     authenticate(req, res, emitter, privateKey)
 })
 
-exapp.post('/api/delete', verifyToken, (req, res) => {
+exapp.post("/api/delete", verifyToken, (req, res) => {
     deletex(req, res, emitter)
 })
 
-exapp.post('/api/get-dir', verifyToken, (req, res) => {
+exapp.post("/api/get-dir", verifyToken, (req, res) => {
     getdir(req, res, emitter)
 })
 
-exapp.post('/api/get-stream', verifyToken, (req, res) => {
+exapp.post("/api/get-stream", verifyToken, (req, res) => {
     getstream(req, res, emitter)
 })
 
-exapp.post('/api/recur-media-scan', verifyToken, (req, res) => {
+exapp.post("/api/recur-media-scan", verifyToken, (req, res) => {
     recursivemediasearch(req, res, emitter)
 })
 
-exapp.post('/api/rename', verifyToken, (req, res) => {
+exapp.post("/api/rename", verifyToken, (req, res) => {
     rename(req, res, emitter)
 })
 
-exapp.get('/stream', (req, res) => {
+exapp.get("/stream", (req, res) => {
     stream(req, res, emitter)
 })
 
-exapp.post('/api/get-user-data', verifyToken, (req, res) => {
+exapp.post("/api/get-user-data", verifyToken, (req, res) => {
     getPicture(req, res, emitter)
 })
 
-exapp.get('/api/server-check', (req, res) => {
+exapp.get("/api/server-check", (req, res) => {
     servercheck(req, res, emitter)
 })
 
-exapp.post('/api/get-file-info', verifyToken, (req, res) => {
+exapp.post("/api/get-file-info", verifyToken, (req, res) => {
     getFileInfo(req, res, emitter)
 })
 
-exapp.post('/api/update-watching', verifyToken, (req, res) => {
+exapp.post("/api/update-watching", verifyToken, (req, res) => {
     updateWatching(req, res, emitter)
 })
 
-exapp.post('/api/get-video-thumbnail', verifyToken, (req, res) => {
+exapp.post("/api/get-video-thumbnail", verifyToken, (req, res) => {
     getVideoThumbnail(req, res, emitter)
+})
+
+exapp.post("/api/upload", verifyToken, (req, res) => {
+    upload(req, res, emitter)
 })
 
 // Verify Token
 function verifyToken(req, res, next) {
     // Get auth header value
-    const bearerHeader = req.headers['authorization'];
+    const bearerHeader = req.headers["authorization"];
 
     // Check if bearer is undefined
-    if(typeof bearerHeader !== 'undefined') {
+    if(typeof bearerHeader !== "undefined") {
       // Split at the space
-      const bearer = bearerHeader.split(' ');
+      const bearer = bearerHeader.split(" ");
 
       // Get token from array
       const bearerToken = bearer[1];

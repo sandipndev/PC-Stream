@@ -25,6 +25,8 @@ async function sh(cmd) {
 	});
 }
 
+exports.sh = sh
+
 /* https://stackoverflow.com/a/24526156 */
 // function to encode file data to base64 encoded string
 function base64_encode(file) {

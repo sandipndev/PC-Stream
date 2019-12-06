@@ -200,6 +200,16 @@ document.addEventListener("DOMContentLoaded", ()=> {
     } else {
       document.getElementById("del-no-pms").click()
     }
+    if (data.can_upload === 1) {
+      document.getElementById("upload-yes-pms").click()
+    } else {
+      document.getElementById("upload-no-pms").click()
+    }
+    if (data.can_rce === 1) {
+      document.getElementById("rce-yes-pms").click()
+    } else {
+      document.getElementById("rce-no-pms").click()
+    }
 
     unallFolders = JSON.parse(data.folders_unallowed)
 
@@ -313,6 +323,20 @@ document.addEventListener("DOMContentLoaded", ()=> {
     for (var i=0; i<d.length; i++) {
       if (d[i].checked) {
         data.can_delete = (d[i].value === "Yes") ? 1 : 0
+      }
+    }
+
+    d = document.getElementsByName("rce-pms")
+    for (var i=0; i<d.length; i++) {
+      if (d[i].checked) {
+        data.can_rce = (d[i].value === "Yes") ? 1 : 0
+      }
+    }
+
+    d = document.getElementsByName("upload-pms")
+    for (var i=0; i<d.length; i++) {
+      if (d[i].checked) {
+        data.can_upload = (d[i].value === "Yes") ? 1 : 0
       }
     }
 

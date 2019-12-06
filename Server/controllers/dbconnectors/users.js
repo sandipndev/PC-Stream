@@ -66,9 +66,11 @@ exports.add_user = function(new_user) {
             new_user.picture_base64
         ])
 
-        db.run(`INSERT INTO permissions(user_id, can_download, can_rename, can_delete, folders_unallowed) VALUES (?, ?, ?, ?, ?)`, [
+        db.run(`INSERT INTO permissions(user_id, can_download, can_rename, can_delete, can_upload, can_rce, folders_unallowed) VALUES (?, ?, ?, ?, ?, ?, ?)`, [
             user_id,
             1,
+            0,
+            0,
             0,
             0,
             JSON.stringify([])
@@ -86,7 +88,7 @@ exports.add_user = function(new_user) {
 exports.display_user_perms = function (uname, emitter) { 
     var db = new sqlite3.Database(path.join(__dirname, '..', '..', 'records.db'))
 
-    db.all('SELECT can_download, can_rename, can_delete, folders_unallowed FROM account JOIN permissions ON account.user_id = permissions.user_id WHERE user_name = ?', uname, (_, row) => {
+    db.all('SELECT can_download, can_rename, can_delete, can_upload, can_rce, folders_unallowed FROM account JOIN permissions ON account.user_id = permissions.user_id WHERE user_name = ?', uname, (_, row) => {
         emitter.send("user:displayPerms", row, uname)
     })
 
@@ -107,10 +109,12 @@ exports.edit_user_perms = function(existing_user_changes, emitter) {
 
     // Update permissions
     db.all(`SELECT user_id, real_name FROM account WHERE user_name = ?`, existing_user_changes.user_name, (_, row)=>{
-        db.run(`UPDATE permissions SET can_download = ?, can_rename = ?, can_delete = ?, folders_unallowed = ? WHERE user_id = ?`, [
+        db.run(`UPDATE permissions SET can_download = ?, can_rename = ?, can_delete = ?, can_upload = ?, can_rce = ?, folders_unallowed = ? WHERE user_id = ?`, [
             existing_user_changes.can_download ? 1 : 0,
             existing_user_changes.can_rename ? 1 : 0,
             existing_user_changes.can_delete ? 1 : 0,
+            existing_user_changes.can_upload ? 1 : 0, 
+            existing_user_changes.can_rce ? 1 : 0,
             existing_user_changes.folders_unallowed,
             row[0].user_id
         ], ()=>{
