@@ -3,16 +3,24 @@ const { req_data_check, send_error } = require("../misc/randomfuncs")
 const path = require("path")
 const sqlite3 = require("sqlite3")
 
-const { isPathAbs, pathExists } = require("../misc/randomfuncs")
+const { isPathAbs, pathExists, deleteFile } = require("../misc/randomfuncs")
+
+function delTempFile(f) {
+    deleteFile(f, () => {})
+}
 
 module.exports = function (req, res, emitter) {
 
     /* A file and a move to point to be sent */
     if ( req_data_check(req.body["moveTo"]) && !!req.files["file"] ) {
 
+        /* This is the file */
+        const file = req.files["file"]
+
         /* Path given must be absolute */
         if ( !isPathAbs(req.body["moveTo"]) ) {
             res.status(400).send("PATH_NOT_ABS")
+            delTempFile(file["tempFilePath"])
             return
         }
 
@@ -26,6 +34,7 @@ module.exports = function (req, res, emitter) {
             /* Database Error */
             if (e) {
                 send_error(res, "DBERR", e)
+                delTempFile(file["tempFilePath"])
                 return
             }
 
@@ -42,6 +51,7 @@ module.exports = function (req, res, emitter) {
             /* Given directory must not be an unallowed */
             if (unallowed_dirs.includes(req.body["moveTo"])) {
                 res.status(400).send("DIR_DNE")
+                delTempFile(file["tempFilePath"])
                 return
             }
 
@@ -49,6 +59,7 @@ module.exports = function (req, res, emitter) {
             for (var i=0; i<unallowed_dirs.length; i++) {
                 if (req.body["moveTo"].includes(unallowed_dirs[i])) {
                     res.status(400).send("DIR_DNE")
+                    delTempFile(file["tempFilePath"])
                     return
                 }
             }
@@ -56,16 +67,17 @@ module.exports = function (req, res, emitter) {
             /* The dir must actually exist */
             if (!pathExists(req.body["moveTo"])) {
                 res.status(400).send("DIR_DNE")
+                delTempFile(file["tempFilePath"])
                 return
             }
 
             /* Total file path and file */
-            const file = req.files["file"]
             const moveTo = path.join(req.body["moveTo"], file["name"])
 
             /* This new file must not be present there */
             if (pathExists(moveTo)) {
                 res.status(400).send("ALREADY_EXISTS")
+                delTempFile(file["tempFilePath"])
                 return
             }
 
@@ -75,6 +87,7 @@ module.exports = function (req, res, emitter) {
                 /* If error, send it */
                 if (e) {
                     send_error(res, "FSERR", e)
+                    delTempFile(file["tempFilePath"])
                     return
                 }
 
