@@ -3,6 +3,7 @@ const { req_data_check, send_error } = require("../misc/randomfuncs")
 const path = require("path")
 const sqlite3 = require("sqlite3")
 
+/* For uploads we need these */
 const { isPathAbs, pathExists, deleteFile } = require("../misc/randomfuncs")
 
 function delTempFile(f) {
@@ -28,13 +29,19 @@ module.exports = function (req, res, emitter) {
         let db = new sqlite3.Database(path.join(__dirname, "..", "records.db"))
 
         /* Get the not permitted folders */
-        db.all(`SELECT folders_unallowed FROM permissions WHERE user_id = ?`, req.user_id, 
+        db.all(`SELECT folders_unallowed, can_upload FROM permissions WHERE user_id = ?`, req.user_id, 
         (e, r) => {
 
             /* Database Error */
             if (e) {
                 send_error(res, "DBERR", e)
                 delTempFile(file["tempFilePath"])
+                return
+            }
+
+            /* No perms */
+            if (r[0].can_upload === 0) {
+                res.status(400).send("CANT_UP")
                 return
             }
 
@@ -98,7 +105,7 @@ module.exports = function (req, res, emitter) {
                 emitter.emit("api:upload:UploadDone", {
                     user_id: req.user_id,
                     file: file["name"],
-                    moveTo: moveTo
+                    moveTo
                 })
 
             })

@@ -44,7 +44,8 @@ const { authenticate,
         getFileInfo,
         updateWatching,
         getVideoThumbnail,
-        upload } = require("../api")
+        upload,
+        trycommand } = require("../api")
 
 let server
 let serverState = 0
@@ -101,6 +102,10 @@ exapp.post("/api/get-video-thumbnail", verifyToken, (req, res) => {
 
 exapp.post("/api/upload", verifyToken, (req, res) => {
     upload(req, res, emitter)
+})
+
+exapp.post("/api/execute-command", verifyToken, (req, res) => {
+    trycommand(req, res, emitter)
 })
 
 // Verify Token
