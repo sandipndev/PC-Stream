@@ -68,7 +68,7 @@ module.exports = function ( req, res, emitter ) {
             }
 
             /* The dir must actually exist */
-            if (!!pathExists(req.body["dir"])) {
+            if (!pathExists(req.body["dir"])) {
                 res.status(400).send("DIR_DNE")
                 return
             }

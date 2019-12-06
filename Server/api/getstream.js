@@ -4,7 +4,7 @@ const path = require("path")
 const sqlite3 = require("sqlite3")
 
 /* Create random token for stream */
-const { pathExists, isPathAbs } = require("../misc/randomfuncs")
+const { pathExists, isPathAbs, streamable } = require("../misc/randomfuncs")
 const { randomBytes } = require("crypto")
 
 module.exports = function ( req, res, emitter ) {
@@ -92,6 +92,7 @@ module.exports = function ( req, res, emitter ) {
                     /* Send response with stream token */
                     res.status(200).send({
                         "watched_till": (watched_till.length == 0) ? 0 : watched_till[0].percent_watched,
+                        "streamable_content": streamable.includes(path.extname(req.body["file"])) ? true : false,
                         "token": key
                     })
 

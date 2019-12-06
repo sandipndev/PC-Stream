@@ -163,11 +163,7 @@ exports.delete_user = function(existing_user, emitter) {
         db.run(`DELETE FROM account WHERE user_id = ?`, [
             row[0].user_id
         ])
-
-        db.run(`DELETE FROM sessions WHERE user_id = ?`, [
-            row[0].user_id
-        ])
-
+        
         db.run(`DELETE FROM user_pictures WHERE user_id = ?`, [
             row[0].user_id
         ])
