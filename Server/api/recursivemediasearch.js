@@ -6,6 +6,7 @@ const sqlite3 = require("sqlite3")
 const { streamable, 
         getDirectories, 
         isChild,
+        pathExists,
         isPathAbs } = require("../misc/randomfuncs")
 
 module.exports = function ( req, res, emitter ) {
