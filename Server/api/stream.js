@@ -20,6 +20,12 @@ module.exports = function ( req, res, emitter ) {
                 return
             }
 
+            /* Token not found */
+            if (r.length === 0) {
+                res.sendStatus(500)
+                return
+            }
+
             /* STREAMING LOGIC --starts */
 
             res.download(r[0].file, path.basename(r[0].file), (err) => {
@@ -31,7 +37,7 @@ module.exports = function ( req, res, emitter ) {
             /* Emit event */
             emitter.emit("api:stream:Streaming", {
                 user_id: r[0].user_id,
-                file: path.basename()
+                file: path.basename(r[0].file)
             })
 
         })
