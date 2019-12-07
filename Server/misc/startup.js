@@ -59,6 +59,12 @@ module.exports.initDbAndGetPrivateKey = function() {
                 "private_key"   TEXT
             );`)
 
+            db.run(`CREATE TABLE IF NOT EXISTS "log_data" (
+                "timestamp" TEXT,
+                "api"   TEXT,
+                "data"  TEXT
+            );`)
+
             db.all(`SELECT private_key FROM ip_port_pkey`, (_, r) => {
                 let pKey
                 if (r.length === 0) {

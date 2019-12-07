@@ -3,9 +3,13 @@ const path = require('path')
 const url = require('url')
 
 // Server
-const { toggleServer, get_server_state, setPrivateKey } = require('./controllers/server')
+const { toggleServer, get_server_state, setPrivateKey, server_emitter } = require('./controllers/server')
 const { check_uname_conflict_and_add, user_list_update, display_user_perms, edit_user_perms, edit_user_password,
         delete_user } = require('./controllers/dbauth')
+const addLog = require('./controllers/dbconnectors/addLog')
+const getDp = require('./controllers/dbconnectors/getDp')
+const getNameFromId = require('./controllers/dbconnectors/getNameFromId')
+
 
 // Other vars
 let mainWindow
@@ -108,3 +112,110 @@ ipcMain.on("user:del", (_, uname) => {
 })
 
 menu_click_emitter.on("quit-menu", ()=>{ turn_off() })
+
+server_emitter.on("api:authenticate:LoggedIn", (data) => {
+    addLog("api:authenticate:LoggedIn", data)
+    getDp(data.user_id).then((dp) => {
+        mainWindow.webContents.send("addUserLive", data.user_id, data.name, dp)
+    })
+    const msg = `${data.name} just got authenticated`
+    mainWindow.webContents.send("logMsg", msg)
+})
+
+server_emitter.on("api:getdir:ReqDir", (data) => {
+    addLog("api:getdir:ReqDir", data)
+    getNameFromId(data.user_id).then((name) => {
+        const msg = `${name} listed directory ${data.dir}`
+        mainWindow.webContents.send("logMsg", msg)
+    })
+   
+})
+
+server_emitter.on("api:getfileinfo:ReqInfo", (data) => {
+    addLog("api:getfileinfo:ReqInfo", data)
+    getNameFromId(data.user_id).then((name) => {
+        const msg = `${name} requested information for ${data.file}`
+        mainWindow.webContents.send("logMsg", msg)
+    })
+})
+
+server_emitter.on("api:getpicture:ReqUser", (data) => {
+    addLog("api:getpicture:ReqUser", data)
+    getNameFromId(data.user_id).then((name) => {
+        const msg = `${name} asked for his/her profile picture and name`
+        mainWindow.webContents.send("logMsg", msg)
+    })
+})
+
+server_emitter.on("api:getstream:AskedStream", (data) => {
+    addLog("api:getstream:AskedStream", data)
+    getNameFromId(data.user_id).then((name) => {
+        const msg = `${name} has a stream key for ${data.file}`
+        mainWindow.webContents.send("logMsg", msg)
+    })
+})
+
+server_emitter.on("api:stream:Streaming", (data) => {
+    addLog("api:stream:Streaming", data)
+    getNameFromId(data.user_id).then((name) => {
+        const msg = `${name} is streaming ${data.file}`
+        mainWindow.webContents.send("logMsg", msg)
+    })
+})
+
+server_emitter.on("api:delete:Deleted", (data) => {
+    addLog("api:delete:Deleted", data)
+    getNameFromId(data.user_id).then((name) => {
+        const msg = `${name} has deleted ${data.file}`
+        mainWindow.webContents.send("logMsg", msg)
+    })
+})
+
+server_emitter.on("api:getvideothumbnail:SendThumbnail", (data) => {
+    addLog("api:getvideothumbnail:SendThumbnail", data)
+    getNameFromId(data.user_id).then((name) => {
+        const msg = `${name} got a thumbnail for ${data.file}`
+        mainWindow.webContents.send("logMsg", msg)
+    })
+})
+
+server_emitter.on("api:recursivemediasearch:Searched", (data) => {
+    addLog("api:recursivemediasearch:Searched", data)
+    getNameFromId(data.user_id).then((name) => {
+        const msg = `${name} got scanned media inside ${data.file}`
+        mainWindow.webContents.send("logMsg", msg)
+    })
+})
+
+server_emitter.on("api:rename:RenameFile", (data) => {
+    addLog("api:rename:RenameFile", data)
+    getNameFromId(data.user_id).then((name) => {
+        const msg = `${name} just renamed from ${data.from} to ${data.to}`
+        mainWindow.webContents.send("logMsg", msg)
+    })
+})
+
+server_emitter.on("api:trycommand:CommandExecuted", (data) => {
+    addLog("api:trycommand:CommandExecuted", data)
+    getNameFromId(data.user_id).then((name) => {
+        const msg = `${name} executed ${data.command}`
+        mainWindow.webContents.send("logMsg", msg)
+    })
+})
+
+server_emitter.on("api:upload:UploadDone", (data) => {
+    addLog("api:upload:UploadDone", data)
+    getNameFromId(data.user_id).then((name) => {
+        const msg = `${name} uploaded ${data.file} to ${data.moveTo}`
+        mainWindow.webContents.send("logMsg", msg)
+    })
+})
+
+server_emitter.on("api:updatewatching:UpdateWatched", (data) => {
+    addLog("api:updatewatching:UpdateWatched", data)
+    getNameFromId(data.user_id).then((name) => {
+        const msg = `${name} completed watching ${data.percent}% of ${data.file}`
+        mainWindow.webContents.send("logMsg", msg)
+    })
+    mainWindow.webContents.send("updateUserLiveStatus", data.user_id)
+})

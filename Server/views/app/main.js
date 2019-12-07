@@ -383,4 +383,71 @@ document.addEventListener("DOMContentLoaded", ()=> {
     ipcRenderer.send("user:listUpdate")
   })
 
+  function addLog(logMsg) {
+    var loglist = document.getElementById("scroll-list")
+
+    var d1 = document.createElement("li")
+    d1.innerText = logMsg
+
+    loglist.appendChild(d1)
+    loglist.scrollTop = loglist.scrollHeight
+  }
+
+  function add_joined_user(userid, username, base64image) {
+
+    let li = document.createElement("li")
+    li.id = `user-stat-${userid}`
+    li.classList.add("row")
+
+    li.innerHTML = `
+    <div class="col-sm-4">
+      <img class="rounded mx-auto" width="55px" height="55px" src="${base64image}">
+    </div>
+    <div class="col-sm-6 offset-sm-1">
+      <div class="row h5">
+        <span id="user-stat-ico-${userid}" class="pr-2" style="color:#17CC60;">&#9679;</span>
+        <span>${username}</span>
+      </div>
+    </div>
+    `
+
+    document.getElementById("user-live-list").appendChild(li)
+
+  }
+
+  function update_user_status(userid, status) {
+    let x = document.getElementById(`user-stat-ico-${userid}`)
+
+    if (x) {
+      if (status === "streaming") {
+        x.style.color = "#FD3E50"
+        document.getElementById("status-dot-1").style.color = "#FD3E50"
+        document.getElementById("status-dot-2").style.color = "#FD3E50"
+      } else {
+        x.style.color = "#17CC60"
+        document.getElementById("status-dot-1").style.color = "#17CC60"
+        document.getElementById("status-dot-2").style.color = "#17CC60"
+      }
+    }
+  }
+
+  function remove_user_status(userid) {
+    let d1 = document.getElementById(`user-stat-${userid}`)
+
+    if (d1) {
+      d1.parentNode.removeChild(d1)
+    }
+  }
+
+  ipcRenderer.on("logMsg", (_, m) => addLog(m))
+
+  ipcRenderer.on("addUserLive", (_, id, name, dp) => {
+    add_joined_user(id, name, dp)
+  })
+
+  ipcRenderer.on("updateUserLiveStatus", (_, id) => {
+    update_user_status(id, "streaming")
+    setInterval(update_user_status, 20000, id, "notstreaming")
+  })
+
 })

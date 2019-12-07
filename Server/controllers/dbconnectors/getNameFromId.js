@@ -5,10 +5,10 @@ const path = require('path')
 module.exports = function (id) {
     return new Promise((resolve, reject) => {
         var db = new sqlite3.Database(path.join(__dirname, '..', '..', 'records.db'))
-        db.all(`SELECT profile_picture FROM user_pictures WHERE user_id = ?`, [ id ], (e, r) => {
+        db.all(`SELECT real_name FROM account WHERE user_id = ?`, [ id ], (e, r) => {
             if (!e) {
                 db.close()
-                resolve(r[0].profile_picture)
+                resolve(r[0].real_name)
             } else {
                 reject(e)
             }

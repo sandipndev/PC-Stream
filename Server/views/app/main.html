@@ -37,27 +37,49 @@
     <div class="rounded text-white mt-3 mr-2 p-1 pl-3 pr-3 shadow" style="display: none;" id="toast"></div>
 
     <div class="container main-section mt-5 mb-5 all-sections" id="home-section">
-        <div class="row">
-            <div class="col-sm-12 bg-white shadow rounded pt-3 pb-3">
-                <div class="row">
-                    <span class="h2 pl-3" id="status-dot-2" style="color: #bbb;">&#9679;</span>
-                    <span class="h2 p-bold pl-3" id="status-text">OFFLINE</span>
-                </div>
-                <div class="row mb-3 mt-2" id="online-shower" style="display: none;">
-                    <div class="float-right pr-4" id="qr-code"></div>
-                    <div class="col-sm-6">
-                        <div class="row">
-                            <div class="col-sm-3 text-black font-weight-bold">IP Addr:</div>
-                            <div class="col-sm-2 text-primary font-weight-bold" id="ip-placeholder"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3 text-black font-weight-bold">Port:</div>
-                            <div class="col-sm-2 text-primary font-weight-bold" id="port-placeholder"></div>
+        <div class="col-sm-12 bg-white shadow rounded pt-3 pb-3">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <span class="h2 pl-3" id="status-dot-2" style="color: #bbb;">&#9679;</span>
+                        <span class="h2 p-bold pl-3" id="status-text">OFFLINE</span>
+                    </div>
+                    <div class="row mb-3 mt-2" id="online-shower" style="display: none;">
+                        <div class="float-right pr-4" id="qr-code"></div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-3 text-black font-weight-bold">IP Addr:</div>
+                                <div class="col-sm-2 text-primary font-weight-bold" id="ip-placeholder"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3 text-black font-weight-bold">Port:</div>
+                                <div class="col-sm-2 text-primary font-weight-bold" id="port-placeholder"></div>
+                            </div>
                         </div>
                     </div>
+                    <div class="row pl-3">
+                        <button class="btn btn-primary btn-lg btn-dark" id="toggle-server-btn">Start Server</button>
+                    </div>
                 </div>
-                <div class="row pl-3">
-                    <button class="btn btn-primary btn-lg btn-dark" id="toggle-server-btn">Start Server</button>
+            </div>
+            <hr>
+            <div class="row mt-4 pl-3">
+                <div class="col-sm-8">
+
+                    <span class="h4">Logs</span>
+
+                    <ul id="scroll-list" class="rounded p-1 mt-2">
+                        
+                    </ul>
+
+                </div>
+                <div class="col-sm-4"> 
+
+                    <span class="h4">Active Now</span>
+
+                    <ul class="mt-2" id="user-live-list" style="list-style-type: none;">                        
+                    </ul>
+
                 </div>
             </div>
         </div>
