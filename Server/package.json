@@ -23,7 +23,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "ejs": "^2.7.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-fileupload": "^1.1.9",
     "fluent-ffmpeg": "^2.1.2",
     "get-video-duration": "^1.0.3",
